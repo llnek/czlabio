@@ -216,7 +216,7 @@ section {
     padding: 20px;
 }
 
-#clients .col-2-3 [class*='col-'] {
+#projects .col-2-3 [class*='col-'] {
     padding: 0;
 }
 
@@ -974,31 +974,16 @@ blockquote {
 
 /* --------- 6.4 Gallery ---------- */
 
-#gallery img {
-    max-height: 300px;
-}
-
-#gallery [class*='col-'] {
-    padding: 0;
-}
-
-#gallery a {
-    display: inline-block;
-    position: relative;
-    overflow: hidden;
-}
-
-#gallery a:hover img {
-    opacity: 0.15;
-    -moz-backface-visibility: hidden;
-}
-
-#gallery a:before {
+#games img { max-height: 300px; }
+#games [class*='col-'] { padding: 0; }
+#games a { display: inline-block; position: relative; overflow: hidden; }
+#games a:hover img { opacity: 0.15; -moz-backface-visibility: hidden; }
+#games a:before {
     font-size: 2.2em;
     font-style: normal;
     font-weight: normal;
     text-align: center;
-    content: "+";
+    content: "play";
     width: 70px;
     height: 70px;
     border-radius: 100em;
@@ -1014,12 +999,61 @@ blockquote {
     transition: all .2s linear;
     vertical-align: middle;
 }
+#games a:hover:before { opacity: 1; top: 50%; left: 50%; }
 
-#gallery a:hover:before {
-    opacity: 1;
-    top: 50%;
+#ml img { max-height: 300px; }
+#ml [class*='col-'] { padding: 0; }
+#ml a { display: inline-block; position: relative; overflow: hidden; }
+#ml a:hover img { opacity: 0.15; -moz-backface-visibility: hidden; }
+#ml a:before {
+    font-size: 2.2em;
+    font-style: normal;
+    font-weight: normal;
+    text-align: center;
+    content: "play";
+    width: 70px;
+    height: 70px;
+    border-radius: 100em;
+    display: block;
+    position: absolute;
+    top: 55%;
     left: 50%;
+    line-height: 72px;
+    margin: -35px 0 0 -35px;
+    opacity: 0;
+    -webkit-transition: all .2s linear;
+    -moz-transition: all .2s linear;
+    transition: all .2s linear;
+    vertical-align: middle;
 }
+#ml a:hover:before { opacity: 1; top: 50%; left: 50%; }
+
+#algos img { max-height: 300px; }
+#algos [class*='col-'] { padding: 0; }
+#algos a { display: inline-block; position: relative; overflow: hidden; }
+#algos a:hover img { opacity: 0.15; -moz-backface-visibility: hidden; }
+#algos a:before {
+    font-size: 2.2em;
+    font-style: normal;
+    font-weight: normal;
+    text-align: center;
+    content: "play";
+    width: 70px;
+    height: 70px;
+    border-radius: 100em;
+    display: block;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    line-height: 72px;
+    margin: -35px 0 0 -35px;
+    opacity: 0;
+    -webkit-transition: all .2s linear;
+    -moz-transition: all .2s linear;
+    transition: all .2s linear;
+    vertical-align: middle;
+}
+#algos a:hover:before { opacity: 1; top: 50%; left: 50%; }
 
 /**
  * Featherlight – ultra slim jQuery lightbox
@@ -1379,7 +1413,7 @@ blockquote {
 
 /* --------- 6.6 Clients ---------- */
 
-#clients a {
+#projects a {
     display: block;
     text-align: center;
     position: relative;
@@ -1388,7 +1422,7 @@ blockquote {
     color: #fff;
 }
 
-#clients img {
+#projects img {
     display: inline-block;
     padding: 15px 25px;
 }
@@ -1410,7 +1444,7 @@ blockquote {
     transition: all 0.3s ease-out;
 }
 
-#clients a:hover .client-overlay {
+#projects a:hover .client-overlay {
     opacity: 1;
 }
 
