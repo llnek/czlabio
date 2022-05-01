@@ -340,8 +340,20 @@
       postUpdate(){
         let m=_G.mediator;
         if(m.isGameOver()){
+          let msg="No Winner", w=m.winner();
+          if(w){
+            if(w.pnum==2) msg= _G.mode==1 ? "You lose !" : "Red wins !";
+            if(w.pnum==1) msg= _G.mode==1 ? "You win !" : "Blue wins !";
+          }
           this.m5.dead=true;
-          _.delay(CLICK_DELAY,()=> _Z.modal("EndGame",{win: m.winner()}));
+          _.delay(CLICK_DELAY,()=> _Z.modal("EndGame",{
+
+            fontSize:64*Mojo.getScaleFactor(),
+            replay:{name:"MainMenu"},
+            quit:{name:"Splash", cfg:SplashCfg},
+            msg,
+            win: msg.includes("win")
+          }));
         }else{
           for(let r,x=0,cs=m.gameState();x<COLS;++x){
             r=_G.maxY(cs,x);
