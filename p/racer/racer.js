@@ -50,7 +50,6 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const getLine=(z)=> _G.lines[_M.ndiv(z,SEGLEN) % _G.lines.length];
-    const doBackDrop=(s)=> s.insert(_S.fillMax(_S.sprite("bg.png")));
     const playClick=()=> Mojo.sound("click.mp3").play();
     const mspeed= Mojo.u.fps * SEGLEN;
     const CLICK_DELAY=343;
@@ -504,7 +503,7 @@
   //load & run
   window.addEventListener("load",()=> MojoH5({
 
-    assetFiles: ["bg.png","player.png","click.mp3", "sky.png",
+    assetFiles: ["player.png","click.mp3", "sky.png",
                  "hills.png","trees.png", "tiles.png","images/tiles.json"],
     arena: {width: 1344, height: 840},
     scaleToWindow:"max",
