@@ -8,7 +8,7 @@ do
   cd $x
   #f=`basename "$x" ".mkv"`
   echo "inside " `pwd`
-  gulp
+  ##gulp
   rm ./dist/game.js
   cd ..
   #ffmpeg -i $f.mkv -vcodec copy -acodec copy $f.mp4
