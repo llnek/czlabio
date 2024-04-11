@@ -99,7 +99,8 @@
         let g= this.g.gfx=_S.graphics();
         this.insert(g);
         this._initLevel();
-        _I.on(["mouseup"],"onClick",this);
+        //_I.on(["mouseup"],"onClick",this);
+        _I.on(["single.tap"],"onClick",this);
       },
       _drawPolygon(ctx,b,K){
         let ps=b.shape._calcPoints().map(p=>new PIXI.Point(p[0],p[1]));
