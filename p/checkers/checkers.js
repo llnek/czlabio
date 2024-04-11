@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -19,10 +19,17 @@
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   function scenes(Mojo){
 
+    ////////////////////////////////////////////////////////////////////////////
+    const
+      BASE_SHEET= "images/base.json",
+      RED_SHEET="images/reds.json",
+      BLACK_SHEET="images/blacks.json";
+
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //load dependencies
     window["io/czlab/checkers/AI"](Mojo);
 
+    ////////////////////////////////////////////////////////////////////////////
     const {Scenes:_Z,
            Sprites:_S,
            Input:_I,
@@ -32,11 +39,10 @@
            math:_M,
            ute:_, is}= Mojo;
 
+    const int=Math.floor;
     const {Bot,
            Local,Mediator}=Mojo;
 
-
-    const int=Math.floor;
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
       COLS=8,
@@ -47,7 +53,7 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       C_ORANGE=_S.color("#f4d52b"),
       SplashCfg= {
         title:"Checkers",
@@ -56,6 +62,8 @@
       };
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function checkStatus(s){
       let out={}, R=0, B=0, RK=0, BK=0;
       for(let r,y=0; y< s.length; ++y){
@@ -77,6 +85,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function isWon(s){
       let R=0, B=0;
       for(let r,y=0; y< s.length; ++y){
@@ -92,12 +102,16 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function isTie(s){
       return _calcNextMoves(TEAM_RED,s)[2]==0 ||
              _calcNextMoves(TEAM_BLACK,s)[2]==0
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _.inject(_G,{
       TEAM_RED,
       TEAM_BLACK,
@@ -109,6 +123,8 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function checkEnd(){
       let
         S= _G.mediator.gameState(),
@@ -125,25 +141,26 @@
         w= c.uuid()==w ? c : ( o.uuid()==w ? o : UNDEF);
         _G.mediator.gameOver(w);
         _.delay(DELAY,()=> _Z.modal("EndGame",{
-
           fontSize: 72*Mojo.getScaleFactor(),
           winner: msg.includes("Win"),
           msg,
           replay: {name:"MainMenu"},
           quit: {name:"Splash",cfg: SplashCfg}
-
         }));
       }
-
       return msg;
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const doBackDrop=(s)=> s.insert( _S.fillMax(_S.sprite("bggreen.jpg")));
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
+    const doBackDrop=(s)=> s.insert( _S.fillMax("bggreen.jpg"));
     const _new8x8=()=> _.fill(ROWS,()=> _.fill(COLS,0));
     const _posOK=(row,col)=> row>=0&&row<ROWS&&col>=0&&col<COLS;
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function _boardStepOn(row,col,M){
       //make target cell clickable
       if(_posOK(row,col) && M[row][col]=="S")
@@ -151,6 +168,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function _boardJumpOn(team,row,col,dy,dx,M,S){
       //make target cell clickable
       let
@@ -165,6 +184,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function _boardShowTargets(sel,M,S){
       let
         e,r1,r2,c1,c2,
@@ -196,7 +217,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    //find all the possible cells that can move
+    /*find all the possible cells that can move */
+    ////////////////////////////////////////////////////////////////////////////
     function _calcSteps(row,col,S){
       let
         r,c,out=[],
@@ -215,7 +237,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    //find all the possible cells that can eat the opponent piece
+    /*find all the possible cells that can eat the opponent piece */
+    ////////////////////////////////////////////////////////////////////////////
     function _calcJumps(row,col,S){
       let {team,dirX,dirY}= S[row][col];
       let s,r2,c2,r,c,out=[];
@@ -238,6 +261,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function _calcNextMoves(team,S){
       let
         jumps=[],
@@ -277,6 +302,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function _resetMask(m){
       (m||_G.mask).forEach(r=>{
         for(let i=0;i<r.lenght;++i)r[i]=0;
@@ -284,6 +311,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function _resetBoard(){
       for(let s,y=0; y<ROWS; ++y)
       for(let x=0;x<COLS;++x){
@@ -294,6 +323,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     class CKBot extends Bot{
       constructor(team,v){
         super(team);
@@ -330,6 +361,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     class CKHuman extends Local{
       constructor(team,v){
         super(team);
@@ -364,6 +397,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     class CKMediator extends Mediator{
       constructor(){
         super();
@@ -403,6 +438,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function _postMove(row,col,S){
       //check if a king is borned!
       const p=S[row][col];
@@ -421,11 +458,14 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function _chgScore(teamEaten){
       teamEaten==TEAM_RED ? _G.blackScore++ : _G.redScore++ }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    //move to target row/col
+    /*move to target row/col */
+    ////////////////////////////////////////////////////////////////////////////
     function _moveTo(r,c, row,col,M,S){
       let
         s=S[r][c],
@@ -448,6 +488,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function _eatPiece(r,c, row,col,M,S){
       let
         er=row>r? row-1 : row+1,
@@ -462,7 +504,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    //fake a bunch of stuff to show next jump
+    /*fake a bunch of stuff to show next jump */
+    ////////////////////////////////////////////////////////////////////////////
     function _nextJump(row,col,out,M,S){
       _.assert(out.length>0, "bad consecutive jump");
       let b,r,c,v,t=_G.tiles[row][col];
@@ -479,6 +522,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function makeMove(r,c,row,col,M,S){
       _moveTo(r,c,row,col,M,S);
       _resetMask();
@@ -488,6 +533,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function _nextToPlay(){
       if(checkEnd()){
       }else{
@@ -497,6 +544,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function _onClick(t){
       let
         S=_G.mediator.gameState(),
@@ -547,6 +596,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("MainMenu",{
       setup(){
         let
@@ -571,6 +622,8 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("StartMenu",{
       setup(options){
         let
@@ -597,6 +650,8 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame",{
       setup(options){
         let
@@ -630,9 +685,9 @@
                 let s;
                 if((_.isEven(y)&&_.isEven(x))||
                    (!_.isEven(y)&&!_.isEven(x))){
-                  s=_S.sprite("light.png");
+                  s=_S.spriteFrame(BASE_SHEET,"light.png");
                 }else{
-                  s=_S.spriteFrom("dark.png","dark1.png");
+                  s=_S.spriteFrom(Mojo.ssf(BASE_SHEET,"dark.png"),Mojo.ssf(BASE_SHEET,"dark1.png"));
                   s.g.dark=true;
                   s.m5.press=()=>M.isGameOver()?0:_onClick(s,M)
                 }
@@ -658,10 +713,15 @@
                    (!_.isEven(y)&&!_.isEven(x))){
                 }else{
                   if(y<3){ //red
-                    s=_S.spriteFrom("red.png","red1.png","red2.png","red3.png");
+                    s=_S.spriteFrom(Mojo.ssf(RED_SHEET,"red.png"),
+                                    Mojo.ssf(RED_SHEET,"red1.png"),
+                                    Mojo.ssf(RED_SHEET,"red2.png"),Mojo.ssf(RED_SHEET,"red3.png"));
                     k={team:TEAM_RED, dirY:[1], dirX:[-1,1]};
                   }else if(y>4){ //black
-                    s=_S.spriteFrom("black.png","black1.png","black2.png","black3.png");
+                    s=_S.spriteFrom(Mojo.ssf(BLACK_SHEET,"black.png"),
+                                    Mojo.ssf(BLACK_SHEET,"black1.png"),
+                                    Mojo.ssf(BLACK_SHEET,"black2.png"),Mojo.ssf(BLACK_SHEET,"black3.png"));
+
                     k={team:TEAM_BLACK, dirY:[-1], dirX:[-1,1]};
                   }
                 }
@@ -717,16 +777,13 @@
         this.g.black.text=_.prettyNumber(_G.blackScore,2);
       }
     });
-
-
     _Z.run("Splash", SplashCfg);
   }
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
-  window.addEventListener("load",()=> MojoH5({
-
-    assetFiles: ["bggreen.jpg","base.png","reds.png","blacks.png",
+  MojoH5Ldr({
+    assetFiles: ["bggreen.jpg",
                  "audioOn.png","audioOff.png",
                  "images/base.json", "images/reds.json","images/blacks.json",
                  "x.mp3", "o.mp3", "click.mp3","game_win.mp3","game_over.mp3"],
@@ -735,7 +792,7 @@
     scaleFit:"y",
     scaleToWindow:"max",
     start(...args){ scenes(...args) }
-  }));
+  });
 
 })(this);
 

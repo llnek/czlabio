@@ -55,12 +55,12 @@
     const lastY=()=> _G.lines.length == 0 ? 0 : _.last(_G.lines).p2.world.y;
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const addBend=(n=ROAD.M, curve=BEND.M, height=0)=> addStretch(n, curve, height);
-    const addHill=(n=ROAD.M, height=HILL.M)=> addStretch(n,0, height);
-    const addRoad=(n=ROAD.M)=> addStretch(n,0, 0);
+    const addBend=(s,n=ROAD.M, curve=BEND.M, height=0)=> addStretch(n, curve, height);
+    const addHill=(s,n=ROAD.M, height=HILL.M)=> addStretch(n,0, height);
+    const addRoad=(s,n=ROAD.M)=> addStretch(n,0, 0);
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const addLowRollingHills=(n=ROAD.E, height=HILL.E)=>
+    const addLowRollingHills=(s,n=ROAD.E, height=HILL.E)=>
       [[n, 0, height/2],
        [n, 0, -height],
        [n, BEND.E,  height],
@@ -69,7 +69,7 @@
        [n, 0, 0]].forEach(a=>addStretch(...a));
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const addSBends=()=>
+    const addSBends=(s)=>
       [[ROAD.M, -BEND.E, 0],
        [ROAD.M, BEND.M, HILL.M],
        [ROAD.M, BEND.E, -HILL.E],
@@ -77,7 +77,7 @@
        [ROAD.M, -BEND.M, -HILL.M]].forEach(a=>addStretch(...a));
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const addBumps=()=>
+    const addBumps=(s)=>
       [[10, 0,  5],
        [10, 0, -2],
        [10, 0, -5],
@@ -88,7 +88,7 @@
        [10, 0, -2]].forEach(a=>addStretch(...a));
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const addDownhillToEnd=(n=200)=> addStretch(n, -BEND.E, - lastY()/SEGLEN);
+    const addDownhillToEnd=(s,n=200)=> addStretch(n, -BEND.E, - lastY()/SEGLEN);
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function addStretch(enter, curve, y){
@@ -101,7 +101,6 @@
           curve,
           sprites: [],
           cars: [],
-          clip:0,
           color: _M.ndiv(n,_G.rumbles)%2 ? C_DARK : C_LIGHT
         });
       }
@@ -120,11 +119,10 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function addTrees(sheet){
-      let n, side;
-      function add(n, sprite, o){
-        let t=Mojo.sheet(sheet,sprite);
-        _G.lines[n].sprites.push({png:sprite, source: t, offset:o, w: t.width })
+      function add(n, sprite, offset){
+        _G.lines[n].sprites.push({source: sprite, offset, w: Mojo.sheet(sheet,sprite).width })
       }
+      let n, side, sprite, offset;
       for(n = 10; n < 200; n += 4 + int(n/100)){
         if(_.rand()<0.3){
           add(n, "palm_tree.png", 0.5 + _.rand()*0.5);
@@ -140,14 +138,17 @@
       }
       for(n = 200 ; n < _G.lines.length ; n += 3){
         if(_.rand()<0.3)
-          add(n, _.randItem(FLORA), _.randSign() * (2 + _.rand() * 5));
+          add(n, _.randItem(FLORA), _.randSign * (2 + _.rand() * 5));
       }
       for(n = 1000 ; n < (_G.lines.length-50) ; n += 100){
         if(_.rand()>0.7){
           side = _.randSign();
           for(let i = 0 ; i < 20 ; ++i){
-            if(_.rand()<0.3)
-              add(n + _.randInt2(0, 50), _.randItem(FLORA), side * (1.5 + _.rand()));
+            if(_.rand()<0.3){
+              sprite = _.randItem(FLORA);
+              offset = side * (1.5 + _.rand());
+              add(n + _.randInt2(0, 50), sprite, offset);
+            }
           }
         }
       }
@@ -155,14 +156,14 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function addCars(sheet){
-      let n, car, segment, z, sprite, speed;
+      let t,n, car, segment, offset, z, sprite, speed;
       _G.cars.length=0;
       for(n = 0; n < _G.totalCars; ++n){
+        offset = _.rand() * _.randSign()*0.8;
         z = int(_.rand() * _G.lines.length) * SEGLEN;
         sprite = _.randItem(CARS);
-        let t=Mojo.sheet(sheet,sprite);
         speed  = _G.maxSpeed/4 + _.rand() * _G.maxSpeed/(sprite == "semi.png" ? 4 : 2);
-        car = { offset:_.rand() * _.randSign()*0.8, source:t, z, png:sprite, speed, w: t.width};
+        car = { offset, z, sprite, speed, w: Mojo.sheet(sheet,sprite).width};
         _G.getLine(car.z).cars.push(car);
         _G.cars.push(car);
       }
@@ -171,24 +172,24 @@
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     _G.initTrack=function(s){
       _G.lines.length=0;
-      addRoad(ROAD.E);
-      addLowRollingHills();
-      addSBends();
-      addBend(ROAD.M, BEND.M, HILL.E);
-      addBumps();
-      addLowRollingHills();
-      addBend(ROAD.H*2, BEND.M, HILL.M);
-      addRoad();
-      addHill(ROAD.M, HILL.H);
-      addSBends();
-      addBend(ROAD.H, -BEND.M, 0);
-      addHill(ROAD.H, HILL.H);
-      addBend(ROAD.H, BEND.M, -HILL.E);
-      addBumps();
-      addHill(ROAD.H, -HILL.M);
-      addRoad();
-      addSBends();
-      addDownhillToEnd();
+      addRoad(s,ROAD.E);
+      addLowRollingHills(s);
+      addSBends(s);
+      addBend(s,ROAD.M, BEND.M, HILL.E);
+      addBumps(s);
+      addLowRollingHills(s);
+      addBend(s,ROAD.H*2, BEND.M, HILL.M);
+      addRoad(s);
+      addHill(s,ROAD.M, HILL.H);
+      addSBends(s);
+      addBend(s,ROAD.H, -BEND.M, 0);
+      addHill(s,ROAD.H, HILL.H);
+      addBend(s,ROAD.H, BEND.M, -HILL.E);
+      addBumps(s);
+      addHill(s,ROAD.H, -HILL.M);
+      addRoad(s);
+      addSBends(s);
+      addDownhillToEnd(s);
 
       addTrees(s);
       addCars(s);

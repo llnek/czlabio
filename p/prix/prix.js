@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -37,7 +37,7 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       SplashCfg= {
         title:"Grand Prix",
         clickSnd:"click.mp3",
@@ -46,7 +46,7 @@
 
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const doBackDrop=(s)=> s.insert(_S.fillMax(_S.sprite("bgblack.jpg")));
+    const doBackDrop=(s)=> s.insert(_S.fillMax("bgblack.jpg"));
     const playClick=()=> Mojo.sound("click.mp3").play();
     const CLICK_DELAY=343;
 
@@ -54,6 +54,8 @@
     const _objF= {};
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("HUD",{
       setup(){
         let K=Mojo.getScaleFactor(true);
@@ -62,14 +64,14 @@
         let L,R,F,offX, offY,r=32*K;
         //////
         R= _S.circle(r,grey,grey,4);
-        R.addChild(_S.anchorXY(_S.bmpText(">",cfg),0.5));
+        R.addChild(_S.centerAnchor(_S.bmpText(">",cfg)));
         offY=K*R.height/2;
         offX=offY;
         _V.set(R, Mojo.width-offX-R.width/2, Mojo.height-offY-R.height/2);
         this.insert(_S.opacity(_I.makeHotspot(R),alpha));
         //////
         L= _S.circle(r,grey,grey,4);
-        L.addChild(_S.anchorXY(_S.bmpText("<",cfg),0.5));
+        L.addChild(_S.centerAnchor(_S.bmpText("<",cfg)));
         _S.pinLeft(R,L,offX/2);
         this.insert(_S.opacity(_I.makeHotspot(L),alpha));
         //////
@@ -80,9 +82,12 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame",{
       setup(){
-        const self=this,
+        const
+          self=this,
           K=Mojo.getScaleFactor(),
           {tiledWidth,tiledHeight, tilesInX,tilesInY,tileW,tileH}=self.tiled;
         //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -98,15 +103,15 @@
             x=column*tileW+s.width/2;
             y=row*tileH+s.height/2;
             p=_S.sprite("start.png");
-            _S.anchorXY(p,0.5);
+            _S.centerAnchor(p);
             p.angle=90;
             p.x=x+tileW+2;
             p.y=y;
-            self.insert(_S.scaleBy(p,0.2,0.2));
+            self.insert(_S.scaleBy(p,0.2*K,0.2*K));
             ////////
             s.x=x;
             s.y=y;
-            s.m5.maxSpeed=200;
+            s.m5.maxSpeed=400*K;
             s.m5.speed=s.m5.maxSpeed;
             s.g.move=_U.Meander(s);
             s.m5.tick=(dt)=> s.g.move(dt) ;
@@ -119,19 +124,17 @@
             });
           },
           mkCar(color){
-            let K=Mojo.getScaleFactor(),
-              s=_S.sprite(`${color}.png`);
-            _S.anchorXY(_S.scaleBy(s,0.08*K,0.08*K),0.5);
+            let s=_S.sprite(`${color}.png`);
+            _S.centerAnchor(_S.scaleBy(s,0.08*K,0.08*K));
             s.m5.type=E_CAR;
             s.m5.cmask=E_CAR;
-            s.m5.maxSpeed=280*K;
+            s.m5.maxSpeed=320*K;
             s.m5.speed=s.m5.maxSpeed;
             s.m5.vel[0] = s.m5.speed;
             return s;
           },
           cfgCar(p1,cps){
-            let K=Mojo.getScaleFactor(),
-              A=0.05*K,r,R=K*p1.width*2.2;
+            let A=0.05*K,r,R=K*p1.width*2.2;
             p1.g.cps=cps.slice();
             p1.g.cpn=0;
             while(1){
@@ -192,8 +195,7 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load & run
-  window.addEventListener("load",()=> MojoH5({
-
+  MojoH5Ldr({
     assetFiles: ["roadTextures_tilesheet.png",
                  "towerDefense_tilesheet.png",
                  "red.png","green.png","orange.png",
@@ -202,8 +204,7 @@
     scaleToWindow:"max",
     scaleFit:"x",
     start(...args){ scenes(...args) }
-
-  }));
+  });
 
 })(this);
 

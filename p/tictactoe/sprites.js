@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -28,6 +28,8 @@
            ute:_,is}=Mojo;
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function triple(grid,v3,other){
       let cnt=0,empty=null;
       v3.forEach(i=>{
@@ -44,6 +46,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function aiEasy(grid,ai,other){
       let pos,tmp=[];
       grid.forEach((v,i)=>{
@@ -53,6 +57,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function aiNormal(grid,ai,other){
       let pos=-1, cs=_.shuffle([0,2,4,6,8]);
       for(let i=0;i<cs.length;++i){
@@ -65,6 +71,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function bruteAI(level,grid,ai,other){
       let win= triple(grid,[0,1,2],ai) ||
                triple(grid,[3,4,5],ai) ||
@@ -90,6 +98,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _G.AI=function(v){
       const o={ pnum:v, board: _G.TTToe(_G.X, _G.O) };
       const signal=[["ai.move",o], "aiMove",o];
@@ -118,11 +128,13 @@
     };
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _G.Tile=function(x,y,tileX,tileY,props){
       let s= _S.sprite(_S.frames("icons.png",tileX,tileY));
       const signal= [["ai.moved",s],"aiMoved",s.m5];
       _S.scaleXY(s,props.scale[0], props.scale[1]);
-      _V.set(_S.anchorXY(s,0.5),x,y);
+      _V.set(_S.centerAnchor(s),x,y);
       _.inject(_I.mkBtn(s).m5,props);
       s.m5.showFrame(1);
       s.m5.aiMoved=()=>{

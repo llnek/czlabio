@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -24,6 +24,7 @@
     const {Game:_G,
            ute:_,is}=Mojo;
 
+    ////////////////////////////////////////////////////////////////////////////
     /** @class */
     class CZ extends Algo.GameBoard{
       constructor(p1v,p2v){

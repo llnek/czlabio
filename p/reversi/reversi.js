@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -140,13 +140,11 @@
           }
           this.gameOver=true;
           _.delay(343,()=> _Z.modal("EndGame",{
-
             fontSize:64*Mojo.getScaleFactor(),
             replay:{name:"MainMenu"},
             quit:{name:"Splash", cfg:_G.SplashCfg},
             msg,
             winner: msg.includes("win")
-
           }));
         }else if(ai && ai.pnum != pcur){
           Mojo.emit(["ai.move",ai]);
@@ -166,8 +164,7 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
-  window.addEventListener("load",()=> MojoH5({
-
+  MojoH5Ldr({
     assetFiles:["bggreen.jpg","icons.png",
                 "x.mp3","o.mp3",
                 "audioOn.png","audioOff.png",
@@ -176,8 +173,7 @@
     scaleToWindow:"max",
     scaleFit:"y",
     start(...args){ scenes(...args) }
-
-  }));
+  });
 
 })(this);
 

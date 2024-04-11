@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -24,7 +24,7 @@
            FX:_F,
            Input:_I,
            Game:_G,
-           Arcade:_2d,
+           Ute2D:_2d,
            v2:_V,
            math:_M,
            ute:_,is}=Mojo;
@@ -219,21 +219,19 @@
             _G.curvature += (_G.targetBend - _G.curvature) * dts;
             //accumulate track curvature
             _G.trackCurvature += _G.curvature * dts;
-            this.gfx.clear() &&
+            _S.gclear(this.gfx) &&
               this.drawWorld() && this.drawTrack({}) &&  this.drawCar();
           },
           drawWorld(){
             //draw sky
-            this.gfx.beginFill(_G.SKY_COLOR);
-            this.gfx.drawRect(0,0,W,H2);
-            this.gfx.endFill();
+            _S.grect(this.gfx,0,0,W,H2);
+            _S.gfill(this.gfx,{color:_G.SKY_COLOR});
             //draw scenery - our hills are a rectified sine wave,
             //where the phase is adjusted by the accumulated track curvature
             for(let hh,x=0; x < W; x+=CHUNKX){
               hh = Math.abs(sin(x * 0.01 + _G.trackCurvature) * _G.HILLHEIGHT);
-              this.gfx.beginFill(_G.HILL_COLOR);
-              this.gfx.drawRect(x,H2-hh,CHUNKX,hh);
-              this.gfx.endFill();
+              _S.grect(this.gfx,x,H2-hh,CHUNKX,hh);
+              _S.gfill(this.gfx,{color:_G.HILL_COLOR});
             }
             return this;
           },
@@ -255,9 +253,8 @@
               proj.rightGrassX = (middle+ roadWidth + clipWidth) * W;
             },
             drawRow=(x1,y1,x2,color)=>{
-              this.gfx.beginFill(color);
-              this.gfx.drawRect(x1,y1,x2-x1,CHUNKY);
-              this.gfx.endFill();
+              _S.grect(this.gfx,x1,y1,x2-x1,CHUNKY);
+              _S.gfill(this.gfx,{color});
             };
             for(let r,y=0;y<H2; y+=CHUNKY){
               project(y);

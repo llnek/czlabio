@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -24,42 +24,57 @@
 
 		//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const DIM=9, D3=3, DIMCNT=81;
-    const NUMSTR= "123456789",
-			NUMS= NUMSTR.split(/(\d{1})/).filter(s=>s.length), NUMINTS=NUMS.map(n=> +n);
+    const NUMSTR= "123456789";
+		const NUMS= NUMSTR.split(/(\d{1})/).filter(s=>s.length), NUMINTS=NUMS.map(n=> +n);
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+		/* */
+    ////////////////////////////////////////////////////////////////////////////
 		const randBlock=()=> _.shuffle(_.shuffle(_.shuffle(NUMINTS.slice())));
 
 		//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+		/* */
+    ////////////////////////////////////////////////////////////////////////////
 		function isInRow(game,y,value){
 			for(let x=0,r= game[y]; x<r.length;++x) if(r[x]==value) return true;
 		}
 
 		//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+		/* */
+    ////////////////////////////////////////////////////////////////////////////
 		function isInCol(game,col,value){
 			for(let y=0,z= game.length; y<z;++y) if(game[y][col]==value) return true;
 		}
 
 		//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+		/* */
+    ////////////////////////////////////////////////////////////////////////////
 		function isInBlock(game,y,x,value){
-			let r= _M.ndiv(y,D3) *D3;
-			let c= _M.ndiv(x,D3) *D3;
+			let r= int(y/D3) *D3;
+			let c= int(x/D3) *D3;
 			for(let i=r;i<(r+D3);++i)
 				for(let j=c;j<(c+D3);++j)
 					if(game[i][j] == value) return true;
 		}
 
 		//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+		/* */
+    ////////////////////////////////////////////////////////////////////////////
 		function checkCell(game,y,x,value){
 			return isInCol(game,x,value) ||
 						 isInRow(game, y,value) || isInBlock(game,y,x,value)?false:true
 		}
 		//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+		/* */
+    ////////////////////////////////////////////////////////////////////////////
 		function findEmpty(game){
 			for(let y=0;y<DIM;++y)
       for(let x=0;x<DIM;++x) if(game[y][x]==0) return true
 		}
+
 		//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+		/* */
+    ////////////////////////////////////////////////////////////////////////////
 		function countEmpty(game){
 			let sum=0;
 			for(let y=0;y<DIM;++y)
@@ -68,10 +83,12 @@
 		}
 
 		//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+		/* */
+    ////////////////////////////////////////////////////////////////////////////
 		function gen(game){
 			let x,y,nums=NUMINTS.slice();
 			for(let i=0;i<DIMCNT;++i){
-				y=_M.ndiv(i,DIM);
+				y=int(i/DIM);
 				x= i % DIM;
 				if(game[y][x]==0){
 					_.shuffle(_.shuffle(_.shuffle(nums)));
@@ -88,6 +105,8 @@
     }
 
 		//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+		/* */
+    ////////////////////////////////////////////////////////////////////////////
 		function reduction(game, rounds=3){
 			//Mojo.CON.log("reduction rounds = "+rounds);
 			let nonEmpty= (function(out){
@@ -121,11 +140,13 @@
 		}
 
 		//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+		/* */
+    ////////////////////////////////////////////////////////////////////////////
 		function resolve(game,ctx){
 			//Mojo.CON.log("resolve: holes= " +countEmpty(game));
 			let x,y;
 			for(let i=0;i<DIMCNT;++i){
-				y= _M.ndiv(i,DIM);
+				y= int(i/DIM);
 				x= i%DIM;
 				if(game[y][x]==0){
 					for(let n,j=0;j<DIM;++j){
@@ -147,22 +168,29 @@
 		}
 
 		//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+		/* */
+    ////////////////////////////////////////////////////////////////////////////
 		const blankGame=()=> _.fill(DIM,()=> _.fill(DIM,0));
 
 		//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+		/* */
+    ////////////////////////////////////////////////////////////////////////////
 		const solverCtx=()=> ({solutions: 0});
 
 		//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-		//can prefill diagonal blocks since no dependencies in rows or cols
+		/*can prefill diagonal blocks since no dependencies in rows or cols */
+    ////////////////////////////////////////////////////////////////////////////
 		function seedBlock(game,block,seed){
 			let c= (block%D3) * D3,
-				k=0, r= _M.ndiv(block,D3) * D3;
+				k=0, r= int(block/D3) * D3;
 			for(let y=r; y<(r+3); ++y)
 				for(let x=c; x<(c+3); ++x)
 					game[y][x]=seed[k++];
 		}
 
 		//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+		/* */
+    ////////////////////////////////////////////////////////////////////////////
 		function seedGame(){
 			let s= [randBlock(), randBlock(), randBlock()];
 			let d= _.randSign()>0?[0,4,8]:[2,4,6]; d=[2,4,6];
@@ -172,8 +200,10 @@
 		}
 
 		//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+		/* */
+    ////////////////////////////////////////////////////////////////////////////
 		function validateBlock(game,block){
-			let r= _M.ndiv(block,D3) * D3;
+			let r= int(block/D3) * D3;
 			let c= block%D3 * D3;
 			let out=[];
 			for(let i=r;i<(r+D3);++i)
@@ -182,6 +212,8 @@
 		}
 
 		//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+		/* */
+    ////////////////////////////////////////////////////////////////////////////
 		function checkDone(game){
 			_.assert(game.length==DIM,"Bad game");
 			_.assert(game[0].length==DIM, "Bad game");
@@ -200,6 +232,8 @@
 		}
 
 		//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+		/* */
+    ////////////////////////////////////////////////////////////////////////////
 		function Sudoku(){
 			return{
 				generate(level){

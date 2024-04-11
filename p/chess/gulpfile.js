@@ -9,7 +9,7 @@ const sourcemaps = require('gulp-sourcemaps');
 
 const jsFiles = [
   "../../vendor/pixi.min.js","../../vendor/mcfud.min.js","../../vendor/shimoji.min.js",
-  "chessjs-0.12.1.js","ai.js","chess.js"
+  "chessjs-0.13.4.js","ai.js","chess.js"
 ];
 
 var destDir = 'dist'; //or any folder inside your public asset folder

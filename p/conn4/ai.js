@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -78,23 +78,23 @@
       isOver(snap){
         let rc= _G.checkAnyWin(snap.state, snap.other);
         if(rc){
-          console.log(`isOver: winner ${rc.uuid()}`);
+          Mojo.CON.log(`isOver: winner ${rc.uuid()}`);
           return rc;
         }
         rc= _G.checkAnyWin(snap.state, snap.cur);
         if(rc){
-          console.log(`isOver: winner ${rc.uuid()}`);
+          Mojo.CON.log(`isOver: winner ${rc.uuid()}`);
           return rc;
         }
         return this.isStalemate(snap);
       }
       evalScore(snap){
         if(_G.checkAnyWin(snap.state, snap.other)){
-          console.log(`score: winner ${snap.other.uuid()}`);
+          Mojo.CON.log(`score: winner ${snap.other.uuid()}`);
           return -100;
         }
         if(_G.checkAnyWin(snap.state, snap.cur)){
-          console.log(`score: winner ${snap.other.uuid()}`);
+          Mojo.CON.log(`score: winner ${snap.other.uuid()}`);
           return 100;
         }
         return 0;

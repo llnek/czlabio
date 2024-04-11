@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -35,9 +35,12 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const E_PLAYER=1,
-      E_ENEMY=2,
-      E_COIN=4,
-      E_KEY=8;
+          E_ENEMY=2,
+          E_COIN=4,
+          E_KEY=8;
+
+    const PLAYER_SPEED=555,
+          GHOST_SPEED=444;
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const SplashCfg= {
@@ -51,6 +54,8 @@
     const DELAY=343;
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function enemyAI(e){
       e.m5.heading=Mojo.LEFT;
       e.m5.switchPercent=2;
@@ -90,9 +95,13 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     const Power={
       s(){},
       c(scene,t,ts,ps){
+        scene.g.powerCount++;
+        t.m5.uuid=`power#${scene.g.powerCount}`;
         t.m5.type=E_KEY;
         t.m5.sensor=true;
         t.m5.onSensor=(colObj)=>{
@@ -107,6 +116,8 @@
     };
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function CoinLayer(scene,tl){
       function cfgCoin(s){
         scene.g.dotCount = _.nor(scene.g.dotCount,0);
@@ -141,8 +152,7 @@
       for(let y=0;y<tilesInY;++y)
       for(let s,x=0;x<tilesInX;++x){
         if(634==c[y*tilesInX+x]){
-          s=_S.sprite(t);
-          _S.anchorXY(_S.scaleBy(s,0.5,0.5),0.5);
+          s=_S.centerAnchor(_S.scaleBy(_S.sprite(t),0.5,0.5));
           s.y=new_tileH*y+new_tileH/2;
           s.x=new_tileW*x+new_tileW/2;
           scene.insert(cfgCoin(s),true);
@@ -151,6 +161,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     const Player={
       s(scene){
         return _S.animation("pac.png",64,64)
@@ -161,13 +173,13 @@
         frames[Mojo.UP]=1;
         frames[Mojo.LEFT]=2;
         frames[Mojo.DOWN]=3;
-        _S.anchorXY(s,0.5);
+        _S.centerAnchor(s);
         s.m5.type=E_PLAYER;
         s.m5.cmask=E_KEY | E_COIN;
-        s.x += _M.ndiv(s.width,2);
-        s.y += _M.ndiv(s.height,2);
+        s.x += int(s.width/2);
+        s.y += int(s.height/2);
         s.m5.uuid="player";
-        s.m5.speed= 200 * scene.getScaleFactor();
+        s.m5.speed= PLAYER_SPEED * scene.getScaleFactor();
         _V.set(s.m5.vel,s.m5.speed, 0);
         s.g.meander=_U.Meander(s);
         s.g.maze=_U.MazeRunner(s,frames);
@@ -181,6 +193,8 @@
     };
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     const Ghost={
       s(){},
       c(scene,s,ts,ps,os){
@@ -189,8 +203,8 @@
         s.m5.cmask=E_PLAYER;
         s.x = os.column * s.width+ _M.ndiv(s.width,2);
         s.y = os.row * s.height+ _M.ndiv(s.height,2);
-        _S.anchorXY(s,0.5);
-        s.m5.speed= 200 * scene.getScaleFactor();
+        _S.centerAnchor(s);
+        s.m5.speed= GHOST_SPEED * scene.getScaleFactor();
         _V.set(s.m5.vel,s.m5.speed, s.m5.speed);
         s.g.meander=_U.Meander(s);
         s.g.ai=enemyAI(s);
@@ -198,13 +212,11 @@
           if(col.B.m5.uuid=="player"){
             _S.die(scene);
             _.delay(DELAY,()=> _Z.modal("EndGame",{
-
               fontSize:64*Mojo.getScaleFactor(),
               replay:{name:"PlayGame"},
               quit:{name:"Splash", cfg:SplashCfg},
               msg:"You Lose!",
               winner:0
-
             }));
           }
         };
@@ -218,11 +230,15 @@
     };
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     const _objFactory={
       Player, Ghost, CoinLayer, Power
     };
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame",{
       setup(){
         let
@@ -231,48 +247,57 @@
           K=Mojo.getScaleFactor();
         doBackDrop(this)
         _Z.run("PlayGame2");
-        _Z.run("HotKeys",{
-          fontSize: 48*K,
-          radius: 42*K,
-          alpha:0.5,
-          cb(obj){
-            _V.set(obj.right,W-obj.right.width,H-obj.right.height);
-            _S.pinLeft(obj.right,obj.left,obj.right.width/4);
-            _V.set(obj.up,obj.up.width,H-obj.up.height);
-            _S.pinRight(obj.up,obj.down,obj.up.width/4);
-            return obj;
-          }
-        });
+        if(Mojo.u.touchOnly){
+          _Z.run("JoyStick");
+        }else{
+          _Z.run("HotKeys",{
+            fontSize: 48*K, radius: 42*K, alpha:0.5,
+            cb(obj){
+              _V.set(obj.right,W-obj.right.width,H-obj.right.height);
+              _S.pinLeft(obj.right,obj.left,obj.right.width/4);
+              _V.set(obj.up,obj.up.width,H-obj.up.height);
+              _S.pinRight(obj.up,obj.down,obj.up.width/4);
+              return obj;
+            }
+          });
+        }
       }
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame2",{
-      setup(options){
+      //setup(arg){ },
+      preTMX(arg){
+        this.g.powerCount=0;
+      },
+      postTMX(){
       }
     },{sgridX:128,sgridY:128,centerStage:true,
        tiled:{name: "chomp.json",factory:_objFactory}});
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    _Z.scene("XXXHUD",{
+    _Z.scene("JoyStick",{
       setup(){
         let s= Mojo.Touch.joystick({
+          static:false,
           onChange(dir){
             if(Mojo.sideRight(dir)){
               _G.player.m5.heading=Mojo.RIGHT;
-              //console.log(`dir===right`);
+              Mojo.CON.log(`dir===right`);
             }
             if(Mojo.sideLeft(dir)){
               _G.player.m5.heading=Mojo.LEFT;
-              //console.log(`dir===left`);
+              Mojo.CON.log(`dir===left`);
             }
             if(Mojo.sideTop(dir)){
               _G.player.m5.heading=Mojo.UP;
-              //console.log(`dir===up`);
+              Mojo.CON.log(`dir===up`);
             }
             if(Mojo.sideBottom(dir)){
               _G.player.m5.heading=Mojo.DOWN;
-              //console.log(`dir===down`);
+              Mojo.CON.log(`dir===down`);
             }
           }
         });
@@ -285,17 +310,16 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load & run
-  window.addEventListener("load",()=> MojoH5({
-
-    assetFiles: ["ghosts.png", "chomp.json","pac.png", "click.mp3","coins.png",
-                 "game_win.mp3","game_over.mp3",
+  MojoH5Ldr({
+    assetFiles: ["ghosts.png", "pac.png", "click.mp3","coins.png",
+                 "chomp.json", "click.mp3","game_win.mp3","game_over.mp3",
                  "platformPack_tilesheet.png","towerDefense_tilesheet.png","RPGpack_sheet.png"],
     arena: {width:1344,height:840},
     scaleToWindow:"max",
     scaleFit:"x",
+    //touchOnly:true,
     start(...args){ scenes(...args) }
-
-  }));
+  });
 
 })(this);
 

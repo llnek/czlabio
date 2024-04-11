@@ -10,15 +10,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
   "use strict";
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  /* */
+  ////////////////////////////////////////////////////////////////////////////
   function scenes(Mojo){
-
     const {Scenes:_Z,
            Sprites:_S,
            FX:_F,
@@ -34,7 +35,7 @@
     const KIND_1=1, KIND_2=2, KIND_3=3;
 
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       DELAY=343,
       int=Math.floor,
       PI2=Math.PI*2,
@@ -51,9 +52,10 @@
       };
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    function fireLaser(){
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
+    function fireLaser(s){
       let
-        s= _G.ship,
         [C,S]= _S.getHeading(s),
         K=Mojo.getScaleFactor(),
         y=s.y+s.height*S* 0.5,
@@ -67,25 +69,26 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function mkShip(scene,X,Y){
       let
         K= Mojo.getScaleFactor(),
         omega=0,
         acc=4*K,
-        img=Mojo.tcached("rocket.png"),
+        img=Mojo.resource("rocket.png"),
         s= _S.sprite(_S.frames(img,img.width/2,img.height));
 
-      _S.tint(_S.anchorXY(s,0.5),_S.SomeColors.red);
+      _S.tint(_S.centerAnchor(s),_S.SomeColors.red);
       _S.scaleXY(s,0.1*K,0.1*K);
       s.m5.showFrame(0);
       s.m5.type=E_SHIP;
       s.angle= 0;
 
       if(1){
-        let b=_S.bmpText("BOOM",UI_FONT,48*K);
-        b.tint=_S.SomeColors.yellow;
+        let b=_S.tint(_S.bmpText("BOOM",UI_FONT,48*K),_S.SomeColors.yellow);
         scene.insert(b);
-        _G.boomMsg= _S.anchorXY(_S.hide(b),0.5);
+        _G.boomMsg= _S.centerAnchor(_S.hide(b));
       }
 
       s.m5.tick=(dt)=>{
@@ -110,7 +113,7 @@
         }
         if(f && !s.g.fireThrottle){
           scene.future(()=>{ s.g.fireThrottle=0 },FIRE_WAIT);
-          fireLaser();
+          fireLaser(_G.ship);
           s.g.fireThrottle=1;
         }
         repos(_S.move(s,dt));
@@ -130,13 +133,11 @@
           }else{
             Mojo.off(["hit",s],"onHit",s.g);
             _S.die(scene) && _.delay(DELAY, ()=> _Z.modal("EndGame",{
-
               fontSize:64*Mojo.getScaleFactor(),
               replay:{name:"PlayGame"},
               quit:{name:"Splash",cfg:SplashCfg},
               msg:"You Lose!",
               winner:0
-
             }));
           }
         }
@@ -146,6 +147,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function mkShield(scene,ship){
       let t= _F.pulse(ship,0.4);
       scene.future(()=>{
@@ -153,22 +156,23 @@
         ship.g.shield=false;
         ship.alpha=1;
         ship.tint=_S.SomeColors.red; }, 10*DELAY);
-      ship.tint=_S.SomeColors.cyan;
+      _S.tint(ship,_S.SomeColors.cyan);
       return (ship.g.shield=true) && ship;
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function takeLaser(){
       //console.log("taking a bullet");
       let o, K=Mojo.getScaleFactor();
       if(_G.bullets.length>0){
         o=_G.bullets.pop()
       }else{
-        o=_S.sprite("laser.png");
-        o.m5.type=E_LASER;
-        _S.anchorXY(o,0.5);
+        o=_S.centerAnchor(_S.sprite("laser.png"));
         _S.scaleBy(o, 0.8*K, 0.2*K);
         _S.tint(o,_S.SomeColors.yellow);
+        o.m5.type=E_LASER;
         o.m5.tick=(dt)=> o.m5.dead?0:repos(_S.move(o,dt));
         o.g.onHit=()=> dropLaser(o);
         _G.gameScene.insert(o,true);
@@ -178,6 +182,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function dropLaser(o){
       //console.log("got rid of a bullet");
       Mojo.off(["hit",o],"onHit",o.g);
@@ -186,6 +192,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function repos(p){
       let r=p.width/2;
       if(p.m5.type==E_LASER){
@@ -211,6 +219,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function takeAstro(kind){
       let o;
       if(kind != KIND_3 || _G.as3.length==0){
@@ -224,6 +234,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function dropAstro(a){
       Mojo.off(["hit",a],"onHit",a.g);
       if(a.g.rank==KIND_3){
@@ -237,12 +249,14 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function mkAstro(kind){
       let
         K= Mojo.getScaleFactor(),
         a= _S.sprite("astro.png"),
         speed, rao, twist = _.randSign();
-      _S.scaleXY(_S.anchorXY(a,0.5),0.5*K,0.5*K);
+      _S.scaleXY(_S.centerAnchor(a),0.5*K,0.5*K);
       a.m5.cmask=E_SHIP|E_LASER;
       a.m5.type=E_ASTRO;
       a.m5.circle=true;
@@ -333,7 +347,7 @@
             while(total>0){
               n=_.randItem(_.shuffle(nums));
               _.disj(nums,n);
-              g=G[_M.ndiv(n,3)][n%3];
+              g=G[int(n/3)][n%3];
               px=g.x1+ (g.x2-g.x1)/2;
               py=g.y1+ (g.y2-g.y1)/2;
               a=takeAstro(KIND_1);
@@ -366,8 +380,7 @@
             _G.health=b;
             self.insert(b.sprite);
             s= this.scoreText= _S.bmpText("0",UI_FONT,48*K);
-            _S.anchorXY(s,0.5,0);
-            _V.set(s,Mojo.width/2,0);
+            _V.set(_S.anchorXY(s,0.5,0),Mojo.width/2,0);
             return self.insert(s);
           }
         });
@@ -409,7 +422,7 @@
           a=_G.astros[i];
           a.m5.dead?0:this.searchSGrid(a).forEach(o=>{
             if(a.m5.type==E_ASTRO && o.m5.type==E_SHIP){
-              //o.g.shield?0: _S.hit(a,o)
+              o.g.shield?0: _S.hit(a,o)
             }else{
               _S.hit(a,o)
             }
@@ -433,20 +446,15 @@
 
     _Z.run("Splash",SplashCfg);
   }
-
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  //bootstrap
-  window.addEventListener("load",()=> MojoH5({
-
-    assetFiles: ["shoot.mp3","explosion.mp3",
-                 "audioOn.png","audioOff.png",
-                 "astro.png","rocket.png","laser.png",
-                 "click.mp3","game_over.mp3","game_win.mp3"],
+  MojoH5Ldr({
+    assetFiles: ["audioOn.png","audioOff.png", "astro.png","rocket.png","laser.png",
+                 "shoot.mp3","explosion.mp3", "click.mp3","game_over.mp3","game_win.mp3"],
     arena: {width: 1344, height: 840},
     scaleToWindow: "max",
     scaleFit:"x",
     start(...args){ scenes(...args) }
-  }));
+  });
 
 })(this);
 

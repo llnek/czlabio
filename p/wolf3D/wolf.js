@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -33,7 +33,7 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       SplashCfg= {
         title:"Wolf3D",
         clickSnd:"click.mp3",
@@ -52,7 +52,8 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     // size of tile (wall height)
-    const TILESZ = 64,
+    const
+      TILESZ = 64,
       WALL_HEIGHT = 64,
       MAPWIDTH=20,
       MAPDEPTH=20;
@@ -182,7 +183,8 @@
     //you can tweak this by pointing to a different map
     const FMAP=map6;
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const BASEW=320,
+    const
+      BASEW=320,
       BASEH=200,
       BASED=276,
       PROJPLANE_MIDY = BASEH/2,
@@ -199,26 +201,28 @@
         }
         return [r,BASEW*r,BASEH*r]
       })();
-    Mojo.CON.log(`viewport width=${PROJECTIONWIDTH}, height=${PROJECTIONHEIGHT}`);
+    _.log(`viewport width=${PROJECTIONWIDTH}, height=${PROJECTIONHEIGHT}`);
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     // FOV = 60
-    const ANGLE60 = BASEW,//PROJECTIONWIDTH;
-      ANGLE30 = _M.ndiv(ANGLE60,2),
-      ANGLE15 = _M.ndiv(ANGLE30,2),
+    const
+      ANGLE60 = BASEW,//PROJECTIONWIDTH;
+      ANGLE30 = int(ANGLE60/2),
+      ANGLE15 = int(ANGLE30/2),
       ANGLE90 = int(ANGLE30*3),
       ANGLE180 = int(ANGLE90*2),
       ANGLE270 = int(ANGLE90*3),
       ANGLE360 = int(ANGLE60*6),
       ANGLE0 = 0,
-      ANGLE5 = _M.ndiv(ANGLE30,6),
+      ANGLE5 = int(ANGLE30/6),
       ANGLE10 = int(ANGLE5*2),
       ANGLE45 = int(ANGLE15*3);
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //trigonometric tables (the ones with "I" such as ISiTable are "Inverse" table)
     //static table to speed things up
-    const tSIN=0,
+    const
+      tSIN=0,
       iSIN=1,
       tCOS=2,
       iCOS=3,
@@ -273,22 +277,27 @@
     })(Math.PI/ANGLE180);
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const doBackDrop=(s)=> s.insert(_S.fillMax(_S.sprite("bg.jpg")));
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
+    const doBackDrop=(s)=> s.insert(_S.fillMax("bg.jpg"));
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function paintRect(gfx,x, y, w, h, c){
-      gfx.beginFill(_S.color(c));
-      gfx.drawRect(x, y, w, h);
-      gfx.endFill();
+      gfx.rect(x, y, w, h);
+      gfx.fill({color:_S.color(c)});
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function initPlayerPos(mapstr){
       let x,y,n,rc,i, a=mapstr.split("");
       while(rc != "."){
         [rc,i]= _.randItem(a,true);
         if(rc == "."){
-          y= _M.ndiv(i,MAPWIDTH);
+          y= int(i/MAPWIDTH);
           x= (i%MAPWIDTH);
           if(a[(y+1)*MAPWIDTH+x]=="."&&
              a[(y-1)*MAPWIDTH+x]=="."&&
@@ -305,13 +314,16 @@
           ANGLE90, ANGLE180, ANGLE270, ANGLE5, ANGLE10, ANGLE45];
       n= [60, 30, 15, 0, 90, 180, 270, 5,10, 45];
       [_G.playerArc,i] = _.randItem(a,true);
-      Mojo.CON.log(`initial playerX= ${_G.playerX}, playerY= ${_G.playerY}, angle=${n[i]}`);
+      _.log(`initial playerX= ${_G.playerX}, playerY= ${_G.playerY}, angle=${n[i]}`);
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("Ctrl",{
       setup(){
-        let self=this,
+        let
+          self=this,
           K=Mojo.getScaleFactor();
         _.inject(this.g,{
           initHotspots(){
@@ -320,22 +332,22 @@
               L,U,R,D,offX, offY, fw=132*K,fh=42*K,lw=4*K;
             //////
             D= _S.circle(fh,grey,grey,lw);
-            D.addChild(_S.anchorXY(_S.bmpText("-",cfg),0.5));
+            D.addChild(_S.centerAnchor(_S.bmpText("-",cfg)));
             _V.set(D, _G.arena.x1-D.width, _G.arena.y2-D.height/2);
             self.insert(_S.opacity(_I.makeHotspot(D),alpha));
             //////
             U= _S.circle(fh,grey,grey,lw);
-            U.addChild(_S.anchorXY(_S.bmpText("+",cfg),0.5));
+            U.addChild(_S.centerAnchor(_S.bmpText("+",cfg)));
             _S.pinAbove(D,U,D.height/4);
             self.insert(_S.opacity(_I.makeHotspot(U),alpha));
             //////lateral movements
             R= _S.circle(fh,grey,grey,lw);
-            R.addChild(_S.anchorXY(_S.bmpText(">",cfg),0.5));
+            R.addChild(_S.centerAnchor(_S.bmpText(">",cfg)));
             _V.set(R, _G.arena.x2+R.width, _G.arena.y2 - R.height/2);
             self.insert(_S.opacity(_I.makeHotspot(R),alpha));
             /////
             L= _S.circle(fh,grey,grey,lw);
-            L.addChild(_S.anchorXY(_S.bmpText("<",cfg),0.5));
+            L.addChild(_S.centerAnchor(_S.bmpText("<",cfg)));
             _S.pinAbove(R,L,R.height/4);
             self.insert(_S.opacity(_I.makeHotspot(L),alpha));
             //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -351,9 +363,12 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame",{
       setup(){
-        let self=this,
+        let
+          self=this,
           K=Mojo.getScaleFactor();
         _.inject(this.g,{
           fps:0,
@@ -384,22 +399,21 @@
             //scene is already centered, so start = 0,0
             for(r=0; r<BASEH/2; r+=step){//sky
               if(!_G.skyUsed){
-                this.gfx.beginFill(_S.color3(c, 125, 225));
-                this.gfx.drawRect(sx,sy+(r*height),width,height);
-                this.gfx.endFill();
+                this.gfx.rect(sx,sy+(r*height),width,height);
+                this.gfx.fill({color:_S.color3(c, 125, 225)});
               }
               --c;
             }
             for(c=0, r=BASEH/2; r<BASEH; r+=step){//floor
-              this.gfx.beginFill(_S.color3(65, c, 65));
-              this.gfx.drawRect(sx,sy+(r*height),width, height);
-              this.gfx.endFill();
+              this.gfx.rect(sx,sy+(r*height),width, height);
+              this.gfx.fill({color:_S.color3(65, c, 65)});
               ++c;
             }
           },
           drawSky(){
             if(_G.skyUsed){
-              let sky= _S.sprite("sky.jpg"),
+              let
+                sky= _S.sprite("sky.jpg"),
                 width = sky.width * (BASEH  / sky.height) * 2,
                 sx=0,sy=0, left = (_G.playerArc / ANGLE360) * -width;
               sky.x=sx+left*PROJRATIO;
@@ -492,8 +506,8 @@
         CV.distY=
         CV.distX=Infinity;
         function probe(H){
-          gx = H ? _M.ndiv(CV.i_x,TILESZ) : _M.ndiv(CV.vtGrid,TILESZ);
-          gy = H ? _M.ndiv(CV.hzGrid,TILESZ) : _M.ndiv(CV.i_y,TILESZ);
+          gx = H ? int(CV.i_x/TILESZ) : int(CV.vtGrid/TILESZ);
+          gy = H ? int(CV.hzGrid/TILESZ) : int(CV.i_y/TILESZ);
           if(gx>=MAPWIDTH || gy>=MAPDEPTH || gx<0 || gy<0){
             H ? (CV.distY=Infinity)
               : (CV.distX=Infinity)
@@ -585,8 +599,9 @@
         _G.playerY+=dy;
         // CHECK COLLISIONS
         // compute cell position
-        let playerXCell = _M.ndiv(_G.playerX,TILESZ),
-          playerYCell = _M.ndiv(_G.playerY,TILESZ),
+        let
+          playerXCell = int(_G.playerX/TILESZ),
+          playerYCell = int(_G.playerY/TILESZ),
           // compute position relative to cell (ie: how many pixel from edge of cell)
           playerXCellOffset = _G.playerX % TILESZ,
           playerYCellOffset = _G.playerY % TILESZ;
@@ -596,13 +611,11 @@
         if(FMAP.charAt((playerYCell*MAPWIDTH)+playerXCell)=="X"){
           _S.die(this);
           _.delay(100,()=> _Z.modal("EndGame",{
-
             fontSize:64*Mojo.getScaleFactor(),
             replay:{name:"PlayGame"},
             quit:{name:"Splash", cfg:SplashCfg},
             msg:"You Win!",
             winner:1
-
           }));
           return;
         }
@@ -658,8 +671,10 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function drawCeiling(scene, castArc, castCol, topOfWall, width, tint){
-      let B=Mojo.tcached("tile41.png");
+      let B=Mojo.resource("tile41.png");
       for(let row=int(topOfWall); row >=0; --row){
         let ratio=(WALL_HEIGHT-_G.playerHeight)/(PROJPLANE_MIDY-row);
         let diagDist= int(PLAYERDIST_PROJPLANE*ratio*TABLES[tFISH][castCol]);
@@ -669,13 +684,14 @@
         xEnd+=_G.playerX;
         yEnd+=_G.playerY;
         // Get the tile intersected by ray:
-        let cellX = _M.ndiv(xEnd , TILESZ),
-          cellY = _M.ndiv(yEnd , TILESZ);
+        let
+          cellX = int(xEnd / TILESZ),
+          cellY = int(yEnd / TILESZ);
         if((cellX<MAPWIDTH) && (cellY<MAPDEPTH) && cellX>=0 && cellY>=0){
           // Find offset of tile and column in texture
           let ty = int(yEnd % TILESZ);
           let tx = int(xEnd % TILESZ);
-          let s= _S.sprite(new PIXI.Texture(B,new PIXI.Rectangle(tx,ty,1,1)));
+          let s= _S.sprite(new PIXI.Texture({source:B, frame:new PIXI.Rectangle(tx,ty,1,1)}));
           s.width = width*PROJRATIO;
           s.height= PROJRATIO;
           s.x=castCol*PROJRATIO;
@@ -686,8 +702,10 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function drawFloor(scene, castArc, castCol, bottomOfWall, width, tint){
-      let B=Mojo.tcached("floortile.png");
+      let B=Mojo.resource("floortile.png");
       for(let row=int(bottomOfWall); row<BASEH; ++row){
         let ratio=_G.playerHeight/(row-PROJPLANE_MIDY);
         let diagDist= int(PLAYERDIST_PROJPLANE*ratio*TABLES[tFISH][castCol]);
@@ -697,13 +715,14 @@
         xEnd += _G.playerX;
         yEnd += _G.playerY;
         // Get the tile intersected by ray:
-        let cellX = _M.ndiv(xEnd , TILESZ),
-          cellY = _M.ndiv(yEnd , TILESZ);
+        let
+          cellX = int(xEnd / TILESZ),
+          cellY = int(yEnd / TILESZ);
         if((cellX<MAPWIDTH) && (cellY<MAPDEPTH) && cellX>=0 && cellY>=0){
             // Find offset of tile and column in texture
           let tx = int(xEnd % TILESZ);
           let ty = int(yEnd % TILESZ);
-          let s= _S.sprite(new PIXI.Texture(B,new PIXI.Rectangle(tx,ty,1,1)));
+          let s= _S.sprite(new PIXI.Texture({source:B,frame:new PIXI.Rectangle(tx,ty,1,1)}));
           s.width = width*PROJRATIO;
           s.height= PROJRATIO;
           s.x=castCol*PROJRATIO;
@@ -714,6 +733,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function drawGoal(scene, castArc, castCol, bottomOfWall, width, tint){
       for(let row=int(bottomOfWall); row<BASEH; ++row){
         let ratio=_G.playerHeight/(row-PROJPLANE_MIDY);
@@ -723,24 +744,26 @@
         // Translate relative to viewer coordinates:
         xEnd += _G.playerX;
         yEnd += _G.playerY;
-        let cellX = _M.ndiv(xEnd , TILESZ),
-          cellY = _M.ndiv(yEnd , TILESZ);
+        let
+          cellX = int(xEnd / TILESZ),
+          cellY = int(yEnd / TILESZ);
         if((cellX<MAPWIDTH) && (cellY<MAPDEPTH) && cellX>=0 && cellY>=0){
           if(FMAP.charAt(cellY*MAPWIDTH+cellX)=="X"){
             let sx=castCol*PROJRATIO;
             let sy=row*PROJRATIO;
-            scene.g.gfx.beginFill(_S.SomeColors.red);
-            scene.g.gfx.drawRect(sx,sy,width*PROJRATIO, PROJRATIO);
-            scene.g.gfx.endFill();
+            scene.g.gfx.rect(sx,sy,width*PROJRATIO, PROJRATIO);
+            scene.g.gfx.fill({color:_S.SomeColors.red});
           }
         }
       }
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function drawWallSlice(scene, x, y, width, height, xOffset, tint){
-      let b= Mojo.tcached("wall64.png");
-      let t= new PIXI.Texture(b,new PIXI.Rectangle(int(xOffset),0,width,b.height));
+      let b= Mojo.resource("wall64.png");
+      let t= new PIXI.Texture({source:b,frame:new PIXI.Rectangle(int(xOffset),0,width,b.height)});
       let s= _S.sprite(t);
       let sx=0,sy=0;
       s.height= height*PROJRATIO;
@@ -751,6 +774,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function HUD(scene,inside=true){
       this.fMinimapWidth=PROJRATIO<2 ? 3: 6;
       this.LEFT=_G.arena.x2;
@@ -760,16 +785,16 @@
         this.LEFT -= (MAPWIDTH*this.fMinimapWidth);
       // draw line from the player position to the position where the ray intersect with wall
       this.drawRayOnOverheadMap=(x,y)=>{
-        scene.g.gfx2.lineStyle(2,_S.color("#f6e73b"));
         scene.g.gfx2.moveTo(this.playerMapX, this.playerMapY);
         scene.g.gfx2.lineTo(this.LEFT+(x*this.fMinimapWidth/TILESZ), _G.arena.y1+ y*this.fMinimapWidth/TILESZ);
+        scene.g.gfx2.stroke({width:2,color:_S.color("#f6e73b")});
       };
       // draw a red line indication the player's direction
       this.drawPlayerPOV=()=>{
-        scene.g.gfx2.lineStyle(2,_S.color("#ff0000"));
         scene.g.gfx2.moveTo( this.playerMapX, this.playerMapY);
         scene.g.gfx2.lineTo(this.playerMapX+ TABLES[tCOS][_G.playerArc]*10,
                             this.playerMapY+ TABLES[tSIN][_G.playerArc]*10);
+        scene.g.gfx2.stroke({width:2,color:_S.color("#ff0000")});
       };
       this.drawMap=(dt)=>{
         for(let css,r=0; r<MAPDEPTH; ++r){
@@ -791,8 +816,7 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run with this config
-  window.addEventListener("load",()=> MojoH5({
-
+  MojoH5Ldr({
     assetFiles: ["tile2.png","tile43.png",
                  "tile42.png","tile41.png",
                  "wall64.png","floortile.png",
@@ -802,8 +826,7 @@
     scaleFit:"x",
     //fps:24,
     start(...args){ scenes(...args) }
-
-  }));
+  });
 
 })(this);
 

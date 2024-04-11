@@ -10,11 +10,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
   "use strict";
+
+  ////////////////////////////////////////////////////////////////////////////
+  const
+    BASE_SHEET="images/base.json",
+    TILE_SHEET="images/tiles.json";
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   function scenes(Mojo){
@@ -37,7 +42,7 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       C_ORANGE=_S.color("#f4d52b"),
       SplashCfg= {
         title:"Connect/4",
@@ -46,7 +51,7 @@
       };
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const doBackDrop=(s)=> s.insert( _S.fillMax(_S.sprite("bg.jpg")));
+    const doBackDrop=(s)=> s.insert( _S.fillMax("bg.jpg"));
     const playClick=()=> Mojo.sound("click.mp3").play();
     const CLICK_DELAY=343;
     const COLS=7, ROWS=6;
@@ -58,6 +63,8 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     class C4Bot extends Bot{
       constructor(uid,v){
         super(uid);
@@ -74,6 +81,8 @@
       }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     class C4Human extends Local{
       constructor(uid,v){
@@ -85,6 +94,8 @@
       }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     class C4Mediator extends Mediator{
       constructor(){
@@ -118,6 +129,8 @@
       }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     _.inject(_G,{
       dropCol(cells,col,turn){
@@ -223,16 +236,20 @@
       }
     });
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     _Z.scene("StartMenu",{
       setup(options){
-        const self=this,
+        const
+          self=this,
           K=Mojo.getScaleFactor(),
           cfg={fontName: UI_FONT, fontSize: 64*K};
-        let s= _S.bmpText("Player 1 (Blue) Starts? ", cfg),
+        let
           gap=_S.bmpText(" / ", cfg),
           b2=_I.mkBtn(_S.bmpText("No", cfg)),
-          b1=_I.mkBtn(_S.bmpText("Yes", cfg));
+          b1=_I.mkBtn(_S.bmpText("Yes", cfg)),
+          s= _S.bmpText("Player 1 (Blue) Starts? ", cfg);
 
         b1.m5.press=
         b2.m5.press=(b)=>{
@@ -247,10 +264,13 @@
       }
     });
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     _Z.scene("MainMenu",{
       setup(){
-        const self=this,
+        const
+          self=this,
           K=Mojo.getScaleFactor();
         //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         this.g.doMenu=function(){
@@ -273,6 +293,8 @@
       }
     });
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     _Z.scene("PlayGame",{
       setup(options){
@@ -299,13 +321,13 @@
               r=g[y];
               t=[];
               for(let z,s,c,x=0;x<r.length;++x){
-                s=_S.spriteFrom("white.png",
-                                //"green.png","orange.png"
-                                "blue.png","red.png");
+                s=_S.spriteFrom(Mojo.ssf(BASE_SHEET,"white.png"),
+                                //Mojo.ssf(TILE_SHEET,"green.png"),Mojo.ssf(TILE_SHEET,"orange.png"),
+                                Mojo.ssf(TILE_SHEET,"blue.png"),Mojo.ssf(TILE_SHEET,"red.png"));
                 c=r[x];
                 z=int(0.9*(c.x2-c.x1));
                 z=_.evenN(z,1);
-                _I.mkBtn( _S.anchorXY(s,0.5));
+                _I.mkBtn( _S.centerAnchor(s));
                 s.g.row=y;
                 s.g.col=x;
                 s.width=z;
@@ -347,7 +369,6 @@
           }
           this.m5.dead=true;
           _.delay(CLICK_DELAY,()=> _Z.modal("EndGame",{
-
             fontSize:64*Mojo.getScaleFactor(),
             replay:{name:"MainMenu"},
             quit:{name:"Splash", cfg:SplashCfg},
@@ -368,10 +389,9 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
-  window.addEventListener("load",()=> MojoH5({
-
+  MojoH5Ldr({
     assetFiles: ["bg.jpg", "base.png","tiles.png",
-                 "images/base.json", "images/tiles.json",
+                 BASE_SHEET,TILE_SHEET,
                  "audioOn.png","audioOff.png",
                  "click.mp3","game_over.mp3","game_win.mp3","x.mp3","o.mp3"],
     arena:{width:1344, height:840},
@@ -379,8 +399,7 @@
     scaleFit:"x",
     scaleToWindow:"max",
     start(...args){ scenes(...args) }
-
-  }));
+  });
 
 })(this);
 

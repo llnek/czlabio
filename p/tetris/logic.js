@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -28,6 +28,7 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     /** check if the piece at this position is ok */
+    ////////////////////////////////////////////////////////////////////////////
     function _test(cells,row,col){
       let y=0;
       for(let px,py,r;y<cells.length;++y){
@@ -49,6 +50,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function _draw(){
       _G.cur.cells.forEach((r,y)=> r.forEach((c,x)=>{
         if(c)
@@ -58,6 +61,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function _lockShape(){
       //sprite position -> tile coordinate
       //since logically row0 is at the bottom
@@ -88,6 +93,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function _checkGrid(){
       function _sink(line){
         for(let s,y=line+1;y<=_G.rows;++y)
@@ -119,6 +126,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function _moveDown(){
       let rc=_test(_G.cur.cells,_G.cur.row-1,_G.cur.col);
       if(rc){
@@ -135,6 +144,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _.inject(_G,{
       /** create the next piece */
       reifyNext(){
@@ -144,7 +155,7 @@
         //add the thickness of the piece
         this.cur.cells.forEach(r=> r.forEach(c=> { if(c) c.visible=true }));
         this.cur.row= this.rows + this.cur.lines[2];
-        this.cur.col= _M.ndiv(this.cols,2);
+        this.cur.col= int(this.cols/2);
         _draw();
         return this.cur;
       },

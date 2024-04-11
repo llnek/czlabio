@@ -10,7 +10,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// Copyright © 2013-2022, Kenneth Leung. All rights reserved.
+// Copyright © 2013-2024, Kenneth Leung. All rights reserved.
 
 ;(function(gscope,UNDEF){
 
@@ -24,6 +24,7 @@
     if(!_M) _M= gscope["io/czlab/mcfud/math"]();
 
     const {is,u:_}= Core;
+    const int=Math.floor;
 
     /**
      * @module mcfud/algo_maze
@@ -99,9 +100,9 @@
           pos= _.randInt(nodes.length);
         if(this.bias){
           if("H" == this.bias){
-            biasFactor = (this.COLS/100)>=1 ? _M.ndiv(this.COLS,100) + 2 : 3
+            biasFactor = (this.COLS/100)>=1 ? int(this.COLS/100) + 2 : 3
           }else if("V" == this.bias){
-            biasFactor = (this.ROWS/100)>=1 ? _M.ndiv(this.ROWS,100) + 2 : 3
+            biasFactor = (this.ROWS/100)>=1 ? int(this.ROWS/100) + 2 : 3
           }
         }
         // Set start node visited.

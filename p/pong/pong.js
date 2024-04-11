@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -31,7 +31,7 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       SplashCfg= {
         title:"PONG",
         clickSnd:"click.mp3",
@@ -39,7 +39,7 @@
       };
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const doBackDrop=(s)=> s.insert( _S.fillMax(_S.sprite("bg.jpg")));
+    const doBackDrop=(s)=> s.insert( _S.fillMax("bg.jpg"));
     const playClick=()=> Mojo.sound("click.mp3").play();
     const CLICK_DELAY=343;
     const MAX_SCORE=2;
@@ -53,6 +53,8 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame",{
       _initPlayer(){
         let paddle = _G.player = _S.sprite("paddle.png");
@@ -81,7 +83,8 @@
         this.insert(paddle);
       },
       setup(){
-        const self=this,
+        const
+          self=this,
           K=Mojo.getScaleFactor(),
           ball= _G.ball = _S.sprite("ball.png"),
           bounce=_G.bounce= Mojo.sound("pop.mp3"),
@@ -89,13 +92,14 @@
         _.inject(this.g,{
           initBg(){
             self.insert(_S.drawBody(g=>{
-              g.lineStyle(4*K,0xffffff);
-              g.beginFill(0);
-              g.drawRect(0,0,Mojo.width-4*K,Mojo.height-4*K);
+              g.rect(0,0,Mojo.width-4*K,Mojo.height-4*K);
+              g.fill({color:0});
+              g.rect(0,0,Mojo.width-4*K,Mojo.height-4*K);
+              g.stroke({width:4*K,color:0xffffff});
               g.moveTo(Mojo.width/2,0);
               g.lineTo(Mojo.width/2,Mojo.height);
+              g.stroke({width:4*K,color:0xffffff});
               //g.drawCircle(Mojo.width/2,Mojo.height/2,32*K);
-              g.endFill();
             }));
           }
         });
@@ -119,13 +123,11 @@
             _V.set(ball.m5.vel, 0,0);
             if(n>MAX_SCORE){
               _.delay(343,()=> _Z.modal("EndGame",{
-
                 fontSize:64*Mojo.getScaleFactor(),
                 replay:{name:"PlayGame"},
                 quit:{name:"Splash", cfg:SplashCfg},
                 msg:"",
                 winner:0
-
               }));
             }else{
               _V.set(ball.m5.vel, _.randSign()*12*K, _.randSign()*8*K);
@@ -160,15 +162,18 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("HUD",{
       setup(){
-        let self=this,
+        let
+          self=this,
           K=Mojo.getScaleFactor(),
           cfg={fontName:UI_FONT,fontSize:36*K},
           x=_S.bmpText("0",cfg),
           o=_S.bmpText("0",cfg),
           d=_S.rect(2,2,0,0,0),
-          w2=_M.ndiv(Mojo.width,2);
+          w2=int(Mojo.width/2);
         _G.scores=[0,0,0];
         _G.msgs[_G.X]=x;
         _G.msgs[_G.O]=o;
@@ -183,7 +188,7 @@
         let ctext=_S.bmpText("0",UI_FONT,64*K);
         ctext.tint=_S.SomeColors.orange;
         _S.hide(ctext);
-        _S.anchorXY(ctext,0.5);
+        _S.centerAnchor(ctext);
         _V.set(ctext,Mojo.width/2,Mojo.height/2);
         this.insert(ctext);
         _G.cntDown=()=>{
@@ -218,16 +223,14 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
-  window.addEventListener("load",()=> MojoH5({
-
+  MojoH5Ldr({
     assetFiles: ["bg.jpg","ball.png", "paddle.png",
                  "click.mp3","game_over.mp3","game_win.mp3","pop.mp3"],
     arena: {width: 1344, height: 840},
     scaleToWindow: "max",
     scaleFit:"x",
     start(...args){ scenes(...args) }
-
-  }));
+  });
 
 })(this);
 

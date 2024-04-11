@@ -10,15 +10,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
   "use strict";
 
+  ////////////////////////////////////////////////////////////////////////////
+  const SHEET="images/tiles.json";
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   function scenes(Mojo){
-
     const {Sprites:_S,
            Scenes:_Z,
            FX:_F,
@@ -49,7 +50,7 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       C_BG=_S.SomeColors.black,
       SplashCfg= {
         title:"Breakout",
@@ -60,7 +61,6 @@
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const bounce=Mojo.sound("coin.mp3");
     const DELAY=343;
-
     const int=Math.floor;
     const E_PADDLE=1;
     const E_BLOCK=2;
@@ -95,7 +95,8 @@
         });
       },
       setup(){
-        const self=this,
+        const
+          self=this,
           K=Mojo.getScaleFactor();
         //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         _.inject(this.g,{
@@ -128,7 +129,8 @@
             return this;
           },
           initLevel(level){
-            let offsetY=-1,
+            let
+              offsetY=-1,
               data=_ASSETS[`level${level}`];
             for(let g,r,y=0;y<data.length;++y){
               g=_G.grid[y];
@@ -137,7 +139,7 @@
               for(let s,p,x=0;x<r.length;++x){
                 if(!r[x]){continue}
                 p=g[x];
-                s=_S.sprite(_.randItem(COLORS));
+                s=_S.spriteFrame(SHEET,_.randItem(COLORS));
                 s.m5.type=E_BLOCK;
                 s.m5.static=true;
                 s.height=int(p.y2-p.y1);
@@ -150,7 +152,7 @@
                 self.insert(s,true);
               }
             }
-            let ball=_S.sprite("ball.png",true);
+            let ball=_S.spriteFrame(SHEET,"ball.png",true);
             ball.m5.cmask=E_BLOCK|E_PADDLE;
             ball.m5.type=E_BALL;
             _S.scaleXY(ball,K,K);
@@ -161,13 +163,13 @@
             };
             self.insert(ball,true);
             let bw=ball.width;
-            let paddle=_S.sprite("paddle.png");
+            let paddle=_S.spriteFrame(SHEET,"paddle.png");
             paddle.m5.static=true;
-            _S.anchorXY(paddle,0.5);
+            _S.centerAnchor(paddle);
             paddle.m5.type=E_PADDLE;
             _S.scaleXY(paddle,K,K);
             paddle.width=5*bw;
-            _V.set(paddle,_G.arena.x1+_M.ndiv(_G.arena.width,2),
+            _V.set(paddle,_G.arena.x1+int(_G.arena.width/2),
                           _G.arena.y2 - 1.5*paddle.height);
             let pY=paddle.y;
             paddle.m5.speed=10;
@@ -211,7 +213,8 @@
           xOffset: -10*K, yOffset:0
         });
         this.g.cntDownMsg=_S.bmpText("1",UI_FONT,96*K);
-        _S.anchorXY(this.g.cntDownMsg,0.5);
+        _S.centerAnchor(this.g.cntDownMsg);
+        _S.opacity(_S.tint(this.g.cntDownMsg,"yellow"),0.8);
         _V.set(this.g.cntDownMsg,Mojo.width/2,Mojo.height/2);
         this.insert(this.g.cntDownMsg);
         this.doCntDown();
@@ -226,13 +229,11 @@
           }
           this.m5.dead=true;
           _.delay(DELAY,()=> _Z.modal("EndGame",{
-
             fontSize:64*Mojo.getScaleFactor(),
             replay:{name:"PlayGame"},
             quit:{name:"Splash", cfg:SplashCfg},
             msg:"You Lose!",
             winner:0
-
           }));
         }
         this.searchSGrid(_G.ball).forEach(o=>{
@@ -261,36 +262,29 @@
         if(_G.blockCount==0){
           _S.die(this);
           _.delay(DELAY,()=> _Z.modal("EndGame",{
-
             fontSize:64*Mojo.getScaleFactor(),
             replay: {name:"PlayGame"},
             quit: {name: "Splash",cfg:SplashCfg},
             msg:"You Win!",
             winner:1
-
           }));
         }
       }
     });
-
-
     _Z.run("Splash", SplashCfg);
   }
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
-  window.addEventListener("load",()=> MojoH5({
-
-    assetFiles: ["star.png","tiles.png","images/tiles.json",
+  MojoH5Ldr({
+    assetFiles: ["star.png","tiles.png",SHEET,
                  "audioOn.png","audioOff.png",
                  "coin.mp3","click.mp3","game_over.mp3","game_win.mp3"],
-
     arena: {width: 1344, height: 840},
     scaleToWindow:"max",
     scaleFit:"x",
     start(...args){ scenes(...args) }
-
-  }));
+  });
 
 })(this);
 

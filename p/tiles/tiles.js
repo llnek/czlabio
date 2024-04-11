@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -31,20 +31,21 @@
            ute:_, is}=Mojo;
 
     const
-      UI_FONT= "Doki Lowercase",
+      UI_FONT= Mojo.DOKI_LOWER,
       SplashCfg= {
         title:"8-Puzzles",
         clickSnd:"click.mp3",
         action: {name:"PlayGame"}
       };
 
-
-    const DIM=3,
+    ////////////////////////////////////////////////////////////////////////////
+    const
+      DIM=3,
       TILES=DIM*DIM,
       CLICK_DELAY=343;
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const doBackDrop=(scene)=> scene.insert(_S.fillMax(_S.sprite("bg.jpg")));
+    const doBackDrop=(scene)=> scene.insert(_S.fillMax("bg.jpg"));
     const playClick=()=> Mojo.sound("click.mp3").play();
     const playSlide=()=> Mojo.sound("slide.mp3").play();
     const zix=(p)=> p.indexOf(0);
@@ -52,7 +53,7 @@
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //deal with [row,col]
     function validMoves(p){
-      let i=zix(p), x= i % DIM, y= _M.ndiv(i,DIM);
+      let i=zix(p), x= i % DIM, y= int(i/DIM);
       let top= y-1, down=y+1, left=x-1, right=x+1;
       let v=[[top,x],[down,x]];
       let h=[[y,left],[y,right]];
@@ -70,6 +71,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function makeMove(p,move){
       let z=zix(p),
           m= move[0]*DIM + move[1], v= p[m];
@@ -79,6 +82,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function dbgShow(p){
       for(let s,y=0;y<DIM;++y){
         s="";
@@ -92,6 +97,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function genPuzzle(dim){
       let g,p=_.fill(dim*dim,(i)=> i+1)
       //set the blank piece
@@ -107,21 +114,24 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame",{
       setup(){
-        const self=this,
+        const
+          self=this,
           K=Mojo.getScaleFactor(),
           [goal,puz]= genPuzzle(DIM);
         _.inject(this.g,{
           initLevel(){
             let out={},
               grid= _S.gridSQ(DIM, 0.95,out),
-              v,n,t,os={fontName:UI_FONT, fontSize: 72*K};
+              v,n,t,os={fontName:UI_FONT, fontSize: 72*K, fill:_S.color("black")};
             grid.forEach((row,y)=> row.forEach((c,x)=>{
               let R=0.98,s=_S.sprite("tile.png");
               s.tint=_S.color("#bb3b58");
               _S.sizeXY(s, R*(c.x2-c.x1), R*(c.y2-c.y1));
-              _S.anchorXY(_V.set(s, _M.ndiv(c.x1+c.x2,2),_M.ndiv(c.y1+c.y2,2)),0.5);
+              _S.centerAnchor(_V.set(s, _M.ndiv(c.x1+c.x2,2),_M.ndiv(c.y1+c.y2,2)));
               n=y*DIM+x;
               v=puz[n];
               s.g.value=v;
@@ -130,7 +140,7 @@
               if(v==0){
                 s.alpha=0.3;
               }else{
-                t=_S.anchorXY(_S.bmpText(`${v}`,os),0.5);
+                t=_S.centerAnchor(_S.bmpText(`${v}`,os));
                 s.addChild(t);
                 s.m5.press=(b)=> this.onClick(b);
               }
@@ -190,7 +200,6 @@
           this.m5.dead=true;
           Mojo.CON.log("You Win!");
           _Z.modal("EndGame",{
-
             fontSize:64*Mojo.getScaleFactor(),
             replay:{name:"PlayGame"},
             quit:{name:"Splash", cfg:SplashCfg},
@@ -207,16 +216,14 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
-  window.addEventListener("load", ()=>MojoH5({
-
+  MojoH5Ldr({
     assetFiles: ["tile.png","bg.jpg","audioOff.png","audioOn.png",
                  "click.mp3","slide.mp3","game_over.mp3","game_win.mp3"],
     arena: {width:768,height:768},
     scaleToWindow: "max",
     scaleFit: "y",
     start(...args){ scenes(...args) }
-
-  }));
+  });
 
 })(this);
 

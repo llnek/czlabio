@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -30,7 +30,7 @@
 
 		//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
 		  SplashCfg= {
 				title:"Jittery Blocks",
 				action: {name:"PlayGame"},
@@ -80,8 +80,8 @@
 				  b,K=Mojo.getScaleFactor();
 				if(!cs){
           b=node.boundingBox();
-					g.lineStyle(2*K, _S.SomeColors.red,0.2);
-					g.drawRect(b.x1, b.y1, b.x2-b.x1,b.y2-b.y1);
+					g.rect(b.x1, b.y1, b.x2-b.x1,b.y2-b.y1);
+					g.stroke({width:2*K, color:_S.SomeColors.red, alpha:0.2});
 				}else{
           cs.forEach(c=> this._drawTree(c))
 				}
@@ -91,12 +91,12 @@
 				  g=this.g.gfx,
 					K=Mojo.getScaleFactor();
         _G.items.forEach(o=>{
+					g.rect(o.x, o.y, o.width, o.height);
 					if(o.g.checked) {
-						g.lineStyle(1*K,_S.color("rgb(48,255,48)"),0.5);
+						g.stroke({width:1*K,color:_S.color("rgb(48,255,48)"),alpha:0.5});
 					} else {
-						g.lineStyle(1*K,_S.color("yellow"),0.5);
+						g.stroke({width:1*K,color:_S.color("yellow"),alpha:0.5});
 					}
-					g.drawRect(o.x, o.y, o.width, o.height);
         });
 			},
       postUpdate(dt){
@@ -141,10 +141,10 @@
       },
       _collide(r1, r2){
 				let
-				  r1w = _M.ndiv(r1.width,2),
-					r2w = _M.ndiv(r2.width,2),
-					r1h = _M.ndiv(r1.height,2),
-					r2h = _M.ndiv(r2.height,2),
+				  r1w = int(r1.width/2),
+					r2w = int(r2.width/2),
+					r1h = int(r1.height/2),
+					r2h = int(r2.height/2),
 				  diffX = (r1.x + r1w) - (r2.x + r2w),
 				  diffY = (r1.y + r1h) - (r2.y + r2h);
 				if(Math.abs(diffX) < r1w + r2w &&
@@ -185,17 +185,14 @@
 
 	//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
-	window.addEventListener("load",()=> MojoH5({
-
+	MojoH5Ldr({
 		assetFiles: ["click.mp3"],
-    xxxarena:{width:1680, height:1050},
 		arena: {width: 1344, height: 840},
     scaleToWindow:"max",
 		scaleFit:"x",
     items:600,
     start(...args){ scenes(...args) }
-
-	}));
+	});
 
 })(this);
 

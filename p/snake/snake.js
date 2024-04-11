@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -32,7 +32,7 @@
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //set up some globals
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       C_ORANGE=_S.color("#f4d52b"),
       SplashCfg= {
         footerMsgSize:10*Mojo.getScaleFactor(),
@@ -45,7 +45,7 @@
 
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const doBackDrop=(s)=> s.insert(_S.fillMax(_S.sprite("bg.jpg")));
+    const doBackDrop=(s)=> s.insert(_S.fillMax("bg.jpg"));
     const playClick=()=> Mojo.sound("click.mp3").play();
     const CLICK_DELAY=343;
 
@@ -54,6 +54,8 @@
     window["io.czlab.snake.models"](Mojo);
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame",{
       _initGrid(){
         let out={};
@@ -67,14 +69,15 @@
         return g;
       },
       setup(){
-        let self=this,
+        let
+          self=this,
           K=Mojo.getScaleFactor();
         doBackDrop(this);
         _G.timerid=-1;
         _G.score=0;
         _G.item=UNDEF;
         this._initGrid();
-        _G.Snake(this, _M.ndiv(_G.grid[0].length,2), _M.ndiv(_G.grid.length,2));
+        _G.Snake(this, int(_G.grid[0].length/2), int(_G.grid.length/2));
         _G.Item(this);
         this.g.score=_S.bmpText("0",UI_FONT,24*K);
         this.g.score.tint=C_ORANGE;
@@ -112,7 +115,6 @@
         }, Mojo.u.frameDelay);
       },
       recalc(){
-
         if(_I.keyDown(_I.RIGHT)){
           (_G.snakeDir != Mojo.LEFT) && _G.snakeMoveRight(this)
         }else if(_I.keyDown(_I.LEFT)){
@@ -124,7 +126,6 @@
         }else{
           _G[_G.snakeMove[_G.snakeDir]](this);
         }
-
         if(_G.snakeEatSelf()){
           Mojo.sound("eat.mp3").play();
           _G.snake[0].m5.dead=true;
@@ -135,7 +136,6 @@
           ++_G.score;
           this.future(()=> _G.Item(this) ,Mojo.u.itemInterval);
         }
-
         if(_G.snake[0].m5.dead){
           if(!_G.snakeBite)
             Mojo.sound("boing1.mp3").play();
@@ -143,13 +143,11 @@
           _G.timerid=UNDEF;
           this.m5.dead=true;
           _.delay(CLICK_DELAY,()=> _Z.modal("EndGame",{
-
             fontSize:32*Mojo.getScaleFactor(),
             replay:{name:"PlayGame"},
             quit:{name:"Splash", cfg:SplashCfg},
             msg:"You Lose!",
             winner:0
-
           }));
         }else{
           this.doMove();
@@ -165,8 +163,7 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
-  window.addEventListener("load", ()=> MojoH5({
-
+  MojoH5Ldr({
     assetFiles:["bg.jpg","head.png","snake.png","tail.png","apple_00.png",
                 "boing1.mp3","apple.mp3",
                 "audioOn.png","audioOff.png",
@@ -178,14 +175,12 @@
     //bgColor:0x239920,
     //bgColor:0x99CC46,
     //bgColor:0xAAD751,
-    frameDelay:500,
-    itemInterval:6000,
-    growthInterval:5000,
+    frameDelay:150,//500,
+    itemInterval:3500,//6000,
+    growthInterval: 3000,//5000,
     snakeLength:5,
     start(...args){ scenes(...args) }
-
-  }));
-
+  });
 
 })(this);
 

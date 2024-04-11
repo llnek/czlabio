@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -43,7 +43,7 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       SplashCfg= {
         title:"NEAT/Smart Bots",
         action: {name:"PlayGame"},
@@ -52,11 +52,11 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-      NUM_INPUTS=10+1,//5,
+      NUM_INPUTS=10+1,
       NUM_OUTPUTS=2,
       NUM_ELITES=10,
       NumSecs= 25,
-      NumTicks=1500,
+      NumTicks=2500,
       HALF_PI = Math.PI/2,
       QUAD_PI = Math.PI/4,
       PI2  = Math.PI*2,
@@ -65,7 +65,8 @@
       MaxTurnRate = 0.2;
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    //sensors to detect obstacles
+    /*sensors to detect obstacles */
+    ////////////////////////////////////////////////////////////////////////////
     function mkSensors(s){
       let c=[s.x,s.y];
       return [s.rotation - HALF_PI,
@@ -77,6 +78,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /*make sure we don't hit anything just after respawn */
+    ////////////////////////////////////////////////////////////////////////////
     function respawn(s){
       let ok;
       while(1){
@@ -84,36 +87,44 @@
         ok=true;
         for(let o,i=0;i<_G.obstacles.length;++i){
           o=_G.obstacles[i];
-          if(_S.hitTest(o,s)){
-            ok=false;
-            break;
-          }
+          if(_S.hitTest(o,s)){ ok=false; break; }
         }
-        if(ok)
-          break;
+        if(ok) break;
       }
       return s;
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function randPos(s){
-      let g,n=_.randInt2(0,3);
-      n=10;
-      switch(n){
+      let g;
+      switch(_.randInt2(0,3)){
         case 0: g=_G.grid[6][11];break;
         case 1: g=_G.grid[7][11];break;
         case 2: g=_G.grid[14][7];break;
         default: g=_G.grid[15][7];break;
       }
-      return _V.set(s,_M.ndiv(g.x1+g.x2,2), _M.ndiv(g.y1+g.y2,2));
+      _V.set(s,_M.ndiv(g.x1+g.x2,2), _M.ndiv(g.y1+g.y2,2));
+      return s;
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
+    function syncHeading(s){
+      _V.set(s.m5.heading,Math.cos(s.rotation), Math.sin(s.rotation));
+      return s;
+    }
+
+    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function mkBot(brain, scene){
-      let s= _S.spriteFrom("tank.png");
-      s.tint=_S.SomeColors.grey;
-      _S.anchorXY(s,0.5);
+      const s= _S.tint(_S.sprite("tank.png"),_S.SomeColors.grey);
       _S.sizeXY(s,_.evenN(_G.tileW*0.9),_.evenN(_G.tileH*0.9));
+      _S.centerAnchor(s);
+      s.m5.heading={x:0,y:0};
       let
         h2=s.height/2,
         w2=s.width/2,
@@ -122,8 +133,7 @@
       s.g.diag= d * 1.2;
       s.g.diagRatio= d/s.g.diag;
       randPos(s);
-      s.m5.heading= {x:Math.cos(s.rotation),
-                     y: Math.sin(s.rotation)};
+      syncHeading(s);
       _.inject(s.g,{
         collided:false,
         W2:w2,
@@ -138,8 +148,7 @@
         reset(){
           this.fitness = NumFIT(0);
           s.angle= 0;
-          randPos(s);
-          _V.set(s.m5.heading,Math.cos(s.rotation), Math.sin(s.rotation));
+          syncHeading(randPos(s));
           this.mmap.reset();
           this.spinBonus = 0;
           this.collisionBonus = 0;
@@ -153,16 +162,12 @@
               o=_G.obstacles[j];
               p=Geo.bodyWrap(_S.toPolygon(o),o.x,o.y);
               res= Geo.hitTestLinePolygon(w[0],w[1],p);
-              if(res[0]){
-                break;
-              }
+              if(res[0]){ break; }
               res=UNDEF;
             }
             if(res && res[0]){
               _.assert(0<= res[1]&&res[1]<=1,"bad sensor result");
-              if(res[1]< s.g.diagRatio){
-                this.collided=true;
-              }
+              if(res[1]< s.g.diagRatio){ this.collided=true; }
               //console.log("c========"+ res[1]);
               input.push(res[1]);
             }else{
@@ -199,7 +204,7 @@
           // clamp rotation
           rotForce = rotForce < -MaxTurnRate ? -MaxTurnRate : (rotForce > MaxTurnRate?MaxTurnRate : rotForce);
           s.rotation += rotForce;
-          _V.set(s.m5.heading, Math.cos(s.rotation), Math.sin(s.rotation));
+          syncHeading(s);
           if(!this.collided){
             s.m5.speed = this.lTrack + this.rTrack;
             _V.add$(s, _V.mul(s.m5.heading, s.m5.speed));
@@ -221,11 +226,11 @@
 
           //debug show sensors
           if(0){
-            scene.g.dbg.lineStyle(1, _S.color("red"));
             mkSensors(s).forEach(p=>{
               scene.g.dbg.moveTo(p[0][0], p[0][1]);
               scene.g.dbg.lineTo(p[1][0], p[1][1]);
-              scene.g.dbg.drawCircle(p[1][0], p[1][1], 2);
+              scene.g.dbg.circle(p[1][0], p[1][1], 2);
+              scene.g.dbg.stroke({width:1, color:_S.color("red")});
             });
             //console.log("colll==="+this.collided);
           }
@@ -239,10 +244,14 @@
     let ticks;
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function randX(){ return _.randInt2(_G.arena.x1,_G.arena.x2) }
     function randY(){ return _.randInt2(_G.arena.y1,_G.arena.y2) }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function MapMemory(){
       let
         grid= JSON.parse(JSON.stringify(_G.grid)),
@@ -305,38 +314,32 @@
               th=g.y2-g.y1,
               color="#737350";
             //square
-            b= _S.rect(5*tw,5*th,color);
-            _S.uuid(b,"o-square");
+            b= _S.uuid(_S.rect(5*tw,5*th,color) ,"o-square");
             g=grid[ROWS-6-3][COLS-6-3];
             _V.set(b,g.x1,g.y1);
             out.push(self.insert(b));
             // 2 rects
-            b= _S.rect(4*tw,8*th,color);
-            _S.uuid(b,"o-vrect");
+            b= _S.uuid(_S.rect(4*tw,8*th,color),"o-vrect");
             g=grid[2][3];
             _V.set(b,g.x1,g.y1);
             out.push(self.insert(b));
             //
-            b= _S.rect(6*tw,3*th,color);
-            _S.uuid(b,"o-hrect");
+            b= _S.uuid(_S.rect(6*tw,3*th,color) ,"o-hrect");
             g=grid[2][3];
             _V.set(b,g.x1,g.y1);
             out.push(self.insert(b));
             //iso-tri
-            b= _S.triangle(5*tw,4*th,0.5,color,color);
-            _S.uuid(b,"isotrig");
+            b= _S.uuid( _S.triangle(5*tw,4*th,0.5,color,color) ,"isotrig");
             g=grid[3][COLS-7];
             _V.set(b,g.x1,g.y1);
             out.push(self.insert(b));
             //2 tri
-            b= _S.triangle(5*tw,2*th,0,color,color);
-            _S.uuid(b, "rangtri-up");
+            b= _S.uuid( _S.triangle(5*tw,2*th,0,color,color) , "rangtri-up");
             g=grid[ROWS-6][0];
             _V.set(b,g.x1,g.y1);
             out.push(self.insert(b));
             //flipped
-            b= _S.triangle(5*tw,-2*th,0,color,color);
-            _S.uuid(b, "rangtri-down");
+            b= _S.uuid( _S.triangle(5*tw,-2*th,0,color,color) , "rangtri-down");
             g=grid[ROWS-4][0];
             _V.set(b,g.x1,g.y1);
             out.push(self.insert(b));
@@ -377,8 +380,7 @@
               ticks = 0;
               //best are up front
               for(let i=0;i<NUM_ELITES;++i){
-                vecBots[i].tint=_S.BtnColors.magenta;
-              }
+                vecBots[i].tint=_S.BtnColors.magenta; }
             }
             return self.insert(_S.bboxFrame(out));
           },
@@ -395,7 +397,7 @@
               let s=_S.bmpText("0",UI_FONT,24*K);
               this.genMsg=self.insert(s);
               s=_S.bmpText("0","unscii",24*K);
-              _S.anchorXY(s,0.5);
+              _S.centerAnchor(s);
               _S.pinAbove(_G.arena,s,s.height*1.5);
               return this.timeMsg=self.insert(s);
             }
@@ -423,15 +425,13 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
-  window.addEventListener("load",()=> MojoH5({
-
+  MojoH5Ldr({
     assetFiles: ["tank.png","menu.png","click.mp3"],
     arena: {width: 1344, height: 840},
     scaleToWindow:"max",
     scaleFit:"x",
     start(...args){ scenes(...args) }
-
-  }));
+  });
 
 })(this);
 

@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -27,18 +27,21 @@
            v2:_V,
            ute:_,is}=Mojo;
 
+    ////////////////////////////////////////////////////////////////////////////
     const AlgoS= window["io/czlab/mcfud/algo/search"]();
     const AlgoM= window["io/czlab/mcfud/algo/maze"]();
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       SplashCfg= {
         title:"A* Maze",
         clickSnd:"click.mp3",
         action: {name:"PlayGame"}
       };
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     _Z.scene("PlayGame",{
       setup(){
@@ -64,7 +67,7 @@
               });
             }
             _V.set(s,Mojo.width/2,Mojo.height/2);
-            self.insert(_S.anchorXY(s,0.5));
+            self.insert(_S.centerAnchor(s));
             _I.on(["single.tap"],cb);
           },
           showMaze(m){
@@ -72,7 +75,7 @@
               {start,end}= m.getIO(),
               h=mmap.length,
               tb,tw,g,gfx,out={}, w=mmap[0].length;
-            g=_S.gridSQ(w,0.8,out);
+            g=_S.gridSQ(w,0.68,out);
             gfx=_S.drawGridLines(0,0,g,1,"grey");
             self.insert(gfx);
             self.insert(_S.bboxFrame(out));
@@ -88,7 +91,7 @@
                 tw= _S.rectTexture(col.x2-col.x1,col.y2-col.y1, _S.color("white"));
                 tb= _S.rectTexture(col.x2-col.x1,col.y2-col.y1, _S.color("black"));
               }
-              let s= _S.rectEx(c=="white"?tw:tb);
+              let s= _S.sprite(c=="white"?tw:tb);
               s.x=col.x1;
               s.y=col.y1;
               self.insert(s);
@@ -105,11 +108,16 @@
             _.delay(100,()=> self.g.postShowMaze());
           },
           postShowMaze(){
-            let s= _S.bmpText("Solve",UI_FONT, 36*K);
+            let s= _S.bmpText("Solve",UI_FONT, 24*K);
             _S.pinAbove(_G.arena,s, s.height);
             s.m5.press=()=>{
-              self.g.solveMaze()
-              _S.remove(s);
+              if(s.text=="Solve"){
+                self.g.solveMaze()
+                s.text= "Regen";
+              }else{
+                _S.remove(s);
+                Mojo.Scenes.runEx("PlayGame");
+              }
             };
             self.insert(_I.mkBtn(s));
           },
@@ -134,8 +142,9 @@
             let p=new AlgoS.AStarGrid(g).pathTo([E.x,E.y],[X.x,X.y],ctx);
             //console.log(p.length);
             //console.log(JSON.stringify(p))
+            let color=_.randItem(_.keys(_S.BtnColors));
             p.forEach(c=>{
-              _G.grid[c[1]][c[0]].sprite.tint=_S.BtnColors.green;
+              _G.grid[c[1]][c[0]].sprite.tint=_S.BtnColors[color];
             });
           }
         });
@@ -150,16 +159,12 @@
   }
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  window.addEventListener("load",()=>{
-    MojoH5({
+  MojoH5Ldr({
       assetFiles: ["click.mp3"],
       arena: {width:1344,height:840},
       scaleToWindow:"max",
       scaleFit:"x",
-      start(...args){ scenes(...args) }
-    });
-  });
-
+      start(...args){ scenes(...args) } });
 
 })(this);
 

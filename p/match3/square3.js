@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -33,6 +33,7 @@
            math:_M,
            ute:_,is} = Mojo;
 
+    ////////////////////////////////////////////////////////////////////////////
     //static data
     const IMAGEFILES=(function(){
       let s= _S.sprite("candy.png");
@@ -42,7 +43,7 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       SplashCfg= {
         title:"Match3!",
         clickSnd:"click.mp3",
@@ -50,17 +51,20 @@
       };
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const doBackDrop=(s,a=1)=> s.insert(_S.opacity(_S.fillMax(_S.sprite("bg.png")),a));
+    const doBackDrop=(s,a=1)=> s.insert(_S.opacity(_S.fillMax("bg.png"),a));
     const playClick=()=> Mojo.sound("click.mp3").play();
     const CLICK_DELAY=343;
     const TILES_X=6;
     const TILES_Y=8;
 
+    ////////////////////////////////////////////////////////////////////////////
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     _.inject(_G,{
       icons: IMAGEFILES
     });
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     _Z.scene("HUD",{
       setup(){
@@ -71,10 +75,13 @@
       }
     });
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     _Z.scene("PlayGame",{
       setup(){
-        const self=this,
+        const
+          self=this,
           K=Mojo.getScaleFactor(),
           grid= _S.gridXY([TILES_X,TILES_Y]);
         //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -126,7 +133,7 @@
             let s=_S.sprite(_G.icons[color]);
             s.iconColor=color;
             _S.sizeXY(s,_G.tileW, _G.tileH);
-            return self.insert(_S.anchorXY(s,0.5));
+            return self.insert(_S.centerAnchor(s));
           },
           onClick(){
             if(!_G.selecting){return}else{_G.dragging=true}
@@ -259,13 +266,11 @@
                 if(!_G.match3.hasAvailableMoves()){
                   self.m5.dead=true;
                   _.delay(100,()=> _Z.modal("EndGame",{
-
                     fontSize:64*Mojo.getScaleFactor(),
                     replay:{name:"PlayGame"},
                     quit:{name:"Splash", cfg:SplashCfg},
                     msg:"",
                     winner:0
-
                   }));
                 }else{
                   _G.selecting = true;
@@ -292,16 +297,14 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
-  window.addEventListener("load", ()=> MojoH5({
-
+  MojoH5Ldr({
     assetFiles: ["bg.png","candy.png","click.mp3",
                  "chimes.mp3","game_over.mp3","game_win.mp3"],
     arena: {width:480,height:800},
     scaleToWindow: "max",
     scaleFit:"y",
     start(...args){ scenes(...args) }
-
-  }));
+  });
 
 })(this);
 

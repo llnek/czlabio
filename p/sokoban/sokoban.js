@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -32,7 +32,7 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-      UI_FONT= "Doki Lowercase",
+      UI_FONT= Mojo.DOKI_LOWER,
       SplashCfg= {
         title:"Sokoban",
         action: {name:"PlayGame"},
@@ -41,11 +41,13 @@
 
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const doBackDrop=(s)=> s.insert(_S.fillMax(_S.sprite("bg.jpg")));
+    const doBackDrop=(s)=> s.insert(_S.fillMax("bg.jpg"));
     const playClick=()=> Mojo.sound("click.mp3").play();
     const CLICK_DELAY=343;
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function doCheckPt(){
       let m={};
       for(let o,i=0;i<_G.items.length;++i){
@@ -59,21 +61,29 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function getItem(y,x){
       for(let o,i=0;i<_G.items.length;++i){
         o=_G.items[i]; if(o.g.row==y && o.g.col==x) return o; }
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function findCrate(y,x){
       for(let o,i=0;i<_G.items.length;++i){
         o=_G.items[i]; if(o.g.row==y && o.g.col==x && o.g.value==3) return o; }
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     const emptySlot=(y,x)=> _G.level[y][x]==0 || _G.level[y][x]==2;
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function holesFilled(){
       let goals=0,found=0;
       for(let o,i=0;i<_G.items.length;++i){
@@ -86,8 +96,9 @@
       return goals>0 && goals==found;
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    /*floor,wall,hole,box,player */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    //floor,wall,hole,box,player
     function testMove(y,x,dirY,dirX){
       let hit= findCrate(y,x);
       if(hit){
@@ -104,6 +115,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function doMove(y,x,dirY,dirX){
       //update history
       doCheckPt();
@@ -135,6 +148,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function undoMove(){
       if(!_G.history.length>0){return}
       if(_G.tweenCnt!=0){return}
@@ -151,6 +166,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _.inject(_G,{
       swipeRight(){
         if(_G.tweenCnt!=0){return}
@@ -195,6 +212,8 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("EndGame",{
       setup(options){
         let snd="game_over.mp3",
@@ -215,6 +234,8 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     const GLYPH=" #.ox";//floor,wall,hole,box,player
     const MAP1= "########,"+
                 "#####x.#,"+
@@ -235,6 +256,9 @@
                 "#   .  #,"+
                 "########";
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function mapToLevel(m){
       let row,grid=[];
       m.split(",").filter(x=>x.length).forEach(s=>{
@@ -253,9 +277,12 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame",{
       setup(){
-        const self=this,
+        const
+          self=this,
           K=Mojo.getScaleFactor();
         _.inject(this.g,{
           initLevel(){
@@ -344,41 +371,42 @@
         if(holesFilled()){
           _S.die(this);
           _.delay(CLICK_DELAY,()=> _Z.modal("EndGame",{
-
             fontSize:64*Mojo.getScaleFactor(),
             replay:{name:"PlayGame"},
             quit:{name:"Splash", cfg:SplashCfg},
             msg:"You Win!",
             winner:1
-
           }));
         }
       }
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("HUD",{
       setup(){
-        let K=Mojo.getScaleFactor(),
+        let
+          K=Mojo.getScaleFactor(),
           g=_G.grid[_G.grid.length-1][_G.grid[0].length-1],
           c,p,s,pad=5*K;
         for(let i=0;i<4;++i){
-          s= _I.mkBtn(_S.anchorXY(_S.sprite("button.png"),0.5));
+          s= _I.mkBtn(_S.centerAnchor(_S.sprite("button.png")));
           _S.sizeXY(s,_G.tileW,_G.tileH);
           if(i==3){
-            c=_S.anchorXY(_S.sprite("arrowLeft.png"),0.5);
+            c=_S.centerAnchor(_S.sprite("arrowLeft.png"));
             _S.uuid(s,"#<-");
           }
           if(i==2){
-            c=_S.anchorXY(_S.sprite("arrowRight.png"),0.5);
+            c=_S.centerAnchor(_S.sprite("arrowRight.png"));
             _S.uuid(s,"#->");
           }
           if(i==1){
-            c=_S.anchorXY(_S.sprite("arrowUp.png"),0.5);
+            c=_S.centerAnchor(_S.sprite("arrowUp.png"));
             _S.uuid(s,"#^^");
           }
           if(i==0){
-            c=_S.anchorXY(_S.sprite("arrowDown.png"),0.5);
+            c=_S.centerAnchor(_S.sprite("arrowDown.png"));
             _S.uuid(s,"#vv");
           }
           c.height= s.height;
@@ -402,10 +430,10 @@
         }
         //////
         g=_G.grid[0][_G.grid[0].length-1];
-        s= _I.mkBtn(_S.anchorXY(_S.sprite("button.png"),0.5));
+        s= _I.mkBtn(_S.centerAnchor(_S.sprite("button.png")));
         _S.sizeXY(s,_G.tileW,_G.tileH);
         _V.set(s,g.x2+pad+s.width/2, g.y1+s.height/2);
-        c=_S.anchorXY(_S.sprite("undo.png"),0.5);
+        c=_S.centerAnchor(_S.sprite("undo.png"));
         c.tint=_S.SomeColors.orange;
         s.addChild(c);
         s.m5.press=()=>undoMove();
@@ -419,17 +447,17 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
-  window.addEventListener("load", ()=>MojoH5({
+  MojoH5Ldr({
     assetFiles: ["click.mp3","game_over.mp3","game_win.mp3",
-      "button.png","arrowUp.png","arrowDown.png","arrowLeft.png","arrowRight.png",
-      "left.png","right.png","up.png","down.png","undo.png",
-                 "wall.png","hole.png","grass.png","water.png","crate.png"],
+                 "button.png","arrowUp.png",
+                 "arrowDown.png","arrowLeft.png","arrowRight.png",
+                 "left.png","right.png","up.png","down.png","undo.png",
+                 "bg.jpg", "wall.png","hole.png","grass.png","water.png","crate.png"],
     arena: {width:1344,height:840},
     scaleToWindow: "max",
     scaleFit: "x",
     start(...args){ scenes(...args) }
-
-  }));
+  });
 
 })(this);
 

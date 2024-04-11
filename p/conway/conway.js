@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -29,6 +29,7 @@
            math:_M,
            ute:_, is}= Mojo;
 
+    ////////////////////////////////////////////////////////////////////////////
     const SEEDS = {
       DieHard: [
         [0, 0, 0, 0, 0, 0, 1, 0],
@@ -139,7 +140,7 @@
     const NBS= [[-1,-1],[-1,0],[-1,1],[0,-1],
       [0,1],[1,-1],[1,0],[1,1]],
       _DELAY=300,
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       C_TILE=_S.color("#b7d150"),
       C_ORANGE=_S.color("#f4d52b"),
       SplashCfg= {
@@ -149,50 +150,56 @@
       };
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const doBackDrop=(s)=> s.insert( _S.fillMax(_S.sprite("bg.jpg")));
+    const doBackDrop=(s)=> s.insert( _S.fillMax("bg.jpg"));
     const playClick=()=> Mojo.sound("click.mp3").play();
     const CLICK_DELAY=343;
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     _Z.scene("MainMenu",{
       setup(){
         let
           self=this,
           btns=[],
+          keys=_.keys(SEEDS),
           K=Mojo.getScaleFactor();
         if(!_G.curPattern)
           _G.curPattern=Mojo.u.defPattern;
         doBackDrop(this);
-        let s,m,cfg= {fontName:UI_FONT,fontSize:32*K};
+        let fsz= Mojo.height * 0.4 / keys.length;//16
+        let s,m,cfg= {fontName:UI_FONT,fontSize: fsz*K};
         function doClicked(btn){
           _G.curPattern=btn.m5.uuid;
           playClick();
         }
-        _.keys(SEEDS).forEach(k=> {
+        _.keys(SEEDS).forEach(k=>{
           btns.push(s=_I.mkBtn(_S.bmpText(k,cfg)));
           _S.uuid(s,k);
         });
-        m=_Z.choiceMenuY(btns, {
+        m=_Z.choiceMenuY(btns,{
           bg:"#cccccc",
           defaultChoice: _G.curPattern,
           disabledColor:_S.color("#cccccc"),
           selectedColor:C_ORANGE,
-          padding:18,
+          padding:fsz*0.4,
           onClick: doClicked});
         this.insert(m);
         //////
-        s=_S.bmpText("Run simulation with this pattern", UI_FONT,36*K);
+        s=_S.bmpText("Run simulation with this pattern", UI_FONT,fsz*1.5*K);
         _I.mkBtn(s).m5.press=(btn)=>{
           playClick();
           btn.tint=C_ORANGE;
           _.delay(CLICK_DELAY,()=>_Z.runEx("PlayGame"));
         };
-        _S.anchorXY(s,0.5);
-        _S.pinBelow(m,s,20);
+        _S.centerAnchor(s);
+        _S.pinAbove(m,s,20*K);
         this.insert(s);
       }
     });
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     _Z.scene("PlayGame",{
       _tile(){
@@ -334,8 +341,7 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
-  window.addEventListener("load",()=> MojoH5({
-
+  MojoH5Ldr({
     assetFiles:["tiles.png","click.mp3","bg.jpg","menu.png"],
     arena:{width:1344, height:840},
     gridLineWidth:1,
@@ -344,8 +350,7 @@
     scaleToWindow:"max",
     scaleFit:"x",
     start(...args){ scenes(...args) }
-
-  }));
+  });
 
 })(this);
 //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

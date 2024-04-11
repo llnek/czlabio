@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -31,7 +31,7 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       C_ORANGE=_S.color("#f4d52b");
 
     _G.SplashCfg= {
@@ -42,14 +42,17 @@
 
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const doBackDrop=(s)=> s.insert(_S.fillMax(_S.sprite("bggreen.jpg")));
+    const doBackDrop=(s)=> s.insert(_S.fillMax("bggreen.jpg"));
     const playClick=()=> Mojo.sound("click.mp3").play();
     const CLICK_DELAY=343;
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("MainMenu",{
       setup(){
-        const self=this,
+        const
+          self=this,
           K=Mojo.getScaleFactor();
         _.inject(this.g,{
           doMenu(){
@@ -73,9 +76,12 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("StartMenu",{
       setup(options){
-        const self=this,
+        const
+          self=this,
           K=Mojo.getScaleFactor(),
           cfg={fontName: UI_FONT, fontSize: 64*K},
           gap=_S.bmpText(" / ", cfg),
@@ -95,37 +101,12 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    _Z.scene("XXXEndGame",{
-      setup(){
-        let w= _G.lastWin,
-          mode = _G.mode,
-          msg="No Winner!",
-          snd="game_over.mp3",
-          K=Mojo.getScaleFactor(),
-          cfg={fontName:UI_FONT, fontSize:64*K};
-        if(_G.points[_G.X]>_G.points[_G.O]){
-          msg= mode==1 ? "You win !" : "Player 1 (Black) wins !";
-          snd="game_win.mp3";
-        }else if(_G.points[_G.X]<_G.points[_G.O]){
-          msg= mode==1 ? "You lose !" : "Player 2 (White) wins !";
-        }
-        let b1=_I.mkBtn(_S.bmpText("Play Again?", cfg)),
-          b2=_I.mkBtn(_S.bmpText("Quit", cfg)),
-          m1=_S.bmpText("Game Over", cfg),
-          m2=_S.bmpText(msg, cfg),
-          gap=_S.bmpText("or", cfg),
-          space=()=> _S.opacity(_S.bmpText("I",cfg),0);
-        b1.m5.press=()=> playClick() && _Z.runEx("MainMenu");
-        b2.m5.press=()=> playClick() && _Z.runEx("Splash");
-        _G.playSnd(snd);
-        this.insert( _Z.layoutY([m1, m2, space(), space(), b1, gap, b2]));
-      }
-    });
-
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame",{
       setup(options){
-        let self=this,
+        let
+          self=this,
           mode=options.mode,
           K=Mojo.getScaleFactor(),
           LT,RT, startsWith=options.startsWith;

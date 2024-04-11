@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -31,8 +31,7 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-
-      UI_FONT= "Doki Lowercase",
+      UI_FONT= Mojo.DOKI_LOWER,
       C_ORANGE=_S.color("#f4d52b"),
       SplashCfg= {
         title:"Tic Tac Toe",
@@ -99,45 +98,21 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const doBackDrop=(s)=> s.insert(_S.fillMax(_S.sprite("bgblack.jpg")));
+    const doBackDrop=(s)=> s.insert(_S.fillMax("bgblack.jpg"));
     const playClick=()=> Mojo.sound("click.mp3").play();
     const CLICK_DELAY=343;
     const int=Math.floor;
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    _Z.scene("xxEndGame",{
-      setup(){
-        let msg="No Winner!",
-          {lastWin,mode}=_G,
-          K=Mojo.getScaleFactor(),
-          cfg={fontName:UI_FONT, fontSize:72*K};
-
-        if(lastWin==_G.O) msg= mode==1 ? "You lose !" : "O wins !";
-        if(lastWin==_G.X) msg= mode==1 ? "You win !" : "X wins !";
-
-        let gap=_S.bmpText("or", cfg),
-          b1=_I.mkBtn(_S.bmpText("Play Again?", cfg)),
-          b2=_I.mkBtn(_S.bmpText("Quit", cfg)),
-          m1=_S.bmpText("Game Over", cfg),
-          m2=_S.bmpText(msg, cfg),
-          space=()=> _S.opacity(_S.bmpText("I",cfg),0);
-
-        b1.m5.press=()=> playClick() && _Z.runEx("MainMenu");
-        b2.m5.press=()=> playClick() && _Z.runEx("Splash");
-
-        Mojo.sound("game_over.mp3").play();
-        this.insert( _Z.layoutY([m1, m2, space(), space(), b1, gap, b2]))
-      }
-    });
-
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("Start1",{
       setup(){
         let self=this,
           m1,m2, K=Mojo.getScaleFactor();
         _.inject(this.g,{
           doChoices(){
-            const cfg={fontSize:64*K,fontName:UI_FONT},
+            const cfg={fontSize:32*K,fontName:UI_FONT},
               space=()=> _S.opacity(_S.bmpText("I", cfg),0);
             m1=_Z.choiceMenuY([_I.mkBtn(_S.uuid(_S.bmpText("Easy",cfg),"#easy")),
                                space(),
@@ -150,17 +125,20 @@
                                 defaultChoice:"#easy",
                                 selectedColor:C_ORANGE,
                                 disabledColor:"#dddddd"});
-            return self.insert(_V.set(m1, (Mojo.width-m1.width)/2, Mojo.height * 0.1));
+            self.insert(_S.centerObj(m1));
+            //self.insert(_V.set(m1, (Mojo.width-m1.width)/2, Mojo.height * 0.1));
+            this.doNext(m1);
           },
-          doNext(){
-            const cfg={fontSize:72*K,fontName:UI_FONT},
+          doNext(menu){
+            const cfg={fontSize:32*K,fontName:UI_FONT},
               space=()=> _S.opacity(_S.bmpText("I", cfg),0),
               c1=_S.uuid(_I.mkBtn(_S.bmpText("Yes",cfg)),"play#x"),
               c2=_S.uuid(_I.mkBtn(_S.bmpText("No", cfg)),"play#o");
             m2= _Z.layoutX([_S.bmpText("Player (X) starts?",cfg),
                             space(),
                             c1, _S.bmpText(" /  ",cfg), c2], {bg:"transparent"});
-            _V.set(m2, (Mojo.width-m2.width)/2, Mojo.height*0.6);
+            //_V.set(m2, (Mojo.width-m2.width)/2, Mojo.height*0.8*K);
+            _S.pinBelow(menu,m2) ;
             c1.m5.press=
             c2.m5.press=function(b){
               _S.tint(b,C_ORANGE);
@@ -177,14 +155,17 @@
           }
         });
         //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-        doBackDrop(this) && this.g.doChoices() && this.g.doNext();
+        doBackDrop(this) && this.g.doChoices();
       }
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("Start2",{
       setup(options){
-        let self=this,
+        let
+          self=this,
           K=Mojo.getScaleFactor();
         _.inject(this.g,{
           doMenu(){
@@ -194,7 +175,7 @@
               space=()=> _S.opacity(_S.bmpText("I", cfg),0),
               m2= _Z.layoutX([_S.bmpText("Player (X) starts?",cfg),
                               space(), c1, _S.bmpText(" /  ",cfg), c2], {bg:"transparent"});
-            _V.set(m2,(Mojo.width-m2.width)/2, Mojo.height*0.6);
+            _V.set(m2,(Mojo.width-m2.width)/2, Mojo.height*0.6*K);
             c1.m5.press=
             c2.m5.press=function(b){
               _S.tint(b,C_ORANGE);
@@ -214,13 +195,16 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("MainMenu",{
       setup(){
-        let self=this,
+        let
+          self=this,
           K=Mojo.getScaleFactor();
         _.inject(this.g,{
           doMenu(){
-            const cfg={fontSize: 64*K, fontName:UI_FONT},
+            const cfg={fontSize: 36*K, fontName:UI_FONT},
               gap=_S.bmpText("or", cfg),
               space=()=> _S.opacity(_S.bmpText("I",cfg),0),
               b1=_S.uuid(_I.mkBtn(_S.bmpText("One Player", cfg)),"play#1"),
@@ -241,47 +225,56 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function _drawBox(ctx){
       let grid=_G.grid,
         gf= grid[0],
         gl= _.last(grid),
         K=Mojo.getScaleFactor();
-      ctx.beginFill(_S.SomeColors.black);
-      ctx.strokeStyle= "white";
-      ctx.lineWidth=4*K;
-      ctx.drawRect(gf.x1,gf.y1,gl.x2-gf.x1,gl.y2-gf.y1);
-      ctx.endFill();
+      ctx.rect(gf.x1,gf.y1,gl.x2-gf.x1,gl.y2-gf.y1);
+      ctx.stroke({color:_S.color("white"),width: 4*K});
+      ctx.fill({color:_S.SomeColors.black});
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function _drawGrid(ctx){
-      let grid=_G.grid,
+      let
+        grid=_G.grid,
         gf= grid[0][0],
         K=Mojo.getScaleFactor();
       _S.drawGridLines(gf.x1,gf.y1,grid,4*K,"white",ctx)
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     const _seeder=()=> _.fill(new Array(DIM*DIM),0);
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame",{
       onAI(pos){
-        const y=_M.ndiv(pos,DIM),
+        const
+          y= int(pos/DIM),
           x=pos%DIM,
           t= this.getChildById(`tile,${x},${y}`);
         //tell the selected tile to do work
         Mojo.emit(["ai.moved",t]);
       },
       setup(options){
-        const self=this,
+        const
+          self=this,
           K=Mojo.getScaleFactor();
         _.inject(this.g,{
           initLevel(){
             let grid= _S.gridSQ(3,0.8),
               s=_S.sprite("icons.png"),
               cz= _S.bboxSize(grid[0][0]);
-            _G.iconSize=[_M.ndiv(s.width,3), s.height];
+            _G.iconSize=[int(s.width/3), s.height];
             //o == 79, x= 88
             return _.inject(_G,{lastWin: 0,
                                 scene:self,
@@ -299,9 +292,9 @@
           doArena(){
             let {DIM,grid,iconSize,iconScale}=_G,
               box=_S.group(_S.drawBody(_drawGrid));
-            _S.anchorXY(box.children[0],0.5);
-            _V.set(box,_M.ndiv(Mojo.width,2),
-                       _M.ndiv(Mojo.height,2));
+            _S.centerAnchor(box.children[0]);
+            _V.set(box,int(Mojo.width/2),
+                       int(Mojo.height/2));
             self.insert(box);
             grid.forEach((r,y)=>{
               r.forEach((o,x)=>{
@@ -342,31 +335,26 @@
       if(_G.lastWin==_G.X) msg= _G.mode==1 ? "You win !" : "X wins !";
 
       _Z.modal("EndGame",{
-
         fontSize:64*Mojo.getScaleFactor(),
         replay:{name:"MainMenu"},
         quit:{name:"Splash", cfg:SplashCfg},
         msg,
         winner:msg.includes("win")
-
       });
     }
-
     _Z.run("Splash", SplashCfg);
   }
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
-  window.addEventListener("load",()=> MojoH5({
-
+  MojoH5Ldr({
     assetFiles:["bgblack.jpg", "icons.png","audioOn.png","audioOff.png",
                 "click.mp3","x.mp3","o.mp3","game_win.mp3","game_over.mp3"],
     arena:{width:1344, height:840},
     scaleToWindow:"max",
     scaleFit:"x",
     start(...args){ scenes(...args) }
-
-  }));
+  });
 
 })(this);
 

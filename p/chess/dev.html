@@ -7,9 +7,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
   <script src="vendor/pixi.min.js"></script>
-
+  <script>/*hack to deal with chess.js (CommonJS isn't installed) */ var exports = {};</script>
   <!-- https://github.com/jhlywa/chess.js/ -->
-
   <!--
 
 <script src="dist/game.min.js"></script>
@@ -30,7 +29,7 @@
   <script src="lib/sound.js"></script>
   <script src="lib/input.js"></script>
   <script src="lib/touch.js"></script>
-  <script src="chessjs-0.12.1.js"></script>
+  <script src="chessjs-0.13.4.js"></script>
   <script src="ai.js"></script>
   <script src="chess.js"></script>
 

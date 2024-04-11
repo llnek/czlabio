@@ -10,11 +10,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
   "use strict";
+
+  const TILE_SHEET="images/tiles.json";
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   function scenes(Mojo){
@@ -29,21 +31,22 @@
            v2:_V,
            ute:_,is}=Mojo;
 
-
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       SplashCfg= {
         title:"Runner",
         clickSnd:"click.mp3",
         action: {name:"PlayGame"}
       };
 
-
+    ////////////////////////////////////////////////////////////////////////////
     const E_PLAYER=1,
     E_BOX=2;
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function cfgContacts(K){
       _G.Duck=[[-36,49],[-36,-13],[-25,-27],[25,-27],[32,-13],[36,49]].map(a=>{
         return [a[0]*K,a[1]*K]
@@ -54,17 +57,24 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function Player(scene){
-      let s= _S.spriteFrom("walk1.png","walk2.png","stand.png","hurt.png","jump.png","duck.png");
+      let s= _S.spriteFrom(Mojo.ssf(TILE_SHEET,"walk1.png"),
+                           Mojo.ssf(TILE_SHEET,"walk2.png"),
+                           Mojo.ssf(TILE_SHEET,"stand.png"),
+                           Mojo.ssf(TILE_SHEET,"hurt.png"),
+                           Mojo.ssf(TILE_SHEET,"jump.png"),
+                           Mojo.ssf(TILE_SHEET,"duck.png"));
       let K=Mojo.getScaleFactor();
       let floor=_G.bgFloor;
       _V.set(s.m5.gravity,0,2000*K);
       _S.scaleXY(s,1.5*K,1.5*K);
-      _S.anchorXY(s,0.5);
+      _S.centerAnchor(s);
       s.m5.uuid="player";
       s.m5.type=E_PLAYER;
       s.m5.cmask=E_BOX;
-      _V.set(s, 40, _G.floorY-_M.ndiv(s.height,2));
+      _V.set(s, 40, _G.floorY- int(s.height/2));
       s.x=Mojo.width/3;
       s.g._mode=null;
       s.g.oldX=s.x;
@@ -104,7 +114,7 @@
         s.g.move(dt);
         s.m5.vel[0] += (speed - s.m5.vel[0])/4;
         if(s.m5.vel[1]>0 && _S.bottomSide(s) > _G.floorY){
-          _V.setY(s, _G.floorY - _M.ndiv(s.height,2));
+          _V.setY(s, _G.floorY - int(s.height/2));
           landed = 1;
           _V.setY(s.m5.vel,0);
         }
@@ -123,20 +133,24 @@
     const tRatio=Mojo.PI_360/360;
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    function Box(scene,player){
-      let b=_S.spriteFrom("rock.png","box1.png","box2.png");
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
+    function Crate(scene,player){
+      let b=_S.spriteFrom(Mojo.ssf(TILE_SHEET, "rock.png"),
+                          Mojo.ssf(TILE_SHEET, "box1.png"),
+                          Mojo.ssf(TILE_SHEET, "box2.png"));
       let theta= _.randSign()*(300*tRatio*_.rand() + 200*tRatio);
       let floor=_G.bgFloor;
       let offset=levels[_.randInt(4)];
       let K=Mojo.getScaleFactor();
       b.m5.showFrame(offset==0?0:(_.randSign()>0?1:2));
       _V.set(b.scale,2.8*K,2.8*K);
-      _S.anchorXY(b,0.5);
+      _S.centerAnchor(b);
       b.m5.type=E_BOX;
-      _V.set(b,player.x + Mojo.width + 50*K, _G.floorY - offset - _M.ndiv(b.height,2));
+      _V.set(b,player.x + Mojo.width + 50*K, _G.floorY - offset - int(b.height/2));
       _V.set(b.m5.vel, -1200*K + 200*K*_.rand(),0);
       _V.setY(b.m5.acc,0);
-      let base=_G.floorY- _M.ndiv(b.height,2);
+      let base=_G.floorY- int(b.height/2);
       b.m5.collide=(col)=>{
         b.alpha = 0.5;
         _V.set(b.m5.vel, 200*K,-300*K);
@@ -159,7 +173,9 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    function BoxThrower(scene,p){
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
+    function Catapult(scene,p){
       let b= {
         launchDelay: 0.75*Mojo.getScaleFactor(),
         launchRandom: 1,
@@ -167,7 +183,7 @@
         update(dt){
           this.launch -= dt;
           if(this.launch < 0) {
-            scene.insert(Box(scene,p),true);
+            scene.insert(Crate(scene,p),true);
             this.launch = this.launchDelay + this.launchRandom * _.rand();
           }
         }
@@ -176,6 +192,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame",{
       setup(){
         let self=this;
@@ -228,11 +246,13 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame2",{
       setup(){
         let K=Mojo.getScaleFactor();
         let p= this.player= Player(this);
-        BoxThrower(this,p);
+        Catapult(this,p);
         _Z.run("AudioIcon",{
           xScale:1.2*K, yScale:1.2*K,
           xOffset: -10*K, yOffset:0
@@ -267,15 +287,14 @@
   }
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  window.addEventListener("load",()=>{
-    MojoH5({
-      assetFiles: ["click.mp3", "boing2.mp3","background-wall.jpg",
-                   "background-floor.jpg", "tiles.png","images/tiles.json"],
+  MojoH5Ldr({
+      assetFiles: ["click.mp3", "boing2.mp3",
+                   "audioOn.png","audioOff.png",
+                   "background-wall.jpg", "background-floor.jpg", TILE_SHEET],
       arena: {width:1344,height:840},
       scaleToWindow:"max",
       scaleFit:"x",
       start(...args){ scenes(...args) }
-    });
   });
 
 })(this);

@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -31,7 +31,7 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       SplashCfg= {
         title:"Zario",
         clickSnd:"click.mp3",
@@ -39,11 +39,13 @@
       };
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const doBackDrop=(s)=> s.insert(_S.fillMax(_S.sprite("bg.jpg")));
+    const doBackDrop=(s)=> s.insert(_S.fillMax("bg.jpg"));
     const playClick=()=> Mojo.sound("click.mp3").play();
     const CLICK_DELAY=343;
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     let MysteryCount=0;
     const Mystery={
       s(){},
@@ -67,6 +69,8 @@
     };
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     const Heart={
       s(){},
       c(scene,s,ts,ps,os){
@@ -86,13 +90,11 @@
           if(os.name=="white_heart" && col.g["red_heart"] && !_G.gameOver){
             _G.gameOver=true;
             _.delay(CLICK_DELAY,()=> _Z.modal("EndGame",{
-
-              fontSize:64*Mojo.getScaleFactor(),
+              fontSize:32*Mojo.getScaleFactor(),
               replay:{name:"PlayGame"},
               quit:{name:"Splash", cfg:SplashCfg},
               msg:"You Win!",
               winner:1
-
             }))
           }
         };
@@ -102,6 +104,8 @@
     };
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     const Key={
       s(){},
       c(scene,s,ts,ps,os){
@@ -123,6 +127,8 @@
     };
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     const Coin={
       s(){},
       c(scene,s,ts,ps,os){
@@ -143,6 +149,8 @@
     };
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     const Spike={
       s(){},
       c(scene,s,ts,ps,os){
@@ -157,8 +165,7 @@
             Mojo.off(...sigs);
             _G.gameOver=true;
             _.delay(CLICK_DELAY,()=> _Z.modal("EndGame",{
-
-              fontSize:64*Mojo.getScaleFactor(),
+              fontSize:32*Mojo.getScaleFactor(),
               replay:{name:"PlayGame"},
               quit:{name:"Splash", cfg:SplashCfg},
               msg:"You Lose!",
@@ -172,6 +179,8 @@
     };
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     const Door={
       s(){},
       c(scene,s,ts,ps,os){
@@ -198,21 +207,26 @@
     };
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     const _objFactory={
       Mystery,Coin,Door,Key,Spike,Heart
     };
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const PStates={ walk_right: [1,3], jump_right: 5, crouch: 4 };
-    const E_PLAYER=1,
+    const
+      E_PLAYER=1,
       E_ITEM=2,
       E_DOOR=4,
       E_SPIKE=8,
       E_FLY=16,
       E_SLIME=32,
-      E_ENEMY=64;
+      E_ENEMY=64,
+      PStates={ walk_right: [1,3], jump_right: 5, crouch: 4 };
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function Player(scene){
       let s=_S.sprite(_S.frames("pinkio.png", 64,78));
       let P=scene.getNamedItem("startpos")[0];
@@ -224,13 +238,13 @@
       s.m5.type=E_PLAYER;
       s.g.hyper=true;
       _V.set(s, P.column*tileW+s.width/2,P.row*tileH+tileH-s.height/2);
-      _V.set(s.m5.gravity,0,333);
+      _V.set(s.m5.gravity,0,1500);
       s.m5.strength= 100;
       s.m5.speed= 300;
       s.m5.score= 0;
-      _S.anchorXY(s,0.5);
+      _S.centerAnchor(s);
       s.g.move=_U.Meander(s);
-      s.g.jump=_U.Jitter(s);
+      s.g.jump=_U.Jitter(s,-640);
       s.m5.showFrame(0);
       s.m5.heading= Mojo.RIGHT;
       _S.remove(_p);
@@ -302,11 +316,13 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function Enemy(scene,s){
       let signals=[[["bump.top",s],"onKill",s.m5],
                    [["hit",s],"onHit",s.m5]];
 
-      _S.anchorXY(s,0.5);
+      _S.centerAnchor(s);
 
       s.g.pat=_U.Patrol(s,true,false);
       s.g.move=_U.Meander(s);
@@ -333,8 +349,7 @@
           Mojo.sound("hit.mp3").play();
           _G.gameOver=true;
           _.delay(CLICK_DELAY,()=>_Z.modal("EndGame",{
-
-            fontSize:64*Mojo.getScaleFactor(),
+            fontSize:32*Mojo.getScaleFactor(),
             replay:{name:"PlayGame"},
             quit:{name:"Splash", cfg:SplashCfg},
             msg:"You Lose!",
@@ -356,6 +371,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function makeEnemies(scene){
       let x,y,s,
           {tileW,tileH}=scene.tiled;
@@ -369,10 +386,12 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame",{
       setup(){
         let K=Mojo.getScaleFactor();
-        this.insert(_S.fillMax(_S.sprite("bg.jpg")))
+        this.insert(_S.fillMax("bg.jpg"))
         _Z.run("PlayGame2");
         _Z.run("HUD");
         _Z.run("AudioIcon",{
@@ -383,9 +402,12 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("HUD",{
       setup(){
-        let K= Mojo.getScaleFactor(),
+        let
+          K= Mojo.getScaleFactor(),
           s=_S.bmpText("0",UI_FONT, 64*K);
         s.tint=_S.SomeColors.white;
         this.g.scoreText= this.insert(s);
@@ -396,9 +418,12 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame2",{
       setup(){
-        const self=this,
+        const
+          self=this,
           K=Mojo.getScaleFactor();
         _G.score=0;
         _G.gameOver=false;
@@ -422,8 +447,7 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load & run
-  window.addEventListener("load",()=> MojoH5({
-
+  MojoH5Ldr({
     assetFiles: ["map.json","hit.mp3","click.mp3","coin.mp3","jump.mp3","bounce.mp3",
                  "pinkio.png","platformPack_tilesheet.png", "bg.jpg",
                  "audioOn.png","audioOff.png",
@@ -433,8 +457,7 @@
     scaleToWindow:"max",
     scaleFit:"x",
     start(...args){ scenes(...args) }
-
-  }));
+  });
 
 })(this);
 

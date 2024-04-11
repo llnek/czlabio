@@ -10,14 +10,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
   "use strict";
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  const int=Math.floor;
+  const
+    int=Math.floor,
+    TILE_SHEET="images/items.json";
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   function scenes(Mojo){
@@ -34,7 +36,7 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       SplashCfg= {
         title:"Frogger",
         clickSnd:"click.mp3",
@@ -42,21 +44,23 @@
       };
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const doBackDrop=(s)=> 1;//s.insert(_S.fillMax(_S.sprite("bg.png")));
+    //const doBackDrop=(s)=> 1;//s.insert(_S.fillMax(_S.sprite("bg.png")));
     const playClick=()=> Mojo.sound("click.mp3").play();
     const CLICK_DELAY=343;
     const ICON_WIDTH=64;
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const E_PLAYER=1,
+    const
+      E_PLAYER=1,
       E_CAR=2,
       E_LOG=4,
       E_COIN=8;
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const BANDS=["home","water","water","water","grass","road","road","road","grass"].map(x=> `${x}.png`),
-      BAND_CNT=BANDS.length, ROAD=3, RIVER=3,
+    const
+      BANDS=["home","water","water","water","grass","road","road","road","grass"].map(x=> `${x}.png`),
       CARS=["bus1","bus2","car1","car2","car3","fire_truck","police","taxi"].map(x=> `${x}.png`),
+      BAND_CNT=BANDS.length, ROAD=3, RIVER=3,
       CARGRP={3:[], 4:[], 5:[], 6:[]},
       CARLEN=[4,5,3,3,3,6,4,4],
       CARMAP={};
@@ -80,6 +84,8 @@
       [0,    "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg", "s"]
     ];
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function randStart(){
       let p,out=[];
@@ -97,16 +103,18 @@
           t=TRACKS[i];
           t[1]= t[1].substring(p) + t[1].substring(0,p);
         }
-        //console.log(TRACKS[i][1]);
+        //Mojo.CON.log(TRACKS[i][1]);
       });
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function mkLog(dir,band,size){
       let
         {tileW,tileH,grid}= _G,
         g=grid[band][0],
-        s= _S.sprite(`log${size}.png`);
+        s= _S.spriteFrame(TILE_SHEET,`log${size}.png`);
       s.m5.mask=E_LOG;
       s.height= 0.8 * tileH;
       s.y=_M.ndiv(g.y1+g.y2 - s.height,2);
@@ -119,12 +127,14 @@
       return s;
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function mkCar(dir,band,png){
       let
         {tileW,tileH,grid}= _G,
         g=grid[band][0],
-        s= _S.sprite(dir>0?png:`_${png}`);
+        s= _S.spriteFrame(TILE_SHEET,dir>0?png:`_${png}`);
       s.height= Math.min(s.height,tileH);
       s.y=g.y2-s.height;
       s.m5.type=E_CAR;
@@ -136,6 +146,8 @@
       return s;
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function checkFlowRight(s){
       if(s.x>Mojo.width){
@@ -149,6 +161,8 @@
       }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function checkFlowLeft(s){
       if((s.x+s.width)<0){
@@ -162,6 +176,8 @@
       }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function checkGoRight(s){
       if(s.x>Mojo.width){
@@ -175,6 +191,8 @@
       }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function checkGoLeft(s){
       if((s.x+s.width)<0){
@@ -188,16 +206,22 @@
       }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function buildTrack(t,band){
       return t[0]>0?buildTrackRight(t,band):buildTrackLeft(t,band)
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function buildRiver(t,band){
       return t[0]>0?buildRiverRight(t,band):buildRiverLeft(t,band)
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function buildRiverLeft(t,band){
       let
@@ -229,6 +253,8 @@
       return out;
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function buildRiverRight(t,band){
       let
@@ -260,6 +286,8 @@
       return out;
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function buildTrackRight(t,band){
       let
@@ -292,6 +320,8 @@
       return out;
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function buildTrackLeft(t,band){
       let
@@ -324,6 +354,8 @@
       return out;
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function fillBand(scene,band,sx,sy,width,height,png){
       let K,s, x=sx, y=sy, row=[];
@@ -347,6 +379,8 @@
       return row;
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     _Z.scene("PlayGame",{
       setup(){
@@ -359,7 +393,7 @@
         _.inject(this.g,{
           initLevel(){
             let sx=0,sy=0,grid=[],
-              K,r,h= _M.ndiv(Mojo.height,BAND_CNT);
+              K,r,h= int(Mojo.height/BAND_CNT);
             _G.tileH=h;
             _G.tileW=h;
             _G.logs=[];
@@ -399,7 +433,7 @@
                   s.y=_M.ndiv(g.y1+g.y2,2);
                   g.blocked=false;
                   _G.coins.push(s);
-                  self.insert(_S.anchorXY(s,0.5),true);
+                  self.insert(_S.centerAnchor(s),true);
                 }
               }
             });
@@ -410,10 +444,10 @@
               cEnd=grid[0].length-1,
               gEnd=grid.length-1,
               last=grid[gEnd],
-              gMid=_M.ndiv(last.length,2)-1,
+              gMid=int(last.length/2)-1,
               m= last[gMid],
               s= _S.sprite("froggy.png");
-            _S.anchorXY(s,0.5);
+            _S.centerAnchor(s);
             _S.sizeXY(s,int(0.8*tileW),int(0.8*tileH));
             s.y= _M.ndiv(last[0].y1+last[0].y2,2);
             s.x= _M.ndiv(m.x1+m.x2,2);
@@ -467,13 +501,11 @@
                 if(_G.coins.length==0){
                   _G.gameOver= self.m5.dead=true;
                   _.delay(CLICK_DELAY,()=>_Z.modal("EndGame",{
-
                     fontSize:64*Mojo.getScaleFactor(),
                     replay:{name:"PlayGame"},
                     quit:{name:"Splash", cfg:SplashCfg},
                     msg:"You Win!",
                     winner:1
-
                   }));
                 }
               }
@@ -595,17 +627,16 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
-  window.addEventListener("load",()=> MojoH5({
-
+  MojoH5Ldr({
     assetFiles: ["click.mp3","game_over.mp3","game_win.mp3",
-                 "log2.png","log3.png","log4.png","home.png","coin.png","block.png",
-                 "items.png","grass.png","water.png","dirt.png","bush.png","froggy.png","images/items.json"],
+                 "home.png","coin.png","block.png","road.png",
+                 "grass.png","water.png","dirt.png","bush.png",
+                 "coin.png","froggy.png",TILE_SHEET],
     arena: {width: 1344, height: 840},
     scaleToWindow:"max",
     scaleFit:"x",
     start(...args){ scenes(...args) }
-
-  }));
+  });
 
 })(this);
 

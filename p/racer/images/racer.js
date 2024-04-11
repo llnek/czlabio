@@ -39,7 +39,7 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-      UI_FONT=Mojo.DOKI_LOWER,
+      UI_FONT="Doki Lowercase",
       SplashCfg= {
         title:"Retro Racer",
         clickSnd:"click.mp3",
@@ -51,7 +51,7 @@
     window["io/czlab/racer/track"](Mojo,SEGLEN);
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const getLine=(z)=> _G.lines[int(z/SEGLEN) % _G.lines.length];
+    const getLine=(z)=> _G.lines[_M.ndiv(z,SEGLEN) % _G.lines.length];
     const playClick=()=> Mojo.sound("click.mp3").play();
     const mspeed= Mojo.u.fps * SEGLEN;
     const CLICK_DELAY=343;
@@ -94,8 +94,6 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    /* */
-    ////////////////////////////////////////////////////////////////////////////
     function increase(start, increment, max){
       let r= start + increment;
       while(r >= max) r -= max;
@@ -104,8 +102,6 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    /* */
-    ////////////////////////////////////////////////////////////////////////////
     function overlap(x1, w1, x2, w2, percent){
       let half = (percent||1)/2,
           min1 = x1 - w1*half,
@@ -116,11 +112,10 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    /* */
-    ////////////////////////////////////////////////////////////////////////////
     function updateCars(seg,dt){
       function _updateCarOffset(car, carSeg, playerSeg){
-        let dir,other,otherW, carW = scaleToRefWidth(car.w);
+        let dir,other,otherW,
+          carW = scaleToRefWidth(car.w);
         //ignore when 'out of sight' of the player
         if((carSeg.index - playerSeg.index) > _G.drawRange){ return 0 }
         for(let seg, j, i=1 ; i < _G.lookAhead ; ++i){
@@ -166,17 +161,22 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    /* */
-    ////////////////////////////////////////////////////////////////////////////
+    const _polys=[{},{},{},{}];
     function drawPoly(g, x1, y1, x2, y2, x3, y3, x4, y4, color){
-      g.poly([x1,y1,x2,y2,x3,y3,x4,y4]);
+      _polys[0].x=x1;
+      _polys[0].y=y1;
+      _polys[1].x=x2;
+      _polys[1].y=y2;
+      _polys[2].x=x3;
+      _polys[2].y=y3;
+      _polys[3].x=x4;
+      _polys[3].y=y4;
+      g.poly(_polys[0],_polys[1],_polys[2],_polys[3]);
       g.fill({color});
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    /* */
-    ////////////////////////////////////////////////////////////////////////////
-    function drawSegment(gfx, gfx2, lanes, p1, p2, color){
+    function drawSegment(gfx, lanes, p1, p2, color){
       const laneMarkerWidth=(road, lanes)=> road/Math.max(32, 8*lanes);
       const rumbleWidth=(road, lanes)=> road/Math.max(6,  2*lanes);
       let r1 = rumbleWidth(p1.w, lanes),
@@ -185,15 +185,15 @@
         l2 = laneMarkerWidth(p2.w, lanes);
       gfx.rect(0, p2.y, _G.W, p1.y - p2.y);
       gfx.fill({color:color.grass});
-      drawPoly(gfx2, p1.x-p1.w-r1, p1.y,
+      drawPoly(gfx, p1.x-p1.w-r1, p1.y,
                     p1.x-p1.w, p1.y,
                     p2.x-p2.w, p2.y,
                     p2.x-p2.w-r2, p2.y, color.rumble);
-      drawPoly(gfx2, p1.x+p1.w+r1, p1.y,
+      drawPoly(gfx, p1.x+p1.w+r1, p1.y,
                     p1.x+p1.w, p1.y,
                     p2.x+p2.w, p2.y,
                     p2.x+p2.w+r2, p2.y, color.rumble);
-      drawPoly(gfx2, p1.x-p1.w, p1.y,
+      drawPoly(gfx, p1.x-p1.w, p1.y,
                     p1.x+p1.w, p1.y,
                     p2.x+p2.w, p2.y,
                     p2.x-p2.w,p2.y, color.road);
@@ -203,7 +203,7 @@
           lanex1 = p1.x - p1.w + lanew1,
           lanex2 = p2.x - p2.w + lanew2;
         for(let lane = 1 ; lane < lanes ; lanex1 += lanew1, lanex2 += lanew2, ++lane)
-          drawPoly(gfx2, lanex1 - l1/2, p1.y,
+          drawPoly(gfx, lanex1 - l1/2, p1.y,
                         lanex1 + l1/2, p1.y,
                         lanex2 + l2/2, p2.y,
                         lanex2 - l2/2, p2.y, color.lane);
@@ -211,38 +211,34 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    /* */
-    ////////////////////////////////////////////////////////////////////////////
-    function drawSprite(scene, sprite, scale, destX, destY, offsetX, offsetY, clipY){
-      _.assert(_.inst(PIXI.Texture,sprite),"expected Texture!");
-      let s, clipH, t= sprite, K=ratioToRoadWidth();
-      let destW  = (t.width * scale * _G.W2) * K, destH  = (t.height * scale * _G.W2) * K;
+    function drawSprite(scene, sheet,sprite, scale, destX, destY, offsetX, offsetY, clipY){
+      let t= sheet ? Mojo.sheet(sheet,sprite):Mojo.resource(sprite),
+        K=ratioToRoadWidth(),
+        destW  = (t.width * scale * _G.W2) * K,
+        destH  = (t.height * scale * _G.W2) * K;
 
       destX += (destW * (offsetX || 0));
       destY += (destH * (offsetY || 0));
 
-      clipH = clipY ? Math.max(0, destY+destH-clipY) : 0;
+      let s,clipH = clipY ? Math.max(0, destY+destH-clipY) : 0;
       if(clipH < destH){
-        s=_S.sprite(t);
+        s= _S.frame(t, t.width, t.height-(t.height*clipH/destH),t.orig.x,t.orig.y);
         s.x=destX;
         s.y=destY;
-        s.setSize(destW, destH-clipH);
+        s.width=destW;
+        s.height=destH-clipH;
         scene.insert(s);
       }
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    /* */
-    ////////////////////////////////////////////////////////////////////////////
     function drawPlayer(scene, speedPercent, scale, destX, destY, steer, updown){
       let resolution= _G.H/480,
-          bounce = 1.5 * _.rand() * speedPercent * resolution * _.randSign();
-      drawSprite(scene, Mojo.image("player.png"), scale, destX, destY + bounce, -0.5, -1);
+        bounce = 1.5 * _.rand() * speedPercent * resolution * _.randSign();
+      drawSprite(scene, UNDEF, "player.png", scale, destX, destY + bounce, -0.5, -1);
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    /* */
-    ////////////////////////////////////////////////////////////////////////////
     function project(p, camX, camY, camZ, camDepth){
       p.camera.x     = (p.world.x || 0) - camX;
       p.camera.y     = (p.world.y || 0) - camY;
@@ -254,35 +250,31 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    /* */
-    ////////////////////////////////////////////////////////////////////////////
     function doBackground(ctx, playerY){
       function _bg(bg, rotation, offset){
         rotation = rotation || 0;
         offset   = offset   || 0;
         let imageW = bg.width/2;
         let imageH = bg.height;
-        let sx = int(bg.width * rotation);
+        let sx = Math.floor(bg.width * rotation);
         let sy = 0;
         let sw = Math.min(imageW, bg.width-sx);
         let sh = imageH;
         let destX = 0;
         let destY = offset;
-        let destW = int(_G.W * (sw/imageW));
+        let destW = Math.floor(_G.W * (sw/imageW));
         let destH = _G.H;
-        let s= new PIXI.Texture(bg,new PIXI.Rectangle(sx,sy,sw,sh));
-        ctx.rect(destX, destY, destW, destH);
-        ctx.texture({texture:s});
+        let s= new PIXI.Texture({source:bg,frame:new PIXI.Rectangle(sx,sy,sw,sh)});
+        ctx.texture(s,_S.color("white"),destX, destY, destW, destH);
         if(sw < imageW){
-          s= new PIXI.Texture(bg,new PIXI.Rectangle(0,sy,imageW-sw,sh));
-          ctx.rect(destW-1, destY, _G.W-destW, destH);
-          ctx.texture({texture:s});
+          s= new PIXI.Texture({source:bg,frame:new PIXI.Rectangle(0,sy,imageW-sw,sh)});
+          ctx.texture(s,_S.color("white"), destW-1, destY, _G.W-destW, destH);
         }
       }
       let resolution=_G.H/480;
-      _bg(Mojo.resource("sky.png"),_G.skyOffset, resolution*_G.skySpeed*playerY);
-      _bg(Mojo.resource("hills.png"),_G.hillOffset, resolution*_G.hillSpeed*playerY);
-      _bg(Mojo.resource("trees.png"),_G.treeOffset, resolution*_G.treeSpeed*playerY);
+      _bg(Mojo.image("sky.png"),_G.skyOffset, resolution*_G.skySpeed*playerY);
+      _bg(Mojo.image("hills.png"),_G.hillOffset, resolution*_G.hillSpeed*playerY);
+      _bg(Mojo.image("trees.png"),_G.treeOffset, resolution*_G.treeSpeed*playerY);
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -291,22 +283,17 @@
     const perc=(a,b)=> (a%b)/b;
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    /* */
-    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame",{
       setup(){
-        const
-          self=this,
+        const self=this,
           K=Mojo.getScaleFactor();
         _.inject(this.g,{
-          hills: _S.fillMax("hills.png"),
-          trees: _S.fillMax("trees.png"),
-          sky: _S.fillMax("sky.png"),
+          hills: _S.fillMax(_S.sprite("hills.png")),
+          trees: _S.fillMax(_S.sprite("trees.png")),
+          sky: _S.fillMax(_S.sprite("sky.png")),
           gfx: _S.graphics(),
-          gfx2:_S.graphics(),
           initLevel(){
-             let
-               r= 1/_G.lanes,
+             let r= 1/_G.lanes,
                camH=1000,
                camD= 1/Math.tan(_G.fov / 2),
                w= Mojo.image("player.png").width;
@@ -330,12 +317,10 @@
             self.insert(this.sky);
             self.insert(this.hills);
             self.insert(this.trees);
-            self.insert(this.gfx);
-            self.insert(this.gfx2);
+            self.insert(this.gfx.clear());
           },
           draw(){
-            let
-              baseLine = getLine(_G.pos),
+            let baseLine = getLine(_G.pos),
               basePerc= perc(_G.pos,SEGLEN),
               x = 0,
               maxY = _G.H,
@@ -344,8 +329,10 @@
               playerPerc= perc(_G.pos+_G.player.z,SEGLEN);
 
             _G.player.y = _M.lerp(playerSeg.p1.world.y, playerSeg.p2.world.y, playerPerc);
-            this.gfx.clear() && this.gfx2.clear() && this.resetGfx();
+            this.resetGfx();
+
             //doBackground(this.gfx, _G.player.y);
+
             for(let cx,cy, cz, seg,n = 0; n < _G.drawRange; ++n){
               seg= _G.lines[(baseLine.index + n) % _G.SEGN];
               seg.clip = maxY;
@@ -358,21 +345,22 @@
               dx += seg.curve;
               if(seg.p2.screen.y >= maxY || // clip by (already rendered) segment
                  seg.p1.camera.z <= _G.camD){continue} // behind us
-              drawSegment(this.gfx, this.gfx2, _G.lanes, seg.p1.screen, seg.p2.screen, seg.color);
+              drawSegment(this.gfx, _G.lanes, seg.p1.screen, seg.p2.screen, seg.color);
               maxY = seg.p2.screen.y;
             }
             for(let ss,d,s,i,c,seg,n = (_G.drawRange-1); n > 0 ; --n){
               seg= _G.lines[(baseLine.index + n) % _G.SEGN];
               seg.cars.forEach(car=>{
+                s= car.sprite;
                 ss=_M.lerp(seg.p1.screen.scale, seg.p2.screen.scale, car.percent);
-                drawSprite(self, car.source, ss,
+                drawSprite(self, TILE_SHEET, s, ss,
                            _M.lerp(seg.p1.screen.x, seg.p2.screen.x,car.percent) +
                            (ss * car.offset * _G.roadWidth * _G.W2),
                            _M.lerp(seg.p1.screen.y, seg.p2.screen.y,car.percent), -0.5, -1, seg.clip);
               });
               for(i = 0 ; i < seg.sprites.length ; ++i){
                 s= seg.sprites[i];
-                drawSprite(self, s.source,
+                drawSprite(self, TILE_SHEET, s.source,
                            seg.p1.screen.scale,
                            seg.p1.screen.x + (seg.p1.screen.scale * s.offset * _G.roadWidth * _G.W2),
                            seg.p1.screen.y,
@@ -397,8 +385,11 @@
                 dx = dt * 2 * speedPercent;
             // at top speed, should be able to cross
             // from left to right (-1 to 1) in 1 second
+
             updateCars(playerSeg,dt);
+
             _G.pos = increase(_G.pos, dt * _G.speed, _G.trackLength);
+
             _G.player.x += _I.keyDown(_I.LEFT) ? -dx : (_I.keyDown(_I.RIGHT) ? dx : 0);
             _G.player.x -= (dx * speedPercent * playerSeg.curve * _G.centrifugal);
             _G.speed = _I.keyDown(_I.SPACE) ? Mojo.accel(_G.speed, _G.accel, dt)
@@ -432,9 +423,11 @@
             }
             _G.player.x = _M.clamp(-3,3,_G.player.x);// dont ever let it go too far out of bounds
             _G.speed = _M.clamp(0, _G.maxSpeed,_G.speed); // or exceed maxSpeed
+
             _G.skyOffset  = increase(_G.skyOffset,  _G.skySpeed  * playerSeg.curve * (_G.pos-startPos)/SEGLEN, 1);
             _G.hillOffset = increase(_G.hillOffset, _G.hillSpeed * playerSeg.curve * (_G.pos-startPos)/SEGLEN, 1);
             _G.treeOffset = increase(_G.treeOffset, _G.treeSpeed * playerSeg.curve * (_G.pos-startPos)/SEGLEN, 1);
+
             if(_G.pos > _G.player.z){
               if(_G.lapTime && (startPos< _G.player.z)){
                 //_G.lastLapTime= _G.lapTime;
@@ -443,10 +436,11 @@
                 _G.lapTime += dt;
               }
             }
+
           }
         });
         //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-        this.g.initLevel() && _Z.run("HUD");
+        this.g.initLevel(TILE_SHEET) && _Z.run("HUD");
       },
       postUpdate(dt){
         this.removeChildren();
@@ -456,12 +450,9 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    /* */
-    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("HUD",{
       setup(){
-        let
-          self=this,
+        let self=this,
           K=Mojo.getScaleFactor(),
           s= _S.bmpText("0","unscii",36*K);
         this.insert(this.g.lapTime=s);
@@ -475,17 +466,17 @@
             R= _S.circle(fh,grey,grey,lw);
             offX= R.width/4;
             offY=offX;
-            R.addChild(_S.centerAnchor(_S.bmpText(">",cfg)));
+            R.addChild(_S.anchorXY(_S.bmpText(">",cfg),0.5));
             _V.set(R, Mojo.width-R.width/2-offX,Mojo.height-R.height/2-offY);
             self.insert(_S.opacity(_I.makeHotspot(R),alpha));
             //////
             L= _S.circle(fh,grey,grey,lw);
-            L.addChild(_S.centerAnchor(_S.bmpText("<",cfg)));
+            L.addChild(_S.anchorXY(_S.bmpText("<",cfg),0.5));
             _S.pinLeft(R,L,offX);
             self.insert(_S.opacity(_I.makeHotspot(L),alpha));
             //////
             U= _S.circle(fh,grey,grey,lw);
-            U.addChild(_S.centerAnchor(_S.bmpText("+",cfg)));
+            U.addChild(_S.anchorXY(_S.bmpText("+",cfg),0.5));
             _V.set(U,offX+U.width/2,Mojo.height-U.height/2-offY);
             self.insert(_S.opacity(_I.makeHotspot(U),alpha));
             //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -506,15 +497,18 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load & run
-  MojoH5Ldr({
-    assetFiles: ["player.png","click.mp3", "sky.png", "hills.png","trees.png", TILE_SHEET],
+  window.addEventListener("load",()=> MojoH5({
+
+    assetFiles: ["player.png","click.mp3",
+                 "sky.png", "hills.png","trees.png", TILE_SHEET],
     arena: {width: 1344, height: 840},
     scaleToWindow:"max",
     scaleFit:"x",
     SEGLEN:200,
     //fps:30,
     start(...args){ scenes(...args) }
-  });
+
+  }));
 
 })(this);
 

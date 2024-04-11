@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -37,7 +37,7 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       SplashCfg= {
         footerMsgSize:24*Mojo.getScaleFactor(),
         title:"Tetris",
@@ -47,7 +47,7 @@
 
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const doBackDrop=(s)=> s.insert(_S.fillMax(_S.sprite("bg.jpg")));
+    const doBackDrop=(s)=> s.insert(_S.fillMax("bg.jpg"));
     const playClick=()=> Mojo.sound("click.mp3").play();
     const CLICK_DELAY=343;
 
@@ -61,6 +61,8 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame",{
       postUpdate(dt){
       },
@@ -95,14 +97,12 @@
         if(_G.gameOver){
           _S.die(this);
           _.delay(100, ()=> _Z.modal("EndGame",{
-
             fontSize:64*Mojo.getScaleFactor(),
             replay:{name:"PlayGame"},
             quit:{name:"Splash", cfg:SplashCfg},
             msg:"",
             winner:0
           }));
-
         }else{
           let sx=_G.vbox.x1,
               sy=_G.vbox.y1,
@@ -110,7 +110,6 @@
               ey=_G.vbox.y2;
           //show the grid
           _G.gfx.clear();
-          _G.gfx.lineStyle(1,_S.color("#cccccc"),0.2);
           for(let i=1;i<_G.rows;++i){
             _G.gfx.moveTo(sx,sy+i*_G.tileH);
             _G.gfx.lineTo(ex,sy+i*_G.tileH);
@@ -119,6 +118,7 @@
             _G.gfx.moveTo(sx+i*_G.tileW,sy);
             _G.gfx.lineTo(sx+i*_G.tileW,ey);
           }
+          _G.gfx.stroke({width:1,color:_S.color("#cccccc"), alpha:0.2});
         }
       },
       dispose(){
@@ -141,7 +141,8 @@
         _I.off(["single.tap"],"single_tap_cb",self);
       },
       setup(){
-        let self=this,
+        let
+          self=this,
           H=Mojo.u.rows,
           W=Mojo.u.cols,
           K=Mojo.getScaleFactor();
@@ -212,6 +213,8 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("HUD",{
       setup(){
         let K=Mojo.getScaleFactor(), LW=30*K;
@@ -219,10 +222,10 @@
         this.insert(_S.rect(Mojo.width,_G.vbox.y1, 0));
         this.insert(_S.bboxFrame(_G.vbox,LW));
         this.insert(this.g.score= _S.bmpText("Score: 0", UI_FONT,84*K));
-        let Y = _M.ndiv(Mojo.height,2),
-            X = _M.ndiv(_G.vbox.x1,2),
+        let Y = int(Mojo.height/2),
+            X = int(_G.vbox.x1/2),
             r= _S.rect(_G.tileW*6,_G.tileH*6,0);
-        _V.set(r, X - _M.ndiv(r.width,2), Y - _M.ndiv(r.height,2));
+        _V.set(r, X - int(r.width/2), Y - int(r.height/2));
         _G.previewBox=r;
         ////////
         _G.gameScene.insert(_S.bboxFrame({x1:r.x, y1:r.y,
@@ -267,7 +270,7 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
-  window.addEventListener("load",()=> MojoH5({
+  MojoH5Ldr({
     assetFiles: ["click.mp3","line.mp3",
                  "audioOn.png","audioOff.png",
                  "tile.png", "bg.jpg", "game_over.mp3"],
@@ -277,8 +280,7 @@
     cols:12,
     rows:22,
     start(...args){ scenes(...args) }
-
-  }));
+  });
 
 })(this);
 

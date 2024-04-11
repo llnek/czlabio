@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -40,7 +40,7 @@
       cloneBody(scene){
         const mkOneCell=(row,col,x,y)=>{
           let s= _S.sprite("snake.png");
-          _S.anchorXY(s,0.5);
+          _S.centerAnchor(s);
           s.g.row=row;
           s.g.col=col;
           _S.scaleXY(s,this.scaleX, this.scaleY);
@@ -162,8 +162,8 @@
                          [this.tileW, this.tileH]),
           dir=_.randItem([Mojo.UP,Mojo.LEFT,Mojo.DOWN,Mojo.RIGHT]);
 
-        _S.anchorXY(h,0.5);
-        _S.anchorXY(s,0.5);
+        _S.centerAnchor(h);
+        _S.centerAnchor(s);
 
         this.snakeMove={};
         this.snakeDir=dir;

@@ -9,12 +9,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 (function(window,UNDEF){
 
   "use strict";
 
+  const TILE_SHEET="images/tiles.json";
+
+  ////////////////////////////////////////////////////////////////////////////
   /**/
   function scenes(Mojo){
     const {Sprites:_S,
@@ -28,8 +31,9 @@
            ute:_,is}=Mojo;
     const int=Math.floor;
 
+    ////////////////////////////////////////////////////////////////////////////
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       C_TITLE=_S.color("#fff20f"),
       C_NUM=_S.color("#24a159"),
       C_ORANGE=_S.color("#f4d52b"),
@@ -50,18 +54,24 @@
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     /**Show the mine, then play the animation of explosion. */
     function boom(scene,cell){
-      let x,y,s= _S.anchorXY(_S.sprite("mine.png"),0.5);
+      let x,y,s= _S.centerAnchor(_S.spriteFrame(TILE_SHEET, "mine.png"));
+      let K=Mojo.getScaleFactor();
       [x,y]=_S.centerXY(cell.sprite);
       s.x=x; s.y=y;
       _S.sizeXY(s,cell.sprite.width, cell.sprite.height);
-      _S.scaleBy(s,0.8, 0.8);
+      _S.scaleBy(s,0.8*K, 0.8*K);
       _S.hide(cell.sprite);
       //show the mine
       scene.insert(s);
       //play the explosion animation
-      s= _S.spriteFrom("boom0.png","boom1.png","boom2.png",
-                       "boom3.png","boom4.png","boom5.png","boom6.png");
-      _S.anchorXY(s,0.5);
+      s= _S.spriteFrom(Mojo.ssf(TILE_SHEET,"boom0.png"),
+                       Mojo.ssf(TILE_SHEET,"boom1.png"),
+                       Mojo.ssf(TILE_SHEET,"boom2.png"),
+                       Mojo.ssf(TILE_SHEET,"boom3.png"),
+                       Mojo.ssf(TILE_SHEET,"boom4.png"),
+                       Mojo.ssf(TILE_SHEET,"boom5.png"),
+                       Mojo.ssf(TILE_SHEET,"boom6.png"));
+      _S.centerAnchor(s);
       s.x=x; s.y=y;
       //animate once only
       s.loop=false;
@@ -71,7 +81,6 @@
         _.delay(100,()=>{
           _S.remove(s);//clear the explosion
           _.delay(100,()=> _Z.modal("EndGame",{
-
             fontSize:64*Mojo.getScaleFactor(),
             replay:{name:"MainMenu"},
             quit:{name:"Splash", cfg:SplashCfg},
@@ -89,9 +98,11 @@
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     /**when the flag is dropped onto a cell */
     function onDropped(scene,B){
-      let found,
-          rows=_G.grid.length,
-          cols=_G.grid[0].length;
+      let
+        found,
+        rows=_G.grid.length,
+        cols=_G.grid[0].length,
+        K=Mojo.getScaleFactor();
       for(let y=0; y<rows; ++y){
         for(let s,cell,x=0; x<cols; ++x){
           cell= _G.grid[y][x];
@@ -104,9 +115,9 @@
               }else{
                 if(_G.minesCount>0) --_G.minesCount;
                 //place a flag on the cell
-                s=_S.anchorXY(_S.sprite("rflag.png"),0.5);
+                s=_S.centerAnchor(_S.spriteFrame(TILE_SHEET, "rflag.png"));
                 _S.sizeXY(s,cell.sprite.width,cell.sprite.height);
-                _S.scaleBy(s, 0.5, 0.5);
+                _S.scaleBy(s, 0.5*K, 0.5*K);
                 [s.x,s.y]= _S.centerXY(cell.sprite);
                 cell.marker=s;
                 scene.insert(s);
@@ -144,7 +155,7 @@
           cell.row=y;
           cell.col=x;
           g=_.randInt2(1,4);
-          cell.sprite= s=_S.sprite(`ground${g}.png`);
+          cell.sprite= s=_S.spriteFrame(TILE_SHEET, `ground${g}.png`);
           s.x=sx+cell.x1;
           s.y=sy+cell.y1;
           _S.sizeXY(s, cell.x2-cell.x1, cell.y2-cell.y1);
@@ -172,19 +183,21 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function showAll(scene){
-      let rows=_G.grid.length,
-          cols=_G.grid[0].length;
+      let
+        rows=_G.grid.length,
+        cols=_G.grid[0].length,
+        K=Mojo.getScaleFactor();
       for(let y=0;y<rows;++y){
         for(let n,s,cell,x=0;x<cols;++x){
           cell=_G.grid[y][x];
           if(!cell.opened){
             n= cell.value==9? "mine.png": `${cell.value}.png`;
-            s=_S.anchorXY(_S.sprite(n),0.5);
+            s=_S.centerAnchor(_S.spriteFrame(TILE_SHEET, n));
             _S.sizeXY(s,cell.sprite.width, cell.sprite.height);
             if(cell.value==9){
-              _S.scaleBy(s, 0.8,0.8);
+              _S.scaleBy(s, 0.8*K,0.8*K);
             }else{
-              _S.scaleBy(s, 0.5, 0.5);
+              _S.scaleBy(s, 0.5*K, 0.5*K);
               s.tint=_S.color("#e2e55c");
             }
             [s.x,s.y]=_S.centerXY(cell.sprite);
@@ -219,13 +232,11 @@
         _G.lastWin=1;
         showAll(scene);
         _.delay(100, ()=>_Z.modal("EndGame",{
-
           fontSize:64*Mojo.getScaleFactor(),
           replay:{name:"MainMenu"},
           quit:{name:"Splash", cfg:SplashCfg},
           msg:"You Win!",
           winner:1
-
         }));
       }
     }
@@ -236,7 +247,7 @@
       let n=rows*cols, x,y,p,t=0;
       while(t<target){
         p=_.randInt2(0,n-1);
-        y=_M.ndiv(p,cols);
+        y=int(p/cols);
         x=p%cols;
         if(_G.grid[y][x].value != V_MINE){
           ++t;
@@ -272,17 +283,18 @@
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function expand(scene,row,col){
       if(!isValid(row,col)){return 0}
-      let sum=0,
-        x,y,s,
-        cell= _G.grid[row][col];
+      let
+        x,y,s, sum=0,
+        K=Mojo.getScaleFactor(),
+        cell = _G.grid[row][col];
       if(!cell.opened && cell.value!=V_MINE && cell.value != V_MARKER){
         _S.hide(cell.sprite);
         cell.opened=true;
         sum=1;
         if(cell.value!=0){
-          s=_S.anchorXY(_S.sprite(`${cell.value}.png`),0.5);
+          s=_S.centerAnchor(_S.spriteFrame(TILE_SHEET, `${cell.value}.png`));
           _S.sizeXY(s,cell.sprite.width, cell.sprite.height);
-          _S.scaleBy(s, 0.5, 0.5);
+          _S.scaleBy(s, 0.5*K, 0.5*K);
           s.tint=_S.color("#e2e55c");
           [s.x,s.y]=_S.centerXY(cell.sprite);
           //show the hint number
@@ -302,19 +314,17 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const initBg=(s)=> _S.repeatSprite("grass.png",true,true,Mojo.width,Mojo.height).forEach(s=>scene.insert(s));
-
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function initHud(scene){
-      let s1,s2,c,s,
-        gap=10,
-        fz=Mojo.getScaleFactor() * 36;
-      s= _G.flag=_S.sprite("box.png");
-      s.addChild(c= _S.sprite("rflag.png"));
-      _S.anchorXY(c,0.5);
+      let
+        s1,s2,c,s, gap=10,
+        K=Mojo.getScaleFactor(), fz=K* 36;
+
+      s= _G.flag=_S.spriteFrame(TILE_SHEET, "box.png");
+      s.addChild(c= _S.spriteFrame(TILE_SHEET, "rflag.png"));
+      _S.centerAnchor(c);
       [c.x,c.y]= _S.centerXY(s);
       _S.sizeXY(s,_G.CELLW, _G.CELLH);
-      _S.scaleBy(c,0.5,0.5);
+      _S.scaleBy(c,0.5*K,0.5*K);
       _I.makeDrag(s);
       s.m5.onDragDropped=()=>{
         onDropped(scene, _G.flag);
@@ -332,9 +342,9 @@
       s.tint=C_TITLE;
       _S.pinAbove(_G.bg,s,gap,0);
       scene.insert(s);
-      s1=_S.sprite("mine.png");
+      s1=_S.spriteFrame(TILE_SHEET, "mine.png");
       _S.sizeXY(s1,_G.CELLW, _G.CELLH);
-      _S.scaleBy(s1, 0.6, 0.6);
+      _S.scaleBy(s1, 0.6*K, 0.6*K);
       s.x += s1.width+gap;
       _S.pinLeft(s,s1,gap,0.5);
       scene.insert(s1);
@@ -345,7 +355,7 @@
       scene.insert(s);
       s1=_S.sprite("clock.png");
       _S.sizeXY(s1,_G.CELLW, _G.CELLH);
-      _S.scaleBy(s1, 0.6, 0.6);
+      _S.scaleBy(s1, 0.6*K, 0.6*K);
       _S.pinLeft(s,s1,gap,0.5);
       scene.insert(s1);
       //for the timer
@@ -364,14 +374,17 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const doBackDrop=(s)=>{
-      _S.repeatSprite("grass.png",true,true,Mojo.width,Mojo.height).forEach(p=>s.insert(p));
+      _S.repeatSprite(
+        Mojo.sheet(TILE_SHEET,"grass.png"),
+        true,true,Mojo.width,Mojo.height).forEach(p=>s.insert(p));
       return s;
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     _Z.scene("MainMenu",{
       setup(){
-        let self=this,
+        let
+          self=this,
           K=Mojo.getScaleFactor(),
           s,b1,b2,b3,gap,pad,fz=K*64;
         s=_S.bmpText("Easy",UI_FONT,fz);
@@ -403,7 +416,8 @@
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     _Z.scene("GamePlay",{
       setup(options){
-        const self=this,
+        const
+          self=this,
           K=Mojo.getScaleFactor();
         let s,w,h,bb,dim=Mojo.u.dimXY;
 
@@ -437,12 +451,10 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //one small step for...
-  window.addEventListener("load",()=> MojoH5({
-
+  MojoH5Ldr({
     assetFiles: ["clock.png", "audioOn.png","audioOff.png",
                  "click.mp3", "boom.mp3","expand.mp3",
-                 "drop.mp3","game_over.mp3","game_win.mp3","tiles.png","images/tiles.json"],
-    XXassetFiles:["1.png","2.png","3.png","4.png","5.png","6.png","7.png","8.png","boom.mp3", "boom0.png","boom1.png","boom2.png","boom3.png","boom4.png","boom5.png","boom6.png", "grass.png","ground1.png","ground2.png","ground3.png","ground4.png","mine.png","rflag.png","box.png"],
+                 "drop.mp3","game_over.mp3","game_win.mp3", TILE_SHEET],
     arena: {width: 920, height: 920},
     scaleToWindow:"max",
     scaleFit:"y",
@@ -452,9 +464,8 @@
       3: [30,16,99]
     },
     dimXY: null,
-    //fps:30,
     start(...args){ scenes(...args) }
-  }));
+  });
 
 })(this);
 

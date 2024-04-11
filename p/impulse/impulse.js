@@ -10,12 +10,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2013-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2013-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
   "use strict";
 
+  ////////////////////////////////////////////////////////////////////////////
   function scenes(Mojo){
 
     const IE=window["io/czlab/impulse_engine/core"]();
@@ -30,8 +31,9 @@
            v2:_V,
            ute:_,is}=Mojo;
 
+    ////////////////////////////////////////////////////////////////////////////
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       SplashCfg= {
         footerMsgSize: 12*Mojo.getScaleFactor(),
         titleSize: 80*Mojo.getScaleFactor(),
@@ -41,6 +43,8 @@
         action: {name:"PlayGame"}
       };
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     _Z.scene("PlayGame", {
       _initLevel(){
@@ -98,19 +102,19 @@
         _I.on(["mouseup"],"onClick",this);
       },
       _drawPolygon(ctx,b,K){
-        ctx.lineStyle(1*K,_S.color(b.rgb));
         let ps=b.shape._calcPoints().map(p=>new PIXI.Point(p[0],p[1]));
-        ctx.drawPolygon(ps);
+        ctx.poly(ps);
+        ctx.stroke({width:1*K,color:_S.color(b.rgb)});
       },
       _drawCircle(ctx,b,K){
-        ctx.lineStyle(1,_S.color(b.rgb));
-        ctx.drawCircle(b.position[0], b.position[1],b.shape.radius);
+        ctx.circle(b.position[0], b.position[1],b.shape.radius);
+        ctx.stroke({width:1,color:_S.color(b.rgb)});
         let r=Mat2.mul(b.shape.u,_V.vec(1,0));
         r=_V.mul(r,b.shape.radius);
         r= _V.add(r, b.position);
-        ctx.lineStyle(1,_S.color("green"));
         ctx.moveTo(b.position[0],b.position[1]);
         ctx.lineTo(r[0],r[1]);
+        ctx.stroke({width:1,color:_S.color("yellow")});
       },
       postUpdate(dt){
         let w= _G.world,
@@ -153,16 +157,14 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
-  window.addEventListener("load",()=> MojoH5({
-
+  MojoH5Ldr({
     assetFiles: ["click.mp3"],
     arena: {width: 800, height: 640},
     scaleToWindow: "max",
     scaleFit:"y",
     iterations:10,
     start(...args){ scenes(...args) }
-
-  }));
+  });
 
 })(this);
 

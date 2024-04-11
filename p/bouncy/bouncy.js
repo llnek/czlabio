@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -32,7 +32,7 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       SplashCfg= {
         title:"Bouncy Balls",
         action: {name:"PlayGame"},
@@ -40,6 +40,8 @@
       };
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function _onSelected(self){
       if(_G.selectedBall){
         //draw the rubberband between the mouse and the marble
@@ -51,6 +53,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function _offSelected(self){
       if(Mojo.mouse.isUp){
         let K=Mojo.getScaleFactor();
@@ -70,17 +74,20 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function _moveXY(self,m,dt){
       if(Mojo.mouse.isDown && !_G.selectedBall && Mojo.mouse.hitTest(m)){
         _V.set(m.m5.vel,0,0);
         _G.selectedBall = m;
       }
       _V.mul$(m.m5.vel,m.m5.friction);
-      _S.move(m,dt);
-      _S.clamp(m,_G.arena,true);
+      _S.clamp(_S.move(m,dt),_G.arena,true);
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function _hitAll(s,objs){
       objs.forEach(o=>{
         if(o !== s)
@@ -89,7 +96,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    //use default spatial grid
+    /*use default spatial grid */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame",{
       setup(){
         let
@@ -110,7 +118,7 @@
                 m= _S.animation("balls.png", 166, 166);
                 m.m5.showFrame(_.randInt2(0,5));
                 m.m5.circle=true;
-                _S.anchorXY(m,0.5);
+                _S.centerAnchor(m);
                 _V.set(m,_M.ndiv(g.x1+g.x2,2),
                          _M.ndiv(g.y1+g.y2,2));
                 _S.sizeXY(m, rr=SIZES[_.randInt2(0, 7)],rr);
@@ -123,7 +131,7 @@
             }
             if(1){
               let s= _S.bmpText("Grab a ball and pull!",UI_FONT,24*K);
-              _S.anchorXY(s,0.5);
+              _S.centerAnchor(s);
               _S.pinAbove(pbox,s,s.height);
               self.insert(s);
             }
@@ -131,7 +139,7 @@
             _G.arena=Mojo.mockStage(out);
             _V.set(_G.arena,0,0);
             //make a line that will connect the mouse to the marbles
-            _G.sling= _S.line("yellow",4*K, [0,0],[32,32]);
+            _G.sling= _S.line("white",4*K, [0,0],[32,32],0.5);
             self.insert(_S.hide(_G.sling));
             self.insert(_S.bboxFrame(pbox));
           }
@@ -192,15 +200,13 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load & run
-  window.addEventListener("load",()=> MojoH5({
-
+  MojoH5Ldr({
     assetFiles: ["balls.png","click.mp3"],
     arena: {width:1344, height:840},
     scaleToWindow:"max",
     scaleFit:"y",
     start(...args){ scenes(...args) }
-
-  }));
+  });
 
 })(this);
 

@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -86,7 +86,7 @@
         _S.scaleXY(s,self.iconScale[0],self.iconScale[1]);
         _V.set(_S.uuid(s,id),x,y);
         _.inject(s.g,props);
-        _I.mkBtn(_S.anchorXY(s,0.5));
+        _I.mkBtn(_S.centerAnchor(s));
         if(props.gval != 0){
           s.m5.enabled=false
         }

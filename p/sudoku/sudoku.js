@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -41,7 +41,7 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       SplashCfg= {
         title:"Sodoku",
         clickSnd:"click.mp3",
@@ -50,10 +50,12 @@
 
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const doBackDrop=(s)=> s.insert(_S.fillMax(_S.opacity(_S.sprite("bg.jpg"),1)));
+    const doBackDrop=(s)=> s.insert(_S.opacity(_S.fillMax("bg.jpg"),1));
     const playClick=()=> Mojo.sound("click.mp3").play();
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _.inject(_G,{
       DIM:9,
       D3:3,
@@ -62,23 +64,30 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _.inject(_G,{
       NUMINTS: _G.NUMS.map(n=> +n),
       NUMSTR: _G.NUMS.join("")
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const FONTCFG={fontName:UI_FONT,fontSize:196*Mojo.getScaleFactor()};
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
+    const FONTCFG={fontName:UI_FONT,fontSize:196*Mojo.getScaleFactor(),fill:_S.color("black")};
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function initCache(w,h,cache){
-      const cfg= FONTCFG,
+      const
+        cfg= FONTCFG,
         K=Mojo.getScaleFactor();
       _G.NUMS.forEach(n=>{
         let out=[],z=_G.NUMS.length+1;
         for(let c,s,i=0;i<z;++i){
-          s=_S.anchorXY(_S.sprite("cell.png"),0.5);
-          c=_S.anchorXY(_S.bmpText(n,cfg),0.5);
+          s=_S.centerAnchor(_S.sprite("cell.png"));
+          c=_S.centerAnchor(_S.bmpText(n,cfg));
           s.addChild(c);
           out.push(_S.sizeXY(s,w,h));
         }
@@ -88,6 +97,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function deselect(){
       if(_G.curMarked){
         _G.curMarked.g.marked=false;
@@ -97,6 +108,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function select(s){
       if(_G.curMarked!==s){
         _G.curMarked=s;
@@ -107,6 +120,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function erase(){
       let s= _G.curMarked;
       if(s && s.g.value !=0){
@@ -120,12 +135,16 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function idleColor(s){
       s.g.value=0;
       return whichColor(s);
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function assign(v){
       let s=_G.curMarked;
       if(s){
@@ -147,6 +166,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function whichColor(s){
       if(s.g.value != 0){
         s.tint=_S.color("#f1ad2e");
@@ -157,15 +178,21 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function addNum(s,v){
       s.removeChildren();
       s.addChild(_S.anchorXY(_S.bmpText(""+v,FONTCFG),0.5));
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     const delNum=(s)=> s.removeChildren();
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function undoMarked(s){
       s.g.marked=false;
       if(_G.curMarked){
@@ -175,6 +202,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     class Action{
       constructor(){ }
       postUndo(s){
@@ -189,6 +218,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     class Assignment extends Action{
       constructor(s,v){
         super();
@@ -202,6 +233,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     class Deletion extends Action{
       constructor(s){
         super()
@@ -215,9 +248,12 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("MainMenu",{
       setup(){
-        const self=this,
+        const
+          self=this,
           K=Mojo.getScaleFactor();
         _.inject(this.g,{
           doChoices(){
@@ -243,26 +279,30 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame",{
       setup(options){
-        const self=this,
+        const
+          self=this,
           K=Mojo.getScaleFactor(),
           lw=Math.max(2,int(2*K));
         _.inject(this.g,{
           drawGrid(grid,gfx){
             let h= grid.length,
               w= grid[0].length;
-            gfx.lineStyle(lw,_S.SomeColors.white);
             //horz lines
             gfx.moveTo(grid[2][0].x1,grid[2][0].y2);
             gfx.lineTo(grid[2][w-1].x2,grid[2][w-1].y2);
             gfx.moveTo(grid[5][0].x1,grid[5][0].y2);
             gfx.lineTo(grid[5][w-1].x2,grid[5][w-1].y2);
+            gfx.stroke({width:lw,color:_S.SomeColors.white});
             //vert lines
             gfx.moveTo(grid[0][2].x2,grid[0][2].y1);
             gfx.lineTo(grid[h-1][2].x2,grid[h-1][2].y2);
             gfx.moveTo(grid[0][5].x2,grid[0][5].y1);
             gfx.lineTo(grid[h-1][5].x2,grid[h-1][5].y2);
+            gfx.stroke({width:lw,color:_S.SomeColors.white});
             return gfx;
           },
           initLevel(){
@@ -300,7 +340,7 @@
                   s.g.value=0;
                   s.g.cell=true;
                   idleColor(s);
-                  _V.set(_S.anchorXY(s,0.5),cx,cy);
+                  _V.set(_S.centerAnchor(s),cx,cy);
                   s.m5.press=()=>{
                     if(_G.curMarked===s){
                       deselect();
@@ -317,12 +357,13 @@
             return this;
           },
           initSel(){
-            let K=Mojo.getScaleFactor(),
+            let
+              K=Mojo.getScaleFactor(),
               pad= 8 *K,
               g=_G.grid[0][0],
               w=g.x2-g.x1,
               p,h=g.y2-g.y1,
-              W=_S.SomeColors.white,
+              W=_S.SomeColors.black,//white,
               C=_S.color("#56d5ef");
             for(let n,i=0;i<_G.NUMINTS.length;++i){
               n=_G.NUMINTS[i];
@@ -348,8 +389,8 @@
               K=Mojo.getScaleFactor(),
               cy= _M.ndiv(g.y1 +g.y2,2),
               cx= int(g.x2 + 8*K + s.width/2);
-            _V.set(_S.anchorXY(s,0.5),cx,cy);
-            s.addChild(_S.anchorXY(_S.bmpText("U",FONTCFG),0.5));
+            _V.set(_S.centerAnchor(s),cx,cy);
+            s.addChild(_S.centerAnchor(_S.bmpText("U",FONTCFG)));
             s.m5.press=()=>{
               if(_G.prevAction){
                 _G.prevAction.undo();
@@ -361,8 +402,8 @@
             p=self.insert(_I.mkBtn(s));
             ///
             let s2=_S.sizeXY(_S.sprite("cell.png"),_G.tileW,_G.tileH);
-            _S.anchorXY(s2,0.5);
-            s2.addChild(_S.anchorXY(_S.bmpText("X",FONTCFG),0.5));
+            _S.centerAnchor(s2);
+            s2.addChild(_S.centerAnchor(_S.bmpText("X",FONTCFG)));
             s2.m5.press=()=> erase();
             s2.tint=_S.color("red");
             this.eraseBtn=s2;
@@ -409,8 +450,7 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load & run
-  window.addEventListener("load",()=> MojoH5({
-
+  MojoH5Ldr({
     assetFiles: ["bg.jpg","cell.png",
                  "audioOn.png","audioOff.png",
                  "game_over.mp3","game_win.mp3","click.mp3","error.mp3"],
@@ -418,8 +458,7 @@
     scaleToWindow:"max",
     scaleFit:"y",
     start(...args){ scenes(...args) }
-
-  }));
+  });
 
 })(this);
 

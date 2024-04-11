@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -26,6 +26,9 @@
   //earn you more points.
   //The game is won when you clear all the cards.
 
+  const TILE_SHEET="images/tiles.json";
+
+  ////////////////////////////////////////////////////////////////////////////
   /**/
   function scenes(Mojo){
     const {Scenes:_Z,
@@ -41,7 +44,7 @@
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //set up some globals
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       C_TEXT=_S.color("#fff20f"),
       SplashCfg= {
         footerMsgSize:40*Mojo.getScaleFactor(),
@@ -58,10 +61,12 @@
     //load in game dependencies
     window["io/czlab/tripeaks/models"](Mojo);
 
-    const doBackDrop=(s)=> s.insert(_S.fillMax(_S.sprite("bg.jpg")));
+    const doBackDrop=(s)=> s.insert(_S.fillMax("bg.jpg"));
     const playClick=()=> Mojo.sound("click.mp3").play();
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame",{
       flipDrawCard(){
         let dc=_G.model.getDrawCard();
@@ -80,7 +85,8 @@
         }
       },
       setup(){
-        const self=this,
+        const
+          self=this,
           K=Mojo.getScaleFactor();
         _.inject(this.g,{
           initLevel(){
@@ -117,7 +123,8 @@
               len=2,gap=10*K,
               width= len * _G.iconSize[0] + (len-1)*gap,
               left=_M.ndiv(Mojo.width-width,2),
-              pile= _S.spriteFrom("cardJoker.png", `${Mojo.u.stockPile}.png`);
+              pile= _S.spriteFrom(Mojo.ssf(TILE_SHEET,"cardJoker.png"),
+                                  Mojo.ssf(TILE_SHEET,`${Mojo.u.stockPile}.png`));
             _V.set(_I.mkBtn(pile),left,top);
             _S.scaleXY(pile,K,K);
             pile.m5.press=()=>{
@@ -222,40 +229,34 @@
         if(msg){
           _G.gameOver=true;
           _.delay(CLICK_DELAY, ()=> _Z.modal("EndGame", {
-
             fontSize:64*Mojo.getScaleFactor(),
             replay:{name:"PlayGame"},
             quit:{name:"Splash", cfg:SplashCfg},
             msg,
             winner:msg.includes("Win")
-
           }));
         }
       }
     });
-
 
     _Z.run("Splash", SplashCfg);
   }
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
-  window.addEventListener("load",()=> MojoH5({
-
+  MojoH5Ldr({
     assetFiles:["audioOn.png","audioOff.png",
                 "open.mp3","error.mp3",
                 "slide.mp3","pick.mp3",
                 "click.mp3",
-                "game_over.mp3","game_win.mp3",
-                "bg.jpg","tiles.png","images/tiles.json"],
+                "game_over.mp3","game_win.mp3", "bg.jpg",TILE_SHEET],
     //24x140, 10x190
     arena:{width:3360, height:1900},
     stockPile:"cardBack_red5",
     scaleToWindow:"max",
     scaleFit:"y",
     start(...args){ scenes(...args) }
-
-  }));
+  });
 
 })(this);
 

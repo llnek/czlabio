@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -41,7 +41,7 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       SplashCfg= {
         title:"NEAT/Flappy Bird",
         clickSnd:"click.mp3",
@@ -54,7 +54,11 @@
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const playClick=()=> Mojo.sound("click.mp3").play();
     const CLICK_DELAY=343;
+    const SPEED_TOP= _.randInt2(2,4);
+    const SPEED_BOT= _.randInt2(2,4);
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function Pipes(K,[x1,y1,h1],[x2,y2,h2]){
       let
@@ -68,15 +72,17 @@
       st.y=y1;
       sb.x=x2;
       sb.y=y2;
-      st.m5.speed=3*K;
-      sb.m5.speed=3*K;
+      st.m5.speed=SPEED_TOP * K; //3*K;
+      sb.m5.speed=SPEED_BOT * K; //5*K;
       return [st,sb];
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function Bird(self,K){
       let s= _S.sprite("bird.png");
-      _S.anchorXY(s,0.5);
+      _S.centerAnchor(s);
       _S.scaleXY(s,K,K);
       s.x = 80;
       s.y = 250;
@@ -105,6 +111,8 @@
       return self.insert(s);
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     _Z.scene("PlayGame",{
       setup(){
@@ -231,16 +239,14 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
-  window.addEventListener("load",()=> MojoH5({
-
+  MojoH5Ldr({
     assetFiles: ["bird.png","pipetop.png","pipebottom.png",
                  "menu.png","background.png","click.mp3"],
-    xarena: {width: 500, height: 512},
     arena: {width: 640, height: 640},
     scaleToWindow:"max",
     scaleFit:"x",
     start(...args){ scenes(...args) }
-  }));
+  });
 
 })(this);
 

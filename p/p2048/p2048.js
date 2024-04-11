@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -31,7 +31,7 @@
            ute:_, is}=Mojo;
 
     const
-      UI_FONT= "Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       SplashCfg= {
         title:"2048",
         clickSnd:"click.mp3",
@@ -40,20 +40,24 @@
 
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const _loadTiles=()=> [0,2,4,8,16, 32,64, 256,1024].map(n=> Mojo.tcached(`${n}.png`));
-    const doBackDrop=(s)=> s.insert( _S.fillMax(_S.sprite("bg.jpg")));
+    const _loadTiles=()=> [0,2,4,8,16, 32,64, 256,1024].map(n=> Mojo.resource(`${n}.png`));
+    const doBackDrop=(s)=> s.insert( _S.fillMax("bg.jpg"));
     const playClick=()=> Mojo.sound("click.mp3").play();
     const CLICK_DELAY=343;
     const DIM=4;
 
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
+    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function _mkTiles(scene){
-      let z=_S.sprite(_G.tileFrames[0]),
+      let
+        z=_S.sprite(_G.tileFrames[0]),
         t=_G.grid[0][0],
         w= t.x2-t.x1,
         h= t.y2-t.y1,
         K=w/z.width,
         out=_.fill(DIM, ()=> []);
+
       for(let pos,s,y=0;y<DIM;++y){
         for(let x=0;x<DIM;++x){
           out[y].push(0);
@@ -62,7 +66,7 @@
           s.g.ROW=y;
           s.g.COL=x;
           _S.scaleXY(s,K,K);
-          _S.anchorXY(s,0.5);
+          _S.centerAnchor(s);
           s.x= _M.ndiv(pos.x1+pos.x2,2);
           s.y= _M.ndiv(pos.y1+pos.y2,2);
           s.m5.showFrame(numToFrame(0));
@@ -73,6 +77,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function numToFrame(num){
       switch(num){
         case 0:return 0;
@@ -91,8 +97,11 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function setNumber(r,c,num){
-      let K= Mojo.getScaleFactor(),
+      let
+        K= Mojo.getScaleFactor(),
         n= numToFrame(num),
         s= _G.TILES[r*DIM+c];
       s.m5.showFrame(n);
@@ -100,22 +109,22 @@
       if(num>0){
         let t= _S.bmpText(`${num}`,UI_FONT,96*K);
         let c=n>2?"white":"black";
-        _S.anchorXY(_S.tint(t,_S.color(c)),0.5);
+        _S.centerAnchor(_S.tint(t,_S.color(c)));
         s.addChild(t);
       }
       if(num==2048)
         _.delay(CLICK_DELAY, ()=> _Z.run("EndGame", {
-
           fontSize:64*Mojo.getScaleFactor(),
           replay:{name:"PlayGame"},
           quit:{name:"Splash", cfg:SplashCfg},
           msg:"You Win!",
           winner:1
-
         }));
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function postSwipe(){
       let p,z,out=[];
       for(let y=0;y<DIM;++y)
@@ -141,18 +150,18 @@
         setNumber(r[0],r[1],_.rand()>0.5?4:2)
       }else{
         _.delay(CLICK_DELAY, ()=> _Z.modal("EndGame",{
-
           fontSize:64*Mojo.getScaleFactor(),
           replay:{name:"PlayGame"},
           quit:{name:"Splash", cfg:SplashCfg},
           msg:"You Lose!",
           winner:0
-
         }));
       }
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function refreshTiles(){
       _G.TILES.forEach(t=> t.removeChildren());
       Mojo.sound("slide.mp3").play();
@@ -163,6 +172,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _.inject(_G,{
       swipeRight(){
         this.tiles.forEach(r=>this.compress(r,true));
@@ -232,6 +243,8 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame",{
       dispose(){
         _I.off(["swipe.down"],"swipeDown",_G);
@@ -288,8 +301,7 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
-  window.addEventListener("load", ()=>MojoH5({
-
+  MojoH5Ldr({
     assetFiles: ["0.png","2.png","4.png",
                  "8.png", "16.png","32.png",
                  "64.png", "256.png","1024.png","bg.jpg",
@@ -298,8 +310,7 @@
     scaleToWindow: "max",
     scaleFit: "y",
     start(...args){ scenes(...args) }
-
-  }));
+  });
 
 })(this);
 

@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -33,10 +33,13 @@
            ute:_,is}=Mojo;
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const Core= window["io/czlab/mcfud/core"](),
+    const
+      Core= window["io/czlab/mcfud/core"](),
       GA= window["io/czlab/mcfud/algo/NNetGA"](Core);
+
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    const READY  = 4,
+    const
+      READY  = 4,
       TRAINING = 1,
       ACTIVE   = 2,
       LEARNING = 3,
@@ -50,14 +53,13 @@
 
 		//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       SplashCfg= {
         titleSize: 70*Mojo.getScaleFactor(),
         title:"Supervised Learning",
         action: {name:"PlayGame"},
         clickSnd:"click.mp3",
       };
-
 
     const VECNAMES= ["Right", "Left", "Down", "Up",
 					           "CW Square", "CCW Square",
@@ -96,6 +98,8 @@
 		}
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function networkTrainingCycle(nnet, learnRate, setIn, setOut){
       nnet.errorSum = 0;
       for(let err,outputs,vec=0;vec<setIn.length;++vec){
@@ -131,6 +135,8 @@
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     function train(nnet,learnRate,data,async){
       let {setIn,setOut} = data;
       _.assert(setIn.length == setOut.length &&
@@ -171,11 +177,13 @@
       }
     }
 
-
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame",{
       setup(){
-        const self=this,
+        const
+          self=this,
           K=Mojo.getScaleFactor();
         _.inject(this.g,{
           showTitle(){
@@ -196,7 +204,7 @@
             this.drawing = false;
             this.clear();
             s=_S.bmpText(`${verb} to train the AI...`,UI_FONT,32*K);
-            _S.anchorXY(s,0.5);
+            _S.centerAnchor(s);
             _V.set(s,Mojo.width/2,Mojo.height/2);
             self.insert(s);
             function cb(){
@@ -210,7 +218,7 @@
             /////
             let m=this.msgText=_S.bmpText(" ",UI_FONT,32*K);
             _S.pinBelow(_G.arena,m,-m.height*2);
-            _S.anchorXY(m,0.5);
+            _S.centerAnchor(m);
             _S.hide( self.insert(m));
           },
           clear(){
@@ -328,7 +336,6 @@
             }
             if(this.path.length < 2){return}
             this.gfx.clear();
-            this.gfx.lineStyle(1,_S.SomeColors.white);
             for(let p,i=0,z=this.path.length; i<z;++i){
               p=this.path[i];
               this.gfx.moveTo(p[0],p[1]);
@@ -337,11 +344,12 @@
               }
               this.gfx.lineTo(p[0],p[1]);
             }
+            this.gfx.stroke({width:1,color:_S.SomeColors.white});
             if(!this.isDrawing() && this.smoothPath.length>0){
-              this.gfx.lineStyle(1,_S.BtnColors.red);
               for(let p,i=0;i<this.smoothPath.length;++i){
                 p=this.smoothPath[i];
-                this.gfx.drawCircle(p[0],p[1],5);
+                this.gfx.circle(p[0],p[1],5);
+                this.gfx.stroke({width:1,color:_S.BtnColors.red});
               }
             }
           },
@@ -419,9 +427,12 @@
     });
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    /* */
+    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("Trainer",{
       setup(){
-        let self=this,
+        let
+          self=this,
           K=Mojo.getScaleFactor(),
           os={fontName:UI_FONT,fontSize:24*K},
           space=()=> _S.opacity(_S.bmpText("I",os),0),
@@ -435,7 +446,7 @@
         s6.tint=_S.BtnColors.green;
         _S.hide(s6);
         this.g.readyBtn=s6;
-        _S.anchorXY(s5,0.5);
+        _S.centerAnchor(s5);
         _S.pinBelow(y,s5,s5.height);
         self.insert(this.g.status=s5);
       },
@@ -475,15 +486,13 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
-  window.addEventListener("load",()=> MojoH5({
-
+  MojoH5Ldr({
     assetFiles: ["click.mp3","coin.mp3"],
     arena: {width: 1344, height: 840},
     scaleToWindow:"max",
     scaleFit:"x",
     start(...args){ scenes(...args) }
-
-  }));
+  });
 
 })(this);
 

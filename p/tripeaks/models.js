@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(global,UNDEF){
 
@@ -20,7 +20,8 @@
   global["io/czlab/tripeaks/models"]=function(Mojo){
 
     //Ace = 1, K = 13
-    const MAX_VALUE = 13,
+    const
+      MAX_VALUE = 13,
       MIN_VALUE = 1,
       DIAMONDS=1,
       CLUBS=2,
@@ -37,6 +38,8 @@
            math:_M,
            ute:_,is}=Mojo;
 
+    const TILE_SHEET="images/tiles.json";
+
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const SUITS = [DIAMONDS, CLUBS, HEARTS, SPADES];
     const CARD_SUITS=(function(obj){
@@ -47,7 +50,9 @@
       return obj;
     })({});
 
+    ////////////////////////////////////////////////////////////////////////////
     /**Reveal the card and make it draggable */
+    ////////////////////////////////////////////////////////////////////////////
     function flipExposed(){
       _G.model.getExposed().forEach(c=>{
         if(c){
@@ -57,17 +62,23 @@
       })
     }
 
+    ////////////////////////////////////////////////////////////////////////////
     /**A card has been dropped */
+    ////////////////////////////////////////////////////////////////////////////
     const dropDrawCard=(c)=> Mojo.emit(["flip.draw",c.parent]);
 
+    ////////////////////////////////////////////////////////////////////////////
     /**Get rid of this card */
+    ////////////////////////////////////////////////////////////////////////////
     function snuffOut(c){
       const {row,col}=c.g;
       _S.remove(c);
       _G.model.delCardAt(row,col)
     }
 
+    ////////////////////////////////////////////////////////////////////////////
     /**Rules to decide how many points to be added */
+    ////////////////////////////////////////////////////////////////////////////
     function _calcScore(a,b){
       let bonus=0,n=10,x=1;
       if(a.g.value==13 && b.g.value==13){
@@ -84,7 +95,9 @@
       _G.score += n*x + bonus;
     }
 
+    ////////////////////////////////////////////////////////////////////////////
     /**/
+    ////////////////////////////////////////////////////////////////////////////
     function _checkDropped(s){
       let found,
         es=_G.model.getExposed(),
@@ -121,15 +134,18 @@
       }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
     /**Create a Card object */
+    ////////////////////////////////////////////////////////////////////////////
     function Card(suit,value){
       _.assert(value >= MIN_VALUE &&
                value <= MAX_VALUE, `Bad Value ${value}`);
-      const symbol = value==10?"10":SYMBOLS[value],
+      const
+        symbol = value==10?"10":SYMBOLS[value],
         K=Mojo.getScaleFactor(),
         cs=CARD_SUITS[suit],
-        s= _S.spriteFrom(`${Mojo.u.stockPile}.png`,
-                         `card${cs}${symbol}.png`); //front and back
+        s= _S.spriteFrom(Mojo.ssf(TILE_SHEET,`${Mojo.u.stockPile}.png`),
+                         Mojo.ssf(TILE_SHEET,`card${cs}${symbol}.png`)); //front and back
       //scale the card,make it nice and even
       if(!_G.iconSize){
         let w,h;
@@ -147,11 +163,14 @@
       return _S.sizeXY(s, _G.iconSize[0], _G.iconSize[1]);
     }
 
+    ////////////////////////////////////////////////////////////////////////////
     /**/
+    ////////////////////////////////////////////////////////////////////////////
     Card.getSingleDeckSize=function(){
       return 4 * MAX_VALUE
     }
 
+    ////////////////////////////////////////////////////////////////////////////
     /** @class */
     class PyramidSolitaire{
       constructor(scene,numPeaks){
@@ -181,20 +200,25 @@
         }
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       getCards(row){
         if(this.validRow(row)) return this.board[row]
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       setDrawCard(c){ this.drawer= c }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       getDrawCard(){ return this.drawer }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       setRowWidth(row, w){ this.boardWidths[row]=w }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       _allocateModel(rows, cols){
         this.board=[];
@@ -203,11 +227,13 @@
           this.board[r]=_.fill(cols,null)
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       validXY(row, card){
         return this.validRow(row) && this.validCol(card)
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       validCol(c){
         return this.board &&
@@ -215,39 +241,49 @@
                c >= 0 && c < this.board[0].length
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       validRow(r){
         return this.board && r >= 0 && r < this.board.length
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       lastRowIndex(){
         return this.board ? this.board.length-1 : -1
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       getRowWidth(row){
         return (this.boardWidths && this.validRow(row)) ? this.boardWidths[row] : -1
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       assertState(cond, msg){ _.assert(cond,msg) }
+
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       assertArg(cond, msg){ _.assert(cond,msg) }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       getCardSet(){ return new Set(getSingleDeck()) }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**Adding the 2 cards equals 13 */
       checkRule2(a, b){
         return a && b && (a.g.value + b.g.value) == MAX_VALUE
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**The card is a King */
       checkRule1(a){
         return a && a.g.value == MAX_VALUE
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       checkRules(a,b){
         //2 kings or a+b=13
@@ -255,12 +291,14 @@
                (a.g.value===b.g.value && a.g.value==MAX_VALUE)
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       delCardAt(row, card){
         if(this.board)
           this.board[row][card] = null
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       setCardAt(row, card, c){
         if(this.board){
@@ -270,6 +308,7 @@
         }
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       getSingleDeck(){
         const deck = [];
@@ -279,6 +318,7 @@
         return deck;
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**Create a peak */
       _initPeak(left, size, input, calcRowWidth){
         for(let rmost,i=0; i<size; ++i){
@@ -295,6 +335,7 @@
         }
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       startGame(deck1, numRows=7, numDraw=1){
         this.assertArg(numRows >= 0, "Rows in pyramid < 0");
@@ -312,6 +353,7 @@
           this.setDrawCard(this.stockPile.shift())
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**Are we all done? */
       isPeakEmpty(){
         for(let r,i=0; i<this.getNumRows(); ++i){
@@ -323,6 +365,7 @@
         return true;
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       isCardExposed(row, card){
         let rc;
@@ -339,6 +382,7 @@
         return rc;
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**Maybe get a new draw card */
       discardDraw(){
         let c;
@@ -348,12 +392,14 @@
         return this.getDrawCard();
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       getNumRows(){
         // how many rows in the pyramid
         return this.board ? this.board.length : -1
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       getExposed(){
         const remains = [];
@@ -366,11 +412,13 @@
         return remains;
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       isPileEmpty(){
         return this.stockPile.length==0
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       isGameStuck(){
         //if stockPile is not empty, then game can always continue
@@ -401,16 +449,19 @@
         return true;
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       someCardAt(row, card){
         return !!this.getCardAt(row, card)
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       noCardAt(row, card){
         return !this.someCardAt(row, card)
       }
 
+      ////////////////////////////////////////////////////////////////////////////
       /**/
       getCardAt(row, card){
         this.assertArg(this.validXY(row, card), "Invalid card position.");
@@ -418,6 +469,7 @@
       }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
     /** @class */
     class OnePeak extends PyramidSolitaire{
       constructor(scene){
@@ -428,6 +480,7 @@
       }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
     /** @class */
     class TriPeak extends PyramidSolitaire{
       constructor(scene){

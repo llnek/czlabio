@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -23,7 +23,8 @@
            Game:_G,
            ute:_, is}=Mojo;
 
-    const D_GREEN= "#1B8463",
+    const
+      D_GREEN= "#1B8463",
       L_GREEN= "#26AE88",
       D_RED= "#B02722",
       L_RED="#DC352E",

@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Copyright © 2020-2022, Kenneth Leung. All rights reserved. */
+ * Copyright © 2020-2024, Kenneth Leung. All rights reserved. */
 
 ;(function(window,UNDEF){
 
@@ -35,6 +35,7 @@
            math:_M,
            ute:_,is}=Mojo;
 
+    ////////////////////////////////////////////////////////////////////////////
     const Core= window["io/czlab/mcfud/core"]();
 
     const ROTATE_LEFT=0,
@@ -47,6 +48,7 @@
 	  const SPEED_TOLERANCE= 4;
 	  const ROTATION_TOLERANCE= 0.1;
 
+    ////////////////////////////////////////////////////////////////////////////
     // Default physical constants for the game
     const DEFAULT_MASS = 6000;        // Roughly based on LEM (4000 accent module + dry decent module)
     const DEFAULT_FUEL = 8000;        // Fuel on the decent module
@@ -68,7 +70,7 @@
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
-      UI_FONT="Doki Lowercase",
+      UI_FONT=Mojo.DOKI_LOWER,
       SplashCfg= {
         title:"Moon Lander",
         clickSnd:"click.mp3",
@@ -79,6 +81,8 @@
     const playClick=()=> Mojo.sound("click.mp3").play();
     const CLICK_DELAY=343;
 
+    ////////////////////////////////////////////////////////////////////////////
+    /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     _Z.scene("PlayGame",{
       setup(){
@@ -184,7 +188,6 @@
             };
             p.x=_.randInt2(Mojo.width*0.1,Mojo.width*0.9);
             _G.player= self.insert(p,true);
-
           }
         });
         function cb(){
@@ -231,13 +234,11 @@
             this.m5.dead=true;
             _.delay(CLICK_DELAY,()=>{
               _Z.modal("EndGame",{
-
                 fontSize:64*Mojo.getScaleFactor(),
                 replay:{name:"PlayGame"},
                 quit:{name:"Splash", cfg:SplashCfg},
                 msg: ok?"You Win!":"You Lose!",
                 winner:ok
-
               })
             });
             break;
@@ -251,16 +252,14 @@
 
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
-  window.addEventListener("load",()=> MojoH5({
-
+  MojoH5Ldr({
     assetFiles: ["lander.png","click.mp3","fire.mp3",
                  "explosion.mp3","game_over.mp3","game_win.mp3"],
     arena: {width: 1344, height: 840},
     scaleToWindow:"max",
     scaleFit:"x",
     start(...args){ scenes(...args) }
-
-  }));
+  });
 
 })(this);
 
