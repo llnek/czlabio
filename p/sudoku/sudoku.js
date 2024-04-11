@@ -43,7 +43,7 @@
     const
       UI_FONT=Mojo.DOKI_LOWER,
       SplashCfg= {
-        title:"Sodoku",
+        title:"Sudoku",
         clickSnd:"click.mp3",
         action: {name:"MainMenu"}
       };
