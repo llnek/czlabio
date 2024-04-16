@@ -467,7 +467,7 @@
         this.insert(this.g.lapTime=s);
         _.inject(this.g,{
           initHotspots(){
-            let cfg={fontName:UI_FONT,fontSize:48*K};
+            let cfg={fontName:UI_FONT,fontSize:32*K};
             let alpha=0.2,grey=_S.color("#cccccc");
             let fw=132*K,fh=36*K,lw=4*K;
             let L,U,R,D,offX, offY;

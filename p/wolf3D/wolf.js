@@ -16,11 +16,13 @@
 
   "use strict";
 
+  ////////////////////////////////////////////////////////////////////////////
   /**Checkout the excellent articles and code from
    * https://permadi.com/1996/05/ray-casting-tutorial-table-of-contents/
    */
   function scenes(Mojo){
 
+    ////////////////////////////////////////////////////////////////////////////
     const {Sprites:_S,
            Scenes:_Z,
            Input:_I,
@@ -31,7 +33,9 @@
            math:_M,
            ute:_,is}=Mojo;
 
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ////////////////////////////////////////////////////////////////////////////
+    /** */
+    ////////////////////////////////////////////////////////////////////////////
     const
       UI_FONT=Mojo.DOKI_LOWER,
       SplashCfg= {
@@ -40,26 +44,29 @@
         action: {name:"PlayGame"}
       };
 
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ////////////////////////////////////////////////////////////////////////////
+    /** */
+    ////////////////////////////////////////////////////////////////////////////
     const playClick=()=> Mojo.sound("click.mp3").play();
     const CLICK_DELAY=343;
-    const FPSSUM= 24/60;
 
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ////////////////////////////////////////////////////////////////////////////
     const int = Math.floor;
     const cos= Math.cos;
     const sin=Math.sin;
 
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    // size of tile (wall height)
+    ////////////////////////////////////////////////////////////////////////////
+    /** size of tile (wall height) */
+    ////////////////////////////////////////////////////////////////////////////
     const
-      TILESZ = 64,
       WALL_HEIGHT = 64,
+      TILESZ = 64,
       MAPWIDTH=20,
       MAPDEPTH=20;
 
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    //Map
+    ////////////////////////////////////////////////////////////////////////////
+    /** Map */
+    ////////////////////////////////////////////////////////////////////////////
     const map1= "############"+
                 "#..........#"+
                 "#.....#.#..#"+
@@ -176,13 +183,20 @@
       return s;
     })("");
 
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ////////////////////////////////////////////////////////////////////////////
+    /** */
+    ////////////////////////////////////////////////////////////////////////////
     const vspace=(c)=> FMAP.charAt(c) == "." || FMAP.charAt(c) == "X";
+    ////////////////////////////////////////////////////////////////////////////
 
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    //you can tweak this by pointing to a different map
+    ////////////////////////////////////////////////////////////////////////////
+    /** you can tweak this by pointing to a different map */
+    ////////////////////////////////////////////////////////////////////////////
     const FMAP=map6;
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    ////////////////////////////////////////////////////////////////////////////
+    /** */
+    ////////////////////////////////////////////////////////////////////////////
     const
       BASEW=320,
       BASEH=200,
@@ -191,7 +205,7 @@
       PLAYERDIST_PROJPLANE = BASED,
       [PROJRATIO, PROJECTIONWIDTH, PROJECTIONHEIGHT] = (function(r){
         if(Mojo.width > 1680){
-          r= 4
+          r= 3.5//4
         }else if(Mojo.width > 1040){
           r= 3
         }else if(Mojo.width > 800){
@@ -199,11 +213,11 @@
         }else{
           r= 1
         }
-        return [r,BASEW*r,BASEH*r]
+        return [r,int(BASEW*r), int(BASEH*r)]
       })();
     _.log(`viewport width=${PROJECTIONWIDTH}, height=${PROJECTIONHEIGHT}`);
 
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ////////////////////////////////////////////////////////////////////////////
     // FOV = 60
     const
       ANGLE60 = BASEW,//PROJECTIONWIDTH;
@@ -218,7 +232,7 @@
       ANGLE10 = int(ANGLE5*2),
       ANGLE45 = int(ANGLE15*3);
 
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ////////////////////////////////////////////////////////////////////////////
     //trigonometric tables (the ones with "I" such as ISiTable are "Inverse" table)
     //static table to speed things up
     const
@@ -233,7 +247,7 @@
       ySTEP=8,
       TABLES=_.fill(9,i=> new Array(ANGLE360+1));
 
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ////////////////////////////////////////////////////////////////////////////
     (function(R){
       for(let v,r,i=0; i<=ANGLE360; ++i){
         r= i*R + 0.00001;// add tiny amount to avoid 0 (div by 0)
@@ -276,21 +290,21 @@
       }
     })(Math.PI/ANGLE180);
 
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    /* */
+    ////////////////////////////////////////////////////////////////////////////
+    /** */
     ////////////////////////////////////////////////////////////////////////////
     const doBackDrop=(s)=> s.insert(_S.fillMax("bg.jpg"));
 
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    /* */
+    ////////////////////////////////////////////////////////////////////////////
+    /** */
     ////////////////////////////////////////////////////////////////////////////
     function paintRect(gfx,x, y, w, h, c){
       gfx.rect(x, y, w, h);
       gfx.fill({color:_S.color(c)});
     }
 
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    /* */
+    ////////////////////////////////////////////////////////////////////////////
+    /** */
     ////////////////////////////////////////////////////////////////////////////
     function initPlayerPos(mapstr){
       let x,y,n,rc,i, a=mapstr.split("");
@@ -317,53 +331,8 @@
       _.log(`initial playerX= ${_G.playerX}, playerY= ${_G.playerY}, angle=${n[i]}`);
     }
 
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    /* */
     ////////////////////////////////////////////////////////////////////////////
-    _Z.scene("Ctrl",{
-      setup(){
-        let
-          self=this,
-          K=Mojo.getScaleFactor();
-        _.inject(this.g,{
-          initHotspots(){
-            let cfg={fontName:UI_FONT,fontSize:48*K},
-              alpha=0.2,grey=_S.SomeColors.grey,
-              L,U,R,D,offX, offY, fw=132*K,fh=42*K,lw=4*K;
-            //////
-            D= _S.circle(fh,grey,grey,lw);
-            D.addChild(_S.centerAnchor(_S.bmpText("-",cfg)));
-            _V.set(D, _G.arena.x1-D.width, _G.arena.y2-D.height/2);
-            self.insert(_S.opacity(_I.makeHotspot(D),alpha));
-            //////
-            U= _S.circle(fh,grey,grey,lw);
-            U.addChild(_S.centerAnchor(_S.bmpText("+",cfg)));
-            _S.pinAbove(D,U,D.height/4);
-            self.insert(_S.opacity(_I.makeHotspot(U),alpha));
-            //////lateral movements
-            R= _S.circle(fh,grey,grey,lw);
-            R.addChild(_S.centerAnchor(_S.bmpText(">",cfg)));
-            _V.set(R, _G.arena.x2+R.width, _G.arena.y2 - R.height/2);
-            self.insert(_S.opacity(_I.makeHotspot(R),alpha));
-            /////
-            L= _S.circle(fh,grey,grey,lw);
-            L.addChild(_S.centerAnchor(_S.bmpText("<",cfg)));
-            _S.pinAbove(R,L,R.height/4);
-            self.insert(_S.opacity(_I.makeHotspot(L),alpha));
-            //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-            R.m5.touch=(o,t)=> t?_I.setKeyOn(_I.RIGHT):_I.setKeyOff(_I.RIGHT);
-            L.m5.touch=(o,t)=> t?_I.setKeyOn(_I.LEFT):_I.setKeyOff(_I.LEFT);
-            U.m5.touch=(o,t)=> t?_I.setKeyOn(_I.UP):_I.setKeyOff(_I.UP);
-            D.m5.touch=(o,t)=> t?_I.setKeyOn(_I.DOWN):_I.setKeyOff(_I.DOWN);
-          }
-        });
-        //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-        this.g.initHotspots();
-      }
-    });
-
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    /* */
+    /** */
     ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame",{
       setup(){
@@ -374,7 +343,8 @@
           fps:0,
           initLevel(){
             //center the scene!!!!!
-            let sy= _M.ndiv(Mojo.height-PROJECTIONHEIGHT,2),
+            let
+              sy= _M.ndiv(Mojo.height-PROJECTIONHEIGHT,2),
               sx= _M.ndiv(Mojo.width-PROJECTIONWIDTH,2);
             self.cvars={ i_x:0, i_y:0,
                          distX:0, distY:0,
@@ -394,7 +364,8 @@
             return self.insert(_S.opacity(this.gfx2=_S.graphics(), 1));
           },
           drawBg(){
-            let width=PROJRATIO*BASEW,
+            let
+              width=PROJRATIO*BASEW,
               height=PROJRATIO, r,sx=0,sy=0,step=1,c=255;
             //scene is already centered, so start = 0,0
             for(r=0; r<BASEH/2; r+=step){//sky
@@ -435,18 +406,12 @@
             return this.hud=new HUD(self)
           }
         });
-        //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ////////////////////////////////////////////////////////////////////////////
         doBackDrop(this) && this.g.initLevel() && this.g.initHUD();
         //put a mat around the arena to hide overflows
         _Z.run("PhotoMat", _.inject({color:"black"},_G.arena));
         if(1){
-          let
-            alpha=0.5,
-            color="grey",
-            radius= 42*K,
-            fontName=UI_FONT,fontSize= 48*K;
           _Z.run("HotKeys",{
-            color,alpha,radius,fontName,fontSize,
             cb(obj){
               _V.set(obj.right, Mojo.width-obj.right.width,Mojo.height-obj.right.height);
               _S.pinLeft(obj.right,obj.left,obj.right.width/3);
@@ -456,7 +421,6 @@
             }
           });
         }
-
         this.g.oldFrameRate= Mojo.frameRate;
         Mojo.frameRate=function(){
           return 1/24;
@@ -465,7 +429,7 @@
       dispose(){
         Mojo.frameRate= this.g.oldFrameRate;
       },
-      //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ////////////////////////////////////////////////////////////////////////////
       //check algo from permadi...
       //https://permadi.com/1996/05/ray-casting-tutorial-7/
       //https://permadi.com/1996/05/ray-casting-tutorial-8/
@@ -480,9 +444,11 @@
         }
       },
       step(castArc,castCol,CV){
-        let self=this,
+        let
+          self=this,
           dx,dy,gx,gy,idx, vtStep, hzStep;
-        let tan_v= TABLES[tTAN][castArc],
+        let
+          tan_v= TABLES[tTAN][castArc],
           tan_i= TABLES[iTAN][castArc],
           sin_v= TABLES[iSIN][castArc],
           cos_v= TABLES[iCOS][castArc];
@@ -611,7 +577,6 @@
         if(FMAP.charAt((playerYCell*MAPWIDTH)+playerXCell)=="X"){
           _S.die(this);
           _.delay(100,()=> _Z.modal("EndGame",{
-            fontSize:64*Mojo.getScaleFactor(),
             replay:{name:"PlayGame"},
             quit:{name:"Splash", cfg:SplashCfg},
             msg:"You Win!",
@@ -670,11 +635,10 @@
       }
     });
 
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    /* */
+    ////////////////////////////////////////////////////////////////////////////
+    /** */
     ////////////////////////////////////////////////////////////////////////////
     function drawCeiling(scene, castArc, castCol, topOfWall, width, tint){
-      let B=Mojo.resource("tile41.png");
       for(let row=int(topOfWall); row >=0; --row){
         let ratio=(WALL_HEIGHT-_G.playerHeight)/(PROJPLANE_MIDY-row);
         let diagDist= int(PLAYERDIST_PROJPLANE*ratio*TABLES[tFISH][castCol]);
@@ -691,7 +655,7 @@
           // Find offset of tile and column in texture
           let ty = int(yEnd % TILESZ);
           let tx = int(xEnd % TILESZ);
-          let s= _S.sprite(new PIXI.Texture({source:B, frame:new PIXI.Rectangle(tx,ty,1,1)}));
+          let s= _S.frame("tile41.png" , 1,1,tx,ty);
           s.width = width*PROJRATIO;
           s.height= PROJRATIO;
           s.x=castCol*PROJRATIO;
@@ -701,11 +665,10 @@
       }
     }
 
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    /* */
+    ////////////////////////////////////////////////////////////////////////////
+    /** */
     ////////////////////////////////////////////////////////////////////////////
     function drawFloor(scene, castArc, castCol, bottomOfWall, width, tint){
-      let B=Mojo.resource("floortile.png");
       for(let row=int(bottomOfWall); row<BASEH; ++row){
         let ratio=_G.playerHeight/(row-PROJPLANE_MIDY);
         let diagDist= int(PLAYERDIST_PROJPLANE*ratio*TABLES[tFISH][castCol]);
@@ -722,7 +685,7 @@
             // Find offset of tile and column in texture
           let tx = int(xEnd % TILESZ);
           let ty = int(yEnd % TILESZ);
-          let s= _S.sprite(new PIXI.Texture({source:B,frame:new PIXI.Rectangle(tx,ty,1,1)}));
+          let s= _S.frame("floortile.png",1,1,tx,ty);
           s.width = width*PROJRATIO;
           s.height= PROJRATIO;
           s.x=castCol*PROJRATIO;
@@ -732,8 +695,8 @@
       }
     }
 
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    /* */
+    ////////////////////////////////////////////////////////////////////////////
+    /** */
     ////////////////////////////////////////////////////////////////////////////
     function drawGoal(scene, castArc, castCol, bottomOfWall, width, tint){
       for(let row=int(bottomOfWall); row<BASEH; ++row){
@@ -758,13 +721,12 @@
       }
     }
 
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    /* */
+    ////////////////////////////////////////////////////////////////////////////
+    /** */
     ////////////////////////////////////////////////////////////////////////////
     function drawWallSlice(scene, x, y, width, height, xOffset, tint){
-      let b= Mojo.resource("wall64.png");
-      let t= new PIXI.Texture({source:b,frame:new PIXI.Rectangle(int(xOffset),0,width,b.height)});
-      let s= _S.sprite(t);
+      let b=Mojo.resource("wall64.png");
+      let s= _S.frame(b, width, b.height, int(xOffset),0);
       let sx=0,sy=0;
       s.height= height*PROJRATIO;
       s.width = width*PROJRATIO;
@@ -773,8 +735,8 @@
       scene.g.box.addChild(s);
     }
 
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    /* */
+    ////////////////////////////////////////////////////////////////////////////
+    /** */
     ////////////////////////////////////////////////////////////////////////////
     function HUD(scene,inside=true){
       this.fMinimapWidth=PROJRATIO<2 ? 3: 6;
@@ -823,7 +785,7 @@
                  "bg.jpg","sky.jpg", "game_win.mp3","click.mp3"],
     arena: {width: 1344, height: 840},
     scaleToWindow:"max",
-    scaleFit:"x",
+    //scaleFit:"x",
     //fps:24,
     start(...args){ scenes(...args) }
   });

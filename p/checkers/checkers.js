@@ -141,7 +141,6 @@
         w= c.uuid()==w ? c : ( o.uuid()==w ? o : UNDEF);
         _G.mediator.gameOver(w);
         _.delay(DELAY,()=> _Z.modal("EndGame",{
-          fontSize: 72*Mojo.getScaleFactor(),
           winner: msg.includes("Win"),
           msg,
           replay: {name:"MainMenu"},
@@ -604,7 +603,7 @@
           self=this,
           mode=1,
           K=Mojo.getScaleFactor(),
-          cfg={fontName:UI_FONT, fontSize: 72*K},
+          cfg={fontName:UI_FONT, fontSize: 48*K},
           space=()=> _S.opacity(_S.bmpText("I",cfg),0),
           b1=_I.mkBtn(_S.uuid(_S.bmpText("One Player",cfg),"#p1")),
           gap=_S.bmpText("or",cfg),
@@ -630,7 +629,7 @@
           self=this,
           startsWith=1,
           K=Mojo.getScaleFactor(),
-          cfg={fontName: UI_FONT, fontSize: 72*K},
+          cfg={fontName: UI_FONT, fontSize: 48*K},
           space=()=> _S.opacity(_S.bmpText("I",cfg),0),
           msg= _S.bmpText("Player 1 (Black) starts? ",cfg),
           b1=_I.mkBtn(_S.uuid(_S.bmpText("Yes",cfg),"#yes")),
@@ -766,7 +765,6 @@
         doBackDrop(this) && this.g.initLevel() &&
           this.g.initBoard() && this.g.initArena() && this.g.initHud();
         _Z.run("AudioIcon",{
-          xScale:1.2*K, yScale:1.2*K,
           xOffset: -10*K, yOffset:0
         });
         //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -784,7 +782,6 @@
   //load and run
   MojoH5Ldr({
     assetFiles: ["bggreen.jpg",
-                 "audioOn.png","audioOff.png",
                  "images/base.json", "images/reds.json","images/blacks.json",
                  "x.mp3", "o.mp3", "click.mp3","game_win.mp3","game_over.mp3"],
     arena: {width: 1344, height: 840},

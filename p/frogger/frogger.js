@@ -103,7 +103,7 @@
           t=TRACKS[i];
           t[1]= t[1].substring(p) + t[1].substring(0,p);
         }
-        //Mojo.CON.log(TRACKS[i][1]);
+        //_.log(TRACKS[i][1]);
       });
     }
 
@@ -501,7 +501,6 @@
                 if(_G.coins.length==0){
                   _G.gameOver= self.m5.dead=true;
                   _.delay(CLICK_DELAY,()=>_Z.modal("EndGame",{
-                    fontSize:64*Mojo.getScaleFactor(),
                     replay:{name:"PlayGame"},
                     quit:{name:"Splash", cfg:SplashCfg},
                     msg:"You Win!",
@@ -598,9 +597,6 @@
         this.g.initHoles();
         this.g.initPlayer();
         _Z.run("HotKeys",{
-          fontSize: 48*K,
-          radius: 32*K,
-          alpha:0.5,
           buttons:true,
           cb(obj){
             _V.set(obj.right,W-obj.right.width,H-obj.right.height);
@@ -634,7 +630,7 @@
                  "coin.png","froggy.png",TILE_SHEET],
     arena: {width: 1344, height: 840},
     scaleToWindow:"max",
-    scaleFit:"x",
+    //scaleFit:"x",
     start(...args){ scenes(...args) }
   });
 

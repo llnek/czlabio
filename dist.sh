@@ -9,9 +9,9 @@ do
     if [ -d "$x" ]; then
       cd $x
       echo "inside " `pwd`
-      #gulp
+      gulp
       #rm ./lib ./vendor
-      #rm ./dist/game.js
+      rm ./dist/game.js
       cd ..
     fi
   fi

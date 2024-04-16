@@ -35,9 +35,6 @@
     const
       UI_FONT=Mojo.DOKI_LOWER,
       SplashCfg= {
-        footerMsgSize: 12*Mojo.getScaleFactor(),
-        titleSize: 80*Mojo.getScaleFactor(),
-        playMsgSize: 48*Mojo.getScaleFactor(),
         title:"2D Physics",
         clickSnd:"click.mp3",
         action: {name:"PlayGame"}

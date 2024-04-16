@@ -36,7 +36,7 @@
 
     //const GA= window["io/czlab/mcfud/algo/NEAT2"](Core);
     const GA= window["io/czlab/mcfud/algo/NEAT"](
-    window["io/czlab/mcfud/core"]()
+      window["io/czlab/mcfud/core"]()
     );
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -45,9 +45,6 @@
       SplashCfg= {
         title:"NEAT/Flappy Bird",
         clickSnd:"click.mp3",
-        titleSize: 40*Mojo.getScaleFactor(),
-        footerMsgSize: 8*Mojo.getScaleFactor(),
-        playMsgSize: 32*Mojo.getScaleFactor(),
         action: {name:"PlayGame"}
       };
 
@@ -219,7 +216,7 @@
         _S.scaleBy(this.g.menu, 0.6*K,0.6*K);
         this.g.menu.anchor.x=1;
         this.g.menu.m5.press=()=>{
-          _Z.runEx("Splash",SplashCfg)
+          _.delay(0,()=> _Z.runEx("Splash",SplashCfg))
         };
         _V.set(this.g.menu, Mojo.width,0);
         this.insert(_I.mkBtn(this.g.menu));
@@ -242,9 +239,8 @@
   MojoH5Ldr({
     assetFiles: ["bird.png","pipetop.png","pipebottom.png",
                  "menu.png","background.png","click.mp3"],
-    arena: {width: 640, height: 640},
+    arena: {width: 1024, height: 720},
     scaleToWindow:"max",
-    scaleFit:"x",
     start(...args){ scenes(...args) }
   });
 

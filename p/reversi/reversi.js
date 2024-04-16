@@ -140,7 +140,6 @@
           }
           this.gameOver=true;
           _.delay(343,()=> _Z.modal("EndGame",{
-            fontSize:64*Mojo.getScaleFactor(),
             replay:{name:"MainMenu"},
             quit:{name:"Splash", cfg:_G.SplashCfg},
             msg,
@@ -167,7 +166,6 @@
   MojoH5Ldr({
     assetFiles:["bggreen.jpg","icons.png",
                 "x.mp3","o.mp3",
-                "audioOn.png","audioOff.png",
                 "click.mp3","game_over.mp3","game_win.mp3"],
     arena:{width:960, height:960},
     scaleToWindow:"max",

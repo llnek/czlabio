@@ -169,7 +169,7 @@
           K=Mojo.getScaleFactor();
         _.inject(this.g,{
           doMenu(){
-            const cfg={fontSize:72*K, fontName:UI_FONT},
+            const cfg={fontSize:32*K, fontName:UI_FONT},
               c1=_S.uuid(_I.mkBtn(_S.bmpText("Yes",cfg)),"play#x"),
               c2=_S.uuid(_I.mkBtn(_S.bmpText("No", cfg)),"play#o"),
               space=()=> _S.opacity(_S.bmpText("I", cfg),0),
@@ -204,7 +204,7 @@
           K=Mojo.getScaleFactor();
         _.inject(this.g,{
           doMenu(){
-            const cfg={fontSize: 36*K, fontName:UI_FONT},
+            const cfg={fontSize: 32*K, fontName:UI_FONT},
               gap=_S.bmpText("or", cfg),
               space=()=> _S.opacity(_S.bmpText("I",cfg),0),
               b1=_S.uuid(_I.mkBtn(_S.bmpText("One Player", cfg)),"play#1"),
@@ -317,7 +317,9 @@
             _.delay(100, ()=> Mojo.emit(["ai.move", a]))
         }
 
-        _Z.run("AudioIcon",{ xScale:K,yScale:K });
+        _Z.run("AudioIcon",{
+          xOffset: -10*K, yOffset:0
+        });
       }
     });
 
@@ -335,7 +337,6 @@
       if(_G.lastWin==_G.X) msg= _G.mode==1 ? "You win !" : "X wins !";
 
       _Z.modal("EndGame",{
-        fontSize:64*Mojo.getScaleFactor(),
         replay:{name:"MainMenu"},
         quit:{name:"Splash", cfg:SplashCfg},
         msg,
@@ -348,11 +349,11 @@
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
   MojoH5Ldr({
-    assetFiles:["bgblack.jpg", "icons.png","audioOn.png","audioOff.png",
+    assetFiles:["bgblack.jpg", "icons.png",
                 "click.mp3","x.mp3","o.mp3","game_win.mp3","game_over.mp3"],
     arena:{width:1344, height:840},
     scaleToWindow:"max",
-    scaleFit:"x",
+    //scaleFit:"x",
     start(...args){ scenes(...args) }
   });
 

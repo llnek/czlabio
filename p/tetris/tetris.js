@@ -39,7 +39,6 @@
     const
       UI_FONT=Mojo.DOKI_LOWER,
       SplashCfg= {
-        footerMsgSize:24*Mojo.getScaleFactor(),
         title:"Tetris",
         clickSnd:"click.mp3",
         action: {name:"PlayGame"}
@@ -97,7 +96,6 @@
         if(_G.gameOver){
           _S.die(this);
           _.delay(100, ()=> _Z.modal("EndGame",{
-            fontSize:64*Mojo.getScaleFactor(),
             replay:{name:"PlayGame"},
             quit:{name:"Splash", cfg:SplashCfg},
             msg:"",
@@ -221,7 +219,7 @@
         Mojo.on(["preview.shape"],"onPreview", this);
         this.insert(_S.rect(Mojo.width,_G.vbox.y1, 0));
         this.insert(_S.bboxFrame(_G.vbox,LW));
-        this.insert(this.g.score= _S.bmpText("Score: 0", UI_FONT,84*K));
+        this.insert(this.g.score= _S.bmpText("Score: 0", UI_FONT,48*K));
         let Y = int(Mojo.height/2),
             X = int(_G.vbox.x1/2),
             r= _S.rect(_G.tileW*6,_G.tileH*6,0);
@@ -233,7 +231,6 @@
         _G.previewNext();
         _.delay(343, ()=> _G.reifyNext() && _G.slowDown());
         _Z.run("AudioIcon",{
-          xScale:2*K, yScale:2*K,
           xOffset: -10*K, yOffset:0
         });
       },
@@ -272,7 +269,6 @@
   //load and run
   MojoH5Ldr({
     assetFiles: ["click.mp3","line.mp3",
-                 "audioOn.png","audioOff.png",
                  "tile.png", "bg.jpg", "game_over.mp3"],
     arena: {width: 768, height: 1408},
     scaleToWindow:"max",

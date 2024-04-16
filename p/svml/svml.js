@@ -55,7 +55,6 @@
     const
       UI_FONT=Mojo.DOKI_LOWER,
       SplashCfg= {
-        titleSize: 70*Mojo.getScaleFactor(),
         title:"Supervised Learning",
         action: {name:"PlayGame"},
         clickSnd:"click.mp3",
@@ -187,7 +186,7 @@
           K=Mojo.getScaleFactor();
         _.inject(this.g,{
           showTitle(){
-            let s=_S.bmpText("AI is trained :)",UI_FONT,32*K);
+            let s=_S.bmpText("AI is trained :)",UI_FONT,24*K);
             _S.pinAbove(_G.arena,s,s.height);
             self.insert(this.title=s);
             this.gfx= self.insert(_S.graphics());
@@ -203,7 +202,7 @@
             this.match = -1;
             this.drawing = false;
             this.clear();
-            s=_S.bmpText(`${verb} to train the AI...`,UI_FONT,32*K);
+            s=_S.bmpText(`${verb} to train the AI...`,UI_FONT,24*K);
             _S.centerAnchor(s);
             _V.set(s,Mojo.width/2,Mojo.height/2);
             self.insert(s);
@@ -216,7 +215,7 @@
             }
             _I.on(["single.tap"],cb);
             /////
-            let m=this.msgText=_S.bmpText(" ",UI_FONT,32*K);
+            let m=this.msgText=_S.bmpText(" ",UI_FONT,24*K);
             _S.pinBelow(_G.arena,m,-m.height*2);
             _S.centerAnchor(m);
             _S.hide( self.insert(m));
@@ -243,7 +242,7 @@
                   this.match = this.bestMatch;
               }
             }
-            Mojo.CON.log(`highest=${this.highestOutput}, best=${this.bestMatch}, match= ${this.match}`);
+            _.log(`highest=${this.highestOutput}, best=${this.bestMatch}, match= ${this.match}`);
             return true;
           },
           createVectors(){
@@ -258,7 +257,7 @@
           },
           smooth(){
             if(this.path.length < this.numSmoothPoints){
-              Mojo.CON.log(`Length of Path not correct: ${this.path.length}, expected: ${this.numSmoothPoints}`);
+              _.log(`Length of Path not correct: ${this.path.length}, expected: ${this.numSmoothPoints}`);
               return false;
             }
 
@@ -292,7 +291,7 @@
             return this.drawing;
           },
           setDrawing(val){
-            Mojo.CON.log(`setdraw called = ${val}, mode=${_G.mode}`);
+            _.log(`setdraw called = ${val}, mode=${_G.mode}`);
             if(val === true){
               _.doseq(_G.pmap,v=>v.tint=_S.SomeColors.white);
               this.clear();
@@ -305,12 +304,12 @@
                 if(this.smooth()){
                   this.createVectors();
                   if(!this.testForMatch())
-                    Mojo.CON.log( "Error when test for match");
+                    _.log( "Error when test for match");
                 }else{
-                  Mojo.CON.log(`NOT SMOOTH???????`);
+                  _.log(`NOT SMOOTH???????`);
                 }
               }catch(e){
-                Mojo.CON.log(e.toString());
+                _.log(e.toString());
               }
             }
           },
@@ -330,7 +329,7 @@
                     //this.msgText.text= `Gesture = ${_G.data.patternName(this.match)}`;
                   }
                 }else if(_G.mode != LEARNING){
-                  Mojo.CON.log(`Not enough points drawn - plz try again`);
+                  _.log(`Not enough points drawn - plz try again`);
                 }
               }
             }
@@ -461,7 +460,7 @@
           })
         }
         if(this.g.trainingFunc){
-          Mojo.CON.log("Training in progress.......................");
+          _.log("Training in progress.......................");
           let ok=this.g.trainingFunc(100,this.g.status);
           function cb(){
             _I.off(["single.tap"],cb);
@@ -490,7 +489,7 @@
     assetFiles: ["click.mp3","coin.mp3"],
     arena: {width: 1344, height: 840},
     scaleToWindow:"max",
-    scaleFit:"x",
+    //scaleFit:"x",
     start(...args){ scenes(...args) }
   });
 

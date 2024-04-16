@@ -69,9 +69,9 @@
     _Z.scene("HUD",{
       setup(){
         let K=Mojo.getScaleFactor();
-        let s=_S.bboxFrame(_G.arena,int(24*K),"#f05680");
+        let s=_S.bboxFrame(_G.arena,int(16*K),"#f05680");
         this.insert(s);
-        this.msg=_S.bmpText("0",{fontName:"unscii",fontSize:36,tint:0xffffff});
+        this.msg=_S.bmpText("0",{fontName:"unscii",fontSize:24*K,tint:0xffffff});
       }
     });
 
@@ -266,7 +266,6 @@
                 if(!_G.match3.hasAvailableMoves()){
                   self.m5.dead=true;
                   _.delay(100,()=> _Z.modal("EndGame",{
-                    fontSize:64*Mojo.getScaleFactor(),
                     replay:{name:"PlayGame"},
                     quit:{name:"Splash", cfg:SplashCfg},
                     msg:"",
@@ -282,6 +281,7 @@
         doBackDrop(this) && this.g.backdrop() && this.g.initLevel();
         _I.on(["single.tap"],"onClick",this.g);
         _Z.run("HUD");
+        _Z.run("AudioIcon",{ xOffset: -10*K, yOffset:0 });
       },
       dispose(){
         _I.off(["single.tap"],"onClick",this.g)

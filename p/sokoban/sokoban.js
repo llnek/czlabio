@@ -214,28 +214,6 @@
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     /* */
     ////////////////////////////////////////////////////////////////////////////
-    _Z.scene("EndGame",{
-      setup(options){
-        let snd="game_over.mp3",
-          os={fontName:UI_FONT,
-              fontSize: 72*Mojo.getScaleFactor()},
-          space=()=> _S.opacity(_S.bmpText("I",os),0),
-          s1=_S.bmpText("Game Over", os),
-          s2=_S.bmpText(options.msg||"You Lose!", os),
-          s4=_I.makeButton(_S.bmpText("Play Again?",os)),
-          s5=_S.bmpText(" or ",os),
-          s6=_I.makeButton(_S.bmpText("Quit",os));
-        s4.m5.press=()=> _Z.runEx("PlayGame");
-        s6.m5.press=()=> _Z.runEx("Splash");
-        if(options.msg) snd="game_win.mp3";
-        Mojo.sound(snd).play();
-        this.insert(_Z.layoutY([s1,s2,space(),space(),space(),s4,s5,s6],options));
-      }
-    });
-
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    /* */
-    ////////////////////////////////////////////////////////////////////////////
     const GLYPH=" #.ox";//floor,wall,hole,box,player
     const MAP1= "########,"+
                 "#####x.#,"+
@@ -371,7 +349,6 @@
         if(holesFilled()){
           _S.die(this);
           _.delay(CLICK_DELAY,()=> _Z.modal("EndGame",{
-            fontSize:64*Mojo.getScaleFactor(),
             replay:{name:"PlayGame"},
             quit:{name:"Splash", cfg:SplashCfg},
             msg:"You Win!",
@@ -455,7 +432,7 @@
                  "bg.jpg", "wall.png","hole.png","grass.png","water.png","crate.png"],
     arena: {width:1344,height:840},
     scaleToWindow: "max",
-    scaleFit: "x",
+    //scaleFit: "x",
     start(...args){ scenes(...args) }
   });
 

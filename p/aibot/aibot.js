@@ -16,7 +16,6 @@
 
   "use strict";
 
-
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //Original idea/code from `AI Techniques for Game Programming` by Mat Buckland.
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -122,18 +121,19 @@
     ////////////////////////////////////////////////////////////////////////////
     function mkBot(brain, scene){
       const s= _S.tint(_S.sprite("tank.png"),_S.SomeColors.grey);
+      let ang=_.randInt2(0,360);
       _S.sizeXY(s,_.evenN(_G.tileW*0.9),_.evenN(_G.tileH*0.9));
       _S.centerAnchor(s);
       s.m5.heading={x:0,y:0};
+      ang=0;
       let
         h2=s.height/2,
         w2=s.width/2,
         d=Math.sqrt(w2*w2+h2*h2);
-      s.angle= 0;
+      s.angle= ang;
       s.g.diag= d * 1.2;
       s.g.diagRatio= d/s.g.diag;
-      randPos(s);
-      syncHeading(s);
+      syncHeading(randPos(s));
       _.inject(s.g,{
         collided:false,
         W2:w2,
@@ -147,7 +147,7 @@
         nnet:brain,
         reset(){
           this.fitness = NumFIT(0);
-          s.angle= 0;
+          s.angle= ang;
           syncHeading(randPos(s));
           this.mmap.reset();
           this.spinBonus = 0;
@@ -168,13 +168,13 @@
             if(res && res[0]){
               _.assert(0<= res[1]&&res[1]<=1,"bad sensor result");
               if(res[1]< s.g.diagRatio){ this.collided=true; }
-              //console.log("c========"+ res[1]);
+              //_.log("c========"+ res[1]);
               input.push(res[1]);
             }else{
               input.push(-1);
             }
             let v= this.mmap.ticksLingered(w[1][0],w[1][1]);
-            //console.log("v===="+v);
+            //_.log("v===="+v);
             if(v==0){
               input.push(-1)
             }else if(v<10){
@@ -222,7 +222,7 @@
           s.y > _G.arena.y2? s.y=_G.arena.y2 : (s.y<_G.arena.y1? s.y=_G.arena.y1 : 0);
 
           this.mmap.update(s.x,s.y);
-          //console.log("numcells=="+this.mmap.numCellsVisited());
+          //_.log("numcells=="+this.mmap.numCellsVisited());
 
           //debug show sensors
           if(0){
@@ -232,7 +232,7 @@
               scene.g.dbg.circle(p[1][0], p[1][1], 2);
               scene.g.dbg.stroke({width:1, color:_S.color("red")});
             });
-            //console.log("colll==="+this.collided);
+            //_.log("colll==="+this.collided);
           }
           return true;
         }
@@ -254,7 +254,7 @@
     ////////////////////////////////////////////////////////////////////////////
     function MapMemory(){
       let
-        grid= JSON.parse(JSON.stringify(_G.grid)),
+        grid= _.clone(_G.grid),//JSON.parse(JSON.stringify(_G.grid)),
         bbox=_S.gridBBox(0,0,grid),
         {tileW,tileH}=_G, px= -1, py=-1;
       grid.forEach(r=>r.forEach(c=> c.visits=0));
@@ -350,7 +350,7 @@
             let
               out={},
               g,gfx=_S.graphics(),
-              grid=_S.gridXY([ROWS,COLS],0.8,0.8,out), g0= grid[0][0];
+              grid=_S.gridXY([ROWS,COLS],0.75,0.75,out), g0= grid[0][0];
             _S.drawGridBox(out,1,"white",gfx);
             _S.drawGridLines(0,0,grid,1,{color:"grey",alpha:0.2},gfx);
             self.insert(gfx);
@@ -386,7 +386,7 @@
           },
           initHud(){
             if(1){
-              let s = _S.scaleBy(_S.sprite("menu.png"), 0.8*K,0.8*K);
+              let s = _S.scaleBy(_S.sprite("menu.png"), 0.6*K,0.6*K);
               s.anchor.x=1;
               s.m5.press=_S.btnPress(s, _S.BtnColors.green,"white","click.mp3",()=>{
                 _Z.runEx("Splash", SplashCfg)
@@ -394,10 +394,10 @@
               self.insert(_I.mkBtn( _V.set(s, Mojo.width,0)));
             }
             if(1){
-              let s=_S.bmpText("0",UI_FONT,24*K);
+              let s=_S.bmpText("0",UI_FONT,16*K);
               this.genMsg=self.insert(s);
-              s=_S.bmpText("0","unscii",24*K);
-              _S.centerAnchor(s);
+              s=_S.bmpText("0","unscii",16*K);
+              _S.tint(_S.centerAnchor(s),"yellow");
               _S.pinAbove(_G.arena,s,s.height*1.5);
               return this.timeMsg=self.insert(s);
             }

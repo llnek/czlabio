@@ -47,7 +47,6 @@
       UI_FONT=Mojo.DOKI_LOWER,
       C_TEXT=_S.color("#fff20f"),
       SplashCfg= {
-        footerMsgSize:40*Mojo.getScaleFactor(),
         title:"TriPeaks",
         clickSnd:"click.mp3",
         action: {name:"PlayGame"}
@@ -114,7 +113,7 @@
             self.futureX(()=> {_G.checkEnd=true}, 3);
           },
           initHud(s){
-            s=this.scoreText= _S.bmpText("Score: 0", UI_FONT, 84*K);
+            s=this.scoreText= _S.bmpText("Score: 0", UI_FONT, 64*K);
             return self.insert(_S.tint(s,C_TEXT));
           },
           drawDrawer(){
@@ -203,8 +202,8 @@
         //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         doBackDrop(this) && this.g.initLevel() && this.g.initHud() && this.g.drawArena();
         Mojo.on(["flip.draw",this],"onFlipDraw",this);
+        //Mojo.Input.setMultiTouch(false);
         _Z.run("AudioIcon",{
-          xScale:2*K, yScale:2*K,
           xOffset: -10*K, yOffset:0
         });
       },
@@ -229,7 +228,6 @@
         if(msg){
           _G.gameOver=true;
           _.delay(CLICK_DELAY, ()=> _Z.modal("EndGame", {
-            fontSize:64*Mojo.getScaleFactor(),
             replay:{name:"PlayGame"},
             quit:{name:"Splash", cfg:SplashCfg},
             msg,
@@ -245,8 +243,7 @@
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
   MojoH5Ldr({
-    assetFiles:["audioOn.png","audioOff.png",
-                "open.mp3","error.mp3",
+    assetFiles:["open.mp3","error.mp3",
                 "slide.mp3","pick.mp3",
                 "click.mp3",
                 "game_over.mp3","game_win.mp3", "bg.jpg",TILE_SHEET],

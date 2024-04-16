@@ -205,10 +205,6 @@
         this.g.initTerrain([]);
         this.g.initPlayer();
         _Z.run("HotKeys",{
-          fontSize: 42*K,
-          radius: 30*K,
-          color: "grey",
-          alpha: 0.5,
           cb(obj){
             _V.set(obj.right, Mojo.width-obj.right.width,Mojo.height-obj.right.height);
             _S.pinLeft(obj.right,obj.left,obj.right.width/4);
@@ -234,7 +230,6 @@
             this.m5.dead=true;
             _.delay(CLICK_DELAY,()=>{
               _Z.modal("EndGame",{
-                fontSize:64*Mojo.getScaleFactor(),
                 replay:{name:"PlayGame"},
                 quit:{name:"Splash", cfg:SplashCfg},
                 msg: ok?"You Win!":"You Lose!",
@@ -257,7 +252,7 @@
                  "explosion.mp3","game_over.mp3","game_win.mp3"],
     arena: {width: 1344, height: 840},
     scaleToWindow:"max",
-    scaleFit:"x",
+    //scaleFit:"x",
     start(...args){ scenes(...args) }
   });
 

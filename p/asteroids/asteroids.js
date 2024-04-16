@@ -41,7 +41,7 @@
       PI2=Math.PI*2,
       //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       //type of asteroid, big,medium,small
-      LaserSpeed=200,
+      LaserSpeed=363,
       FIRE_WAIT=343,
       MAX_TURN= 333,
       TURN_RANGE= 666,
@@ -86,7 +86,7 @@
       s.angle= 0;
 
       if(1){
-        let b=_S.tint(_S.bmpText("BOOM",UI_FONT,48*K),_S.SomeColors.yellow);
+        let b=_S.tint(_S.bmpText("BOOM",UI_FONT,32*K),_S.SomeColors.yellow);
         scene.insert(b);
         _G.boomMsg= _S.centerAnchor(_S.hide(b));
       }
@@ -133,7 +133,6 @@
           }else{
             Mojo.off(["hit",s],"onHit",s.g);
             _S.die(scene) && _.delay(DELAY, ()=> _Z.modal("EndGame",{
-              fontSize:64*Mojo.getScaleFactor(),
               replay:{name:"PlayGame"},
               quit:{name:"Splash",cfg:SplashCfg},
               msg:"You Lose!",
@@ -226,7 +225,7 @@
       if(kind != KIND_3 || _G.as3.length==0){
         o=mkAstro(kind)
       }else{
-        //console.log("got a3");
+        //_.log("got a3");
         o=_G.as3.pop();
       }
       Mojo.on(["hit",o],"onHit",o.g);
@@ -239,10 +238,10 @@
     function dropAstro(a){
       Mojo.off(["hit",a],"onHit",a.g);
       if(a.g.rank==KIND_3){
-        //console.log("put a3 back");
+        //_.log("put a3 back");
         _G.as3.push(a);
       }else{
-        //console.log("astro die");
+        //_.log("astro die");
         _G.gameScene.queueForRemoval(a);
       }
       return _S.hide(_G.gameScene.degrid(_S.die(a)));
@@ -379,7 +378,7 @@
             _V.set(b.sprite,0,0);
             _G.health=b;
             self.insert(b.sprite);
-            s= this.scoreText= _S.bmpText("0",UI_FONT,48*K);
+            s= this.scoreText= _S.bmpText("0",UI_FONT,32*K);
             _V.set(_S.anchorXY(s,0.5,0),Mojo.width/2,0);
             return self.insert(s);
           }
@@ -395,14 +394,7 @@
           xOffset: -10*K, yOffset:0
         });
         if(1){
-          let
-            fontName=UI_FONT,
-            fontSize= 48*K,
-            radius= 36*K,
-            color="grey",
-            alpha=0.5;
           _Z.run("HotKeys",{
-            fontName, fontSize, radius, color, alpha,
             fire:true,
             cb(obj){
               _V.set(obj.right, Mojo.width-obj.right.width, Mojo.height-obj.right.height);
@@ -434,7 +426,6 @@
           Mojo.off(_G.ship.g);
           _S.die(this) &&
             _.delay(DELAY, ()=> _Z.modal("EndGame",{
-              fontSize:64*Mojo.getScaleFactor(),
               replay:{name:"PlayGame"},
               quit:{name: "Splash", cfg:SplashCfg},
               msg:"You Win!",

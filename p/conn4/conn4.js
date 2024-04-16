@@ -244,7 +244,7 @@
         const
           self=this,
           K=Mojo.getScaleFactor(),
-          cfg={fontName: UI_FONT, fontSize: 64*K};
+          cfg={fontName: UI_FONT, fontSize: 48*K};
         let
           gap=_S.bmpText(" / ", cfg),
           b2=_I.mkBtn(_S.bmpText("No", cfg)),
@@ -274,7 +274,7 @@
           K=Mojo.getScaleFactor();
         //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         this.g.doMenu=function(){
-          const cfg={fontSize: 64*K, fontName:UI_FONT},
+          const cfg={fontSize: 48*K, fontName:UI_FONT},
             gap=_S.bmpText("or", cfg),
             space=()=> _S.opacity(_S.bmpText("I",cfg),0),
             b1=_S.uuid(_I.mkBtn(_S.bmpText("One Player", cfg)),"play#1"),
@@ -355,7 +355,6 @@
         doBackDrop(this) &&
           this.g.initArena(this, this.g.initLevel()).start(options.startsWith==1?p1:p2);
         _Z.run("AudioIcon",{
-          xScale:1.2*K, yScale:1.2*K,
           xOffset: -10*K, yOffset:0
         });
       },
@@ -369,7 +368,6 @@
           }
           this.m5.dead=true;
           _.delay(CLICK_DELAY,()=> _Z.modal("EndGame",{
-            fontSize:64*Mojo.getScaleFactor(),
             replay:{name:"MainMenu"},
             quit:{name:"Splash", cfg:SplashCfg},
             msg,
@@ -392,7 +390,6 @@
   MojoH5Ldr({
     assetFiles: ["bg.jpg", "base.png","tiles.png",
                  BASE_SHEET,TILE_SHEET,
-                 "audioOn.png","audioOff.png",
                  "click.mp3","game_over.mp3","game_win.mp3","x.mp3","o.mp3"],
     arena:{width:1344, height:840},
     iconSize: 96,

@@ -114,7 +114,6 @@
       }
       if(num==2048)
         _.delay(CLICK_DELAY, ()=> _Z.run("EndGame", {
-          fontSize:64*Mojo.getScaleFactor(),
           replay:{name:"PlayGame"},
           quit:{name:"Splash", cfg:SplashCfg},
           msg:"You Win!",
@@ -150,7 +149,6 @@
         setNumber(r[0],r[1],_.rand()>0.5?4:2)
       }else{
         _.delay(CLICK_DELAY, ()=> _Z.modal("EndGame",{
-          fontSize:64*Mojo.getScaleFactor(),
           replay:{name:"PlayGame"},
           quit:{name:"Splash", cfg:SplashCfg},
           msg:"You Lose!",
@@ -257,6 +255,7 @@
         _G.dirDown.dispose();
       },
       setup(){
+        let K=Mojo.getScaleFactor();
         //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         doBackDrop(this);
         _.inject(_G,{
@@ -293,6 +292,8 @@
         _I.on(["swipe.left"],"swipeLeft",_G);
         _I.on(["swipe.right"],"swipeRight",_G);
         this.g.initLevel();
+
+        _Z.run("AudioIcon",{ xOffset: -10*K, yOffset:0 });
       }
     });
 

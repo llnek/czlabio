@@ -257,7 +257,7 @@
           K=Mojo.getScaleFactor();
         _.inject(this.g,{
           doChoices(){
-            let cfg={fontSize:64*K,fontName:UI_FONT},
+            let cfg={fontSize:48*K,fontName:UI_FONT},
               space=()=> _S.opacity(_S.bmpText("I", cfg),0),
               b1=_I.mkBtn(_S.uuid(_S.bmpText("Easy",cfg),"#easy")),
               b2= _I.mkBtn(_S.uuid(_S.bmpText("Normal",cfg),"#normal")),
@@ -415,7 +415,6 @@
         doBackDrop(this) && this.g.initLevel() &&
           this.g.initGame() && this.g.initSel() && this.g.initHUD();
         _Z.run("AudioIcon",{
-          xScale:1.36*K, yScale:1.36*K,
           xOffset: -10*K, yOffset:0
         });
       },
@@ -440,7 +439,7 @@
           _Z.modal("EndGame",{msg:"You Win!"});
         }
         if(_I.keyDown(_I.SPACE)){
-          //Mojo.CON.log("==> " + JSON.stringify(_G.sudoku));
+          //_.log("==> " + JSON.stringify(_G.sudoku));
         }
       }
     });
@@ -452,7 +451,6 @@
   //load & run
   MojoH5Ldr({
     assetFiles: ["bg.jpg","cell.png",
-                 "audioOn.png","audioOff.png",
                  "game_over.mp3","game_win.mp3","click.mp3","error.mp3"],
     arena: {width: 1344, height: 840},
     scaleToWindow:"max",

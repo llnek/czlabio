@@ -78,7 +78,7 @@
             g=_S.gridSQ(w,0.68,out);
             gfx=_S.drawGridLines(0,0,g,1,"grey");
             self.insert(gfx);
-            self.insert(_S.bboxFrame(out));
+            self.insert(_S.bboxFrame(out,16*K));
             g.forEach((row,y)=> row.forEach((col,x)=>{
               let skip= (x == start[0] && y == start[1]) || (x == end[0] && y == end[1]);
               let v= mmap[y][x];
@@ -104,19 +104,19 @@
               maze:m
             });
             ////
-            Mojo.CON.log(`maze size= [${h},${w}]`);
+            _.log(`maze size= [${h},${w}]`);
             _.delay(100,()=> self.g.postShowMaze());
           },
           postShowMaze(){
             let s= _S.bmpText("Solve",UI_FONT, 24*K);
-            _S.pinAbove(_G.arena,s, s.height);
+            _S.pinAbove(_G.arena,s, 8*K + s.height);
             s.m5.press=()=>{
               if(s.text=="Solve"){
                 self.g.solveMaze()
                 s.text= "Regen";
               }else{
                 _S.remove(s);
-                Mojo.Scenes.runEx("PlayGame");
+                _.delay(0, ()=>Mojo.Scenes.runEx("PlayGame"));
               }
             };
             self.insert(_I.mkBtn(s));
@@ -163,7 +163,7 @@
       assetFiles: ["click.mp3"],
       arena: {width:1344,height:840},
       scaleToWindow:"max",
-      scaleFit:"x",
+      //scaleFit:"x",
       start(...args){ scenes(...args) } });
 
 })(this);

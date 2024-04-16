@@ -320,7 +320,6 @@
       }
       _S.die(_G.gameScene);
       _.delay(CLICK_DELAY,()=> _Z.modal("EndGame",{
-        fontSize:64*Mojo.getScaleFactor(),
         replay:{name:"PlayGame"},
         quit:{name:"Splash", cfg:SplashCfg},
         msg:"You Win!",
@@ -341,7 +340,6 @@
       if(!s){
         _S.die(scene);
         _.delay(CLICK_DELAY,()=>_Z.modal("EndGame",{
-          fontSize:64*Mojo.getScaleFactor(),
           replay:{name:"PlayGame"},
           quit:{name:"Splash", cfg:SplashCfg},
           msg:"You Win!",
@@ -459,10 +457,10 @@
           if(b.y>Mojo.height) reclaimBomb(b);
         };
         s=b;
-        //Mojo.CON.log("new bomb ");
+        //_.log("new bomb ");
       }else{
         s=_G.bombs.pop();
-        //Mojo.CON.log("got bomb from cache");
+        //_.log("got bomb from cache");
       }
       _S.show(s);
       s.m5.dead=false;
@@ -511,16 +509,10 @@
         self.future(dropBombs,1000);
         _controls(this);
         if(1){
-          let
-            alpha=0.5,
-            color="grey",
-            radius= 42*K,
-            fontName=UI_FONT,fontSize= 48*K;
           _Z.run("HotKeys",{
-            color,alpha,radius,fontName,fontSize,
-            extra(ss){
-              let b=_S.opacity(_S.circle(radius,color),alpha);
-              b.addChild(_S.centerAnchor(_S.bmpText("^",fontName,fontSize)));
+            extra(ss,arg){
+              let b=_S.opacity(_S.circle(arg.radius,arg.color),arg.alpha);
+              b.addChild(_S.centerAnchor(_S.bmpText("^",arg.fontName,arg.fontSize)));
               b.m5.press=()=> fireBullet();
               _V.set(b,b.width,Mojo.height-b.height);
               ss.insert(_I.mkBtn(b));
@@ -536,7 +528,6 @@
           });
         }
         _Z.run("AudioIcon",{
-          xScale:1.2*K, yScale:1.2*K,
           xOffset: -10*K, yOffset:0
         });
       },
@@ -595,7 +586,7 @@
                  "ufo.mp3", "march.mp3","explosion.mp3","fire.mp3"],
     arena:{width:1344, height:840}, //4:3
     scaleToWindow:"max",
-    scaleFit:"x",
+    //scaleFit:"x",
     start(...args){ scenes(...args) }
   });
 

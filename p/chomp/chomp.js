@@ -131,7 +131,6 @@
           if(scene.g.dotCount==0){
             _S.die(scene);
             _.delay(CLICK_DELAY,()=> _Z.modal("EndGame",{
-              fontSize:64*Mojo.getScaleFactor(),
               replay:{name:"PlayGame"},
               quit:{name:"Splash", cfg:SplashCfg},
               msg:"You Win!",
@@ -212,7 +211,6 @@
           if(col.B.m5.uuid=="player"){
             _S.die(scene);
             _.delay(DELAY,()=> _Z.modal("EndGame",{
-              fontSize:64*Mojo.getScaleFactor(),
               replay:{name:"PlayGame"},
               quit:{name:"Splash", cfg:SplashCfg},
               msg:"You Lose!",
@@ -251,7 +249,6 @@
           _Z.run("JoyStick");
         }else{
           _Z.run("HotKeys",{
-            fontSize: 48*K, radius: 42*K, alpha:0.5,
             cb(obj){
               _V.set(obj.right,W-obj.right.width,H-obj.right.height);
               _S.pinLeft(obj.right,obj.left,obj.right.width/4);
@@ -317,7 +314,7 @@
     arena: {width:1344,height:840},
     scaleToWindow:"max",
     scaleFit:"x",
-    //touchOnly:true,
+    //touchOnly: true,
     start(...args){ scenes(...args) }
   });
 

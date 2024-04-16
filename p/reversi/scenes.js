@@ -56,7 +56,7 @@
           K=Mojo.getScaleFactor();
         _.inject(this.g,{
           doMenu(){
-            const cfg={fontSize: 64*K, fontName:UI_FONT},
+            const cfg={fontSize: 48*K, fontName:UI_FONT},
               space=()=> _S.opacity(_S.bmpText("I",cfg),0),
               gap=_S.bmpText("or", cfg),
               b1=_S.uuid(_I.mkBtn(_S.bmpText("One Player", cfg)),"p1"),
@@ -205,7 +205,6 @@
             _.delay(100, ()=> Mojo.emit(["ai.move", a]));
         }
         _Z.run("AudioIcon",{
-          xScale:1.2*K, yScale:1.2*K,
           xOffset: -10*K, yOffset:0
         });
       },

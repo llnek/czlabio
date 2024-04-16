@@ -35,12 +35,9 @@
       UI_FONT=Mojo.DOKI_LOWER,
       C_ORANGE=_S.color("#f4d52b"),
       SplashCfg= {
-        footerMsgSize:10*Mojo.getScaleFactor(),
         title:"Snake",
-        titleSize: 56*Mojo.getScaleFactor(),
-        action: {name:"PlayGame"},
         clickSnd:"click.mp3",
-        playMsgSize:32*Mojo.getScaleFactor()
+        action: {name:"PlayGame"}
       };
 
 
@@ -89,14 +86,10 @@
         }
         ///
         _Z.run("AudioIcon",{
-          xScale:0.6*K, yScale:0.6*K,
           xOffset: -10*K, yOffset:0
         });
         ////
         _Z.run("HotKeys",{
-          fontSize:32*K,
-          radius:24*K,
-          alpha:0.5,
           cb(obj){
             _V.set(obj.right,Mojo.width-obj.right.width,Mojo.height-obj.right.height);
             _S.pinLeft(obj.right,obj.left,obj.right.width/4);
@@ -110,9 +103,10 @@
         _G.growSnake(this);
       },
       doMove(){
+        const x=Mojo.u.frameDelay;
         this.future(()=>{
           this.recalc();
-        }, Mojo.u.frameDelay);
+        }, Mojo.touchDevice ? (2*x) :x);
       },
       recalc(){
         if(_I.keyDown(_I.RIGHT)){
@@ -143,7 +137,6 @@
           _G.timerid=UNDEF;
           this.m5.dead=true;
           _.delay(CLICK_DELAY,()=> _Z.modal("EndGame",{
-            fontSize:32*Mojo.getScaleFactor(),
             replay:{name:"PlayGame"},
             quit:{name:"Splash", cfg:SplashCfg},
             msg:"You Lose!",
@@ -166,16 +159,15 @@
   MojoH5Ldr({
     assetFiles:["bg.jpg","head.png","snake.png","tail.png","apple_00.png",
                 "boing1.mp3","apple.mp3",
-                "audioOn.png","audioOff.png",
                 "eat.mp3","click.mp3","game_over.mp3","game_win.mp3"],
     arena: {width:640,height:480},
     scaleToWindow: "max",
-    scaleFit:"x",
+    //scaleFit:"x",
     //bgColor: 0x51b2ee,
     //bgColor:0x239920,
     //bgColor:0x99CC46,
     //bgColor:0xAAD751,
-    frameDelay:150,//500,
+    frameDelay:150,
     itemInterval:3500,//6000,
     growthInterval: 3000,//5000,
     snakeLength:5,

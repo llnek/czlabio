@@ -78,23 +78,23 @@
       isOver(snap){
         let rc= _G.checkAnyWin(snap.state, snap.other);
         if(rc){
-          Mojo.CON.log(`isOver: winner ${rc.uuid()}`);
+          _.log(`isOver: winner ${rc.uuid()}`);
           return rc;
         }
         rc= _G.checkAnyWin(snap.state, snap.cur);
         if(rc){
-          Mojo.CON.log(`isOver: winner ${rc.uuid()}`);
+          _.log(`isOver: winner ${rc.uuid()}`);
           return rc;
         }
         return this.isStalemate(snap);
       }
       evalScore(snap){
         if(_G.checkAnyWin(snap.state, snap.other)){
-          Mojo.CON.log(`score: winner ${snap.other.uuid()}`);
+          _.log(`score: winner ${snap.other.uuid()}`);
           return -100;
         }
         if(_G.checkAnyWin(snap.state, snap.cur)){
-          Mojo.CON.log(`score: winner ${snap.other.uuid()}`);
+          _.log(`score: winner ${snap.other.uuid()}`);
           return 100;
         }
         return 0;
@@ -104,6 +104,7 @@
     _G.AI=function(p1,p2){ return new CZ(p1,p2) };
 
   }
+
 
 })(this);
 

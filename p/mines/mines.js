@@ -81,7 +81,6 @@
         _.delay(100,()=>{
           _S.remove(s);//clear the explosion
           _.delay(100,()=> _Z.modal("EndGame",{
-            fontSize:64*Mojo.getScaleFactor(),
             replay:{name:"MainMenu"},
             quit:{name:"Splash", cfg:SplashCfg},
             msg:"You Lose!",
@@ -232,7 +231,6 @@
         _G.lastWin=1;
         showAll(scene);
         _.delay(100, ()=>_Z.modal("EndGame",{
-          fontSize:64*Mojo.getScaleFactor(),
           replay:{name:"MainMenu"},
           quit:{name:"Splash", cfg:SplashCfg},
           msg:"You Win!",
@@ -316,8 +314,8 @@
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     function initHud(scene){
       let
-        s1,s2,c,s, gap=10,
-        K=Mojo.getScaleFactor(), fz=K* 36;
+        s1,s2,c,s,
+        K=Mojo.getScaleFactor(), fz=K* 24, gap=10*K;
 
       s= _G.flag=_S.spriteFrame(TILE_SHEET, "box.png");
       s.addChild(c= _S.spriteFrame(TILE_SHEET, "rflag.png"));
@@ -386,7 +384,7 @@
         let
           self=this,
           K=Mojo.getScaleFactor(),
-          s,b1,b2,b3,gap,pad,fz=K*64;
+          s,b1,b2,b3,gap,pad,fz=K*48;
         s=_S.bmpText("Easy",UI_FONT,fz);
         b1=_I.mkBtn(_S.uuid(s,"#easy"));
         s=_S.bmpText("Medium",UI_FONT, fz);
@@ -442,6 +440,9 @@
         initLevel(this,dim[0],dim[1],dim[2]);
         this.insert(_G.gfx);
         //show other UI stuff
+        _Z.run("AudioIcon",{
+          xOffset: -10*K, yOffset:0
+        });
         initHud(this);
       }
     });
@@ -452,7 +453,7 @@
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //one small step for...
   MojoH5Ldr({
-    assetFiles: ["clock.png", "audioOn.png","audioOff.png",
+    assetFiles: ["clock.png",
                  "click.mp3", "boom.mp3","expand.mp3",
                  "drop.mp3","game_over.mp3","game_win.mp3", TILE_SHEET],
     arena: {width: 920, height: 920},

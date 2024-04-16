@@ -102,7 +102,7 @@
         _.inject(this.g,{
           init(n){
             let f,b,r,h,out={},
-                grid= _S.gridXY([COLS,ROWS],0.8,0.8,out);
+                grid= _S.gridXY([COLS,ROWS],0.75,0.75,out);
             h=grid[0][0].y2-grid[0][0].y1;
             r=_S.rect(out.width,out.height,C_BG,C_BG);
             self.insert( _V.copy(r,out));
@@ -206,13 +206,13 @@
         });
         //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         this.g.init(1)&&this.g.ctrl();
-        this.g.score=_S.bmpText(" 0 ",UI_FONT,48*K);
+        this.g.score=_S.bmpText(" 0 ",UI_FONT,56*K);
         self.insert(this.g.score);
         _Z.run("AudioIcon",{
-          xScale:1.2*K, yScale:1.2*K,
+          //xScale:1.2*K, yScale:1.2*K,
           xOffset: -10*K, yOffset:0
         });
-        this.g.cntDownMsg=_S.bmpText("1",UI_FONT,96*K);
+        this.g.cntDownMsg=_S.bmpText("1",UI_FONT,64*K);
         _S.centerAnchor(this.g.cntDownMsg);
         _S.opacity(_S.tint(this.g.cntDownMsg,"yellow"),0.8);
         _V.set(this.g.cntDownMsg,Mojo.width/2,Mojo.height/2);
@@ -229,7 +229,6 @@
           }
           this.m5.dead=true;
           _.delay(DELAY,()=> _Z.modal("EndGame",{
-            fontSize:64*Mojo.getScaleFactor(),
             replay:{name:"PlayGame"},
             quit:{name:"Splash", cfg:SplashCfg},
             msg:"You Lose!",
@@ -262,7 +261,6 @@
         if(_G.blockCount==0){
           _S.die(this);
           _.delay(DELAY,()=> _Z.modal("EndGame",{
-            fontSize:64*Mojo.getScaleFactor(),
             replay: {name:"PlayGame"},
             quit: {name: "Splash",cfg:SplashCfg},
             msg:"You Win!",
@@ -278,7 +276,6 @@
   //load and run
   MojoH5Ldr({
     assetFiles: ["star.png","tiles.png",SHEET,
-                 "audioOn.png","audioOff.png",
                  "coin.mp3","click.mp3","game_over.mp3","game_win.mp3"],
     arena: {width: 1344, height: 840},
     scaleToWindow:"max",

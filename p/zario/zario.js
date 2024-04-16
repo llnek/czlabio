@@ -90,7 +90,6 @@
           if(os.name=="white_heart" && col.g["red_heart"] && !_G.gameOver){
             _G.gameOver=true;
             _.delay(CLICK_DELAY,()=> _Z.modal("EndGame",{
-              fontSize:32*Mojo.getScaleFactor(),
               replay:{name:"PlayGame"},
               quit:{name:"Splash", cfg:SplashCfg},
               msg:"You Win!",
@@ -165,7 +164,6 @@
             Mojo.off(...sigs);
             _G.gameOver=true;
             _.delay(CLICK_DELAY,()=> _Z.modal("EndGame",{
-              fontSize:32*Mojo.getScaleFactor(),
               replay:{name:"PlayGame"},
               quit:{name:"Splash", cfg:SplashCfg},
               msg:"You Lose!",
@@ -248,6 +246,18 @@
       s.m5.showFrame(0);
       s.m5.heading= Mojo.RIGHT;
       _S.remove(_p);
+
+      if(0){
+        _Z.run("HotKeys",{
+          cb(obj){
+            _V.set(obj.right, Mojo.width-obj.right.width,Mojo.height-obj.right.height);
+            _S.pinLeft(obj.right,obj.left,obj.right.width/3);
+            _V.set(obj.up, obj.up.width,Mojo.height-obj.up.height);
+            _S.pinRight(obj.up,obj.down,obj.up.width/3);
+            return obj;
+          }
+        });
+      }
       //controls
       let leftArrow = _I.keybd(_I.LEFT, ()=>{
         if(s.scale.x>0) s.m5.flip="x";
@@ -349,7 +359,6 @@
           Mojo.sound("hit.mp3").play();
           _G.gameOver=true;
           _.delay(CLICK_DELAY,()=>_Z.modal("EndGame",{
-            fontSize:32*Mojo.getScaleFactor(),
             replay:{name:"PlayGame"},
             quit:{name:"Splash", cfg:SplashCfg},
             msg:"You Lose!",
@@ -395,7 +404,6 @@
         _Z.run("PlayGame2");
         _Z.run("HUD");
         _Z.run("AudioIcon",{
-          xScale:1.2*K, yScale:1.2*K,
           xOffset: -10*K, yOffset:0
         });
       }
@@ -450,7 +458,6 @@
   MojoH5Ldr({
     assetFiles: ["map.json","hit.mp3","click.mp3","coin.mp3","jump.mp3","bounce.mp3",
                  "pinkio.png","platformPack_tilesheet.png", "bg.jpg",
-                 "audioOn.png","audioOff.png",
                  "game_over.mp3","game_win.mp3",
                  "bee0.png","bee1.png","worm0.png","worm1.png","snail0.png","snail1.png"],
     arena: {width:1344, height:840,scale:1},

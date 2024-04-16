@@ -78,7 +78,7 @@
           m= move[0]*DIM + move[1], v= p[m];
       p[z]=v;
       p[m]=0;
-      //Mojo.CON.log("makemove====> "+ p.join(","));
+      //_.log("makemove====> "+ p.join(","));
     }
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -91,7 +91,7 @@
           s+= (""+p[y*DIM+x]);
           s+=",";
         }
-        Mojo.CON.log(s);
+        _.log(s);
       }
       return p;
     }
@@ -191,16 +191,14 @@
         doBackDrop(this) && this.g.initLevel() && this.g.showMoves();
         //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         _Z.run("AudioIcon",{
-          xScale:K, yScale:K,
           xOffset: -10*K, yOffset:0
         });
       },
       postUpdate(){
         if(this.g.checkFinz()){
           this.m5.dead=true;
-          Mojo.CON.log("You Win!");
+          _.log("You Win!");
           _Z.modal("EndGame",{
-            fontSize:64*Mojo.getScaleFactor(),
             replay:{name:"PlayGame"},
             quit:{name:"Splash", cfg:SplashCfg},
             msg:"You Win!",
@@ -217,7 +215,7 @@
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
   MojoH5Ldr({
-    assetFiles: ["tile.png","bg.jpg","audioOff.png","audioOn.png",
+    assetFiles: ["tile.png","bg.jpg",
                  "click.mp3","slide.mp3","game_over.mp3","game_win.mp3"],
     arena: {width:768,height:768},
     scaleToWindow: "max",

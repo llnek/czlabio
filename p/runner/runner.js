@@ -254,13 +254,9 @@
         let p= this.player= Player(this);
         Catapult(this,p);
         _Z.run("AudioIcon",{
-          xScale:1.2*K, yScale:1.2*K,
           xOffset: -10*K, yOffset:0
         });
         _Z.run("HotKeys",{
-          radius:48*K,
-          fontSize:48*K,
-          alpha:0.8,
           cb(obj){
             _V.set(obj.down,Mojo.width-obj.down.width,Mojo.height-obj.down.height);
             _S.pinLeft(obj.down,obj.up,obj.down.height/4);
@@ -289,7 +285,6 @@
   //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   MojoH5Ldr({
       assetFiles: ["click.mp3", "boing2.mp3",
-                   "audioOn.png","audioOff.png",
                    "background-wall.jpg", "background-floor.jpg", TILE_SHEET],
       arena: {width:1344,height:840},
       scaleToWindow:"max",

@@ -57,7 +57,8 @@
     const F_COLPOSMAP={a:7,b:6,c:5,d:4,e:3,f:2,g:1,h:0};
     const COLPOSMAP={a:0,b:1,c:2,d:3,e:4,f:5,g:6,h:7};
 
-    const ROWPOS=[null,7,6,5,4,3,2,1,0],
+    const
+      ROWPOS=[null,7,6,5,4,3,2,1,0],
       RPOS=[8,7,6,5,4,3,2,1],
       F_COLPOS="hgfedcba",
       COLPOS="abcdefgh",
@@ -119,7 +120,6 @@
             msg= _G.mode==1? "You Lose!" : "Player 2 Win!";
         }
         _.delay(DELAY,()=> _Z.modal("EndGame",{
-          fontSize:64*Mojo.getScaleFactor(),
           replay:{name:"MainMenu"},
           quit:{name:"Splash", cfg:SplashCfg},
           msg,
@@ -148,8 +148,8 @@
       doPoke(){
         let S= _G.mediator.gameState(),
             move, moves= S.moves({verbose:true});
-        //console.log("aiMove=======");
-        //console.log(JSON.stringify(moves));
+        //_.log("aiMove=======");
+        //_.log(JSON.stringify(moves));
         if(moves && moves.length>0){
           move= moves.length==1?moves[0]: this.ai.run(S, this)
         }
@@ -170,7 +170,7 @@
       onPoke(){
         if(!checkEnd()){
           _S.tint(_G.selector, this.uuid()=="w"?WCOLOR:BCOLOR);
-          Mojo.CON.log(this.owner.state.ascii());
+          _.log(this.owner.state.ascii());
           _G[this.owner.state.inCheck()?"showCheckMsg":"hideCheckMsg"]();
           super.onPoke();
         }
@@ -200,15 +200,15 @@
         if(move){
           let xxx=this.state.move(move);
           _.assert(xxx, "Bad AI move!");
-          //Mojo.CON.log("ai moved= " + JSON.stringify(xxx));
+          //_.log("ai moved= " + JSON.stringify(xxx));
           updateInfo(xxx);
           playSnd(who.uuid());
           repaint();
         }
       }
       postMove(who,move){
-        //Mojo.CON.log("post-ai========");
-        //Mojo.CON.log(this.state.ascii());
+        //_.log("post-ai========");
+        //_.log(this.state.ascii());
         _nextToPlay();
       }
     }
@@ -270,10 +270,11 @@
     ////////////////////////////////////////////////////////////////////////////
     _Z.scene("MainMenu",{
       setup(){
-        let self=this,
+        let
+          self=this,
           mode=1,
           K=Mojo.getScaleFactor(),
-          cfg={fontName:UI_FONT,fontSize:72*K},
+          cfg={fontName:UI_FONT,fontSize:48*K},
           space=()=>_S.opacity(_S.bmpText("I",cfg),0),
           b1= _S.uuid(_I.mkBtn(_S.bmpText("1 PLAYER",cfg)),"#p1"),
           gap=_S.bmpText("or",cfg),
@@ -298,7 +299,7 @@
         let
           self=this,
           K=Mojo.getScaleFactor(),
-          cfg={fontName:UI_FONT,fontSize:72*K};
+          cfg={fontName:UI_FONT,fontSize:48*K};
         options.startsWith=1;
         let space=()=> _S.opacity(_S.bmpText("I",cfg),0),
           msg= _S.bmpText("Player 1 starts? ",cfg),
@@ -367,7 +368,7 @@
       }else{
         setMask(S);
       }
-      //Mojo.CON.log(S.ascii());
+      //_.log(S.ascii());
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -408,7 +409,7 @@
               _.assert(false,"Bad user move");
             }
             updateInfo(xxx);
-            //Mojo.CON.log("user moved= " + JSON.stringify(xxx));
+            //_.log("user moved= " + JSON.stringify(xxx));
             playSnd(_G.curSel.g.team);
             clsTargets(M);
             repaint();
@@ -451,8 +452,8 @@
               if(moves && moves.length>0){
                 let pms= seekPromotion(moves);
                 playSnd(s.g.team);
-                //Mojo.CON.log("p1 moves ==== ");
-                //Mojo.CON.log(JSON.stringify(moves));
+                //_.log("p1 moves ==== ");
+                //_.log(JSON.stringify(moves));
                 //valid moves
                 _G.curSel=s;
                 _V.copy(_G.selector,s);
@@ -475,7 +476,7 @@
                   _G.showPromotion()
                 }
               }else{
-                Mojo.CON.log("GAME OVER!");
+                //_.log("GAME OVER!");
               }
             }
           }
@@ -663,7 +664,7 @@
         //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         this.g.initLevel=()=>{
           M= _G.mediator= new CHMediator();
-          _G.dispInfo=false;//(Mojo.width> 1100 && Mojo.height > 740);
+          _G.dispInfo=(Mojo.width> 1000 && Mojo.height > 700);
           _G.curTargets=[];
           _G.targets=[];
           _G.board=[];
@@ -686,7 +687,7 @@
         };
         //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         this.g.initBoard=()=>{
-          let z,g= _G.grid= _S.gridXY([COLS,ROWS],0.9,0.75);
+          let z,g= _G.grid= _S.gridXY([COLS,ROWS],0.8,0.75);
           _G.arena= _S.gridBBox(0,0,g);
           for(let t,y=0;y<ROWS;++y){
             _G.board.push(t=[]);
@@ -722,7 +723,7 @@
           let
             M=_G.mediator,
             s,color,rows,cols,row=ROWS-1,
-            cfg={fontName:UI_FONT,fontSize:36*K};
+            cfg={fontName:UI_FONT,fontSize:24*K};
           if(M.flipped()){
             rows= RPOS.reverse();
             cols= F_COLPOS;
@@ -755,7 +756,7 @@
           let out=[makeIcon("q","#queen"),
                    makeIcon("b","#bishop"),
                    makeIcon("n","#night"),makeIcon("r","#rook")];
-          out.forEach(c=> _S.show(_S.tint(c,C_ORANGE)));
+          out.forEach(c=> _S.show(_I.mkBtn(_S.tint(c,C_ORANGE))));
           _G.promoteMenu= _Z.choiceMenuY(out,cfg);
           _S.pinRight(_G.frame, _G.promoteMenu,10,0);
           self.insert(_G.promoteMenu);
@@ -763,7 +764,7 @@
         };
         //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         this.g.initMsgs=(s)=>{
-          s= _G.checkMsg=_S.bmpText("Check!",UI_FONT, 48*K);
+          s= _G.checkMsg=_S.bmpText("Check!",UI_FONT, 36*K);
           _S.pinRight(_G.frame, s, 10);
           _S.hide(s);
           self.insert(s);
@@ -773,8 +774,8 @@
           let x= _S.leftSide(_G.frame)/2,
               out,prev,m,s,c1,c2,
               p2moves=[],p1moves=[],
-              xxx={fontName: UI_FONT, fontSize: 48*K},
-              cfg={fontName: UI_FONT, fontSize: 64*K};
+              xxx={fontName: UI_FONT, fontSize: 18*K},
+              cfg={fontName: UI_FONT, fontSize: 24*K};
           _G.moves={};
           if(_G.mediator.flipped()){
             _G.moves["w"]=p2moves;
@@ -822,23 +823,6 @@
           });
           out.forEach(m=>m.text="--");
         };
-        this.g.initMisc=(s)=>{
-          s= _S.spriteFrom("audioOn.png","audioOff.png");
-          _I.mkBtn(_S.scaleXY(s,1.2*K,1.2*K));
-          s.anchor.x=1;
-          s.anchor.y=0;
-          s.alpha=0.5;
-          s.m5.showFrame(_D.sfx()?0:1);
-          s.m5.press=(btn)=>{
-            if(_D.sfx()){
-              _D.mute();
-            }else{
-              _D.unmute();
-            }
-            s.m5.showFrame(_D.sfx()?0:1);
-          };
-          self.insert( _V.set(s,Mojo.width,0));
-        };
         //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         doBackDrop(this) && this.g.initLevel() && this.g.initBoard() && this.g.initPromotion();
         M.flipped(p1.uuid()=="b");
@@ -846,7 +830,11 @@
         this.g.initMsgs();
         if(_G.dispInfo)
           this.g.initInfo();
-        this.g.initMisc();
+
+        _Z.run("AudioIcon",{
+          xOffset: -10*K, yOffset:0
+        });
+
         repaint();
         M.start(options.startsWith==1?p1:p2);
       },
@@ -899,7 +887,6 @@
   //load and run
   MojoH5Ldr({
     assetFiles: [TILE_SHEET, "bggreen.jpg",
-                 "audioOff.png","audioOn.png",
                  "click.mp3", "x.mp3","o.mp3","game_over.mp3","game_win.mp3"],
     arena:{width:1344, height:840},
     iconSize: 96,

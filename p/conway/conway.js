@@ -319,7 +319,7 @@
           c0=grid[0][0],
           s, bx=_S.gridBBox(0,0,grid);
         _G.arena=bx;
-        s= _S.bboxFrame(_G.arena,32*K);
+        s= _S.bboxFrame(_G.arena,24*K);
         this.insert(s);
         if(1){
           let s=_I.mkBtn(_S.sprite("menu.png"));

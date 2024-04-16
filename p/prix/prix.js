@@ -59,7 +59,7 @@
     _Z.scene("HUD",{
       setup(){
         let K=Mojo.getScaleFactor(true);
-        let cfg={fontName:UI_FONT,fontSize:64*K};
+        let cfg={fontName:UI_FONT,fontSize:48*K};
         let alpha=0.5,grey=_S.color("#cccccc");
         let L,R,F,offX, offY,r=32*K;
         //////

@@ -123,14 +123,13 @@
             _V.set(ball.m5.vel, 0,0);
             if(n>MAX_SCORE){
               _.delay(343,()=> _Z.modal("EndGame",{
-                fontSize:64*Mojo.getScaleFactor(),
                 replay:{name:"PlayGame"},
                 quit:{name:"Splash", cfg:SplashCfg},
                 msg:"",
                 winner:0
               }));
             }else{
-              _V.set(ball.m5.vel, _.randSign()*12*K, _.randSign()*8*K);
+              _V.set(ball.m5.vel, _.randSign()*16*K, _.randSign()*10*K);
               _G.cntDown();
             }
           }
@@ -148,9 +147,10 @@
         };
         this.insert(ball);
         _S.pinCenter(this,ball);
-        _V.set(ball.m5.vel, _.randSign()*8*K, _.randSign()*5*K);
+        _V.set(ball.m5.vel, _.randSign()*16*K, _.randSign()*10*K);
         //////
         _Z.run("HUD");
+        _Z.run("AudioIcon",{ xOffset: -10*K, yOffset:0 });
       },
       postUpdate(){
         for(let i=1;i<_G.msgs.length;++i){
@@ -169,7 +169,7 @@
         let
           self=this,
           K=Mojo.getScaleFactor(),
-          cfg={fontName:UI_FONT,fontSize:36*K},
+          cfg={fontName:UI_FONT,fontSize:32*K},
           x=_S.bmpText("0",cfg),
           o=_S.bmpText("0",cfg),
           d=_S.rect(2,2,0,0,0),
@@ -185,7 +185,7 @@
         this.insert(x);
         this.insert(o);
 
-        let ctext=_S.bmpText("0",UI_FONT,64*K);
+        let ctext=_S.bmpText("0",UI_FONT,48*K);
         ctext.tint=_S.SomeColors.orange;
         _S.hide(ctext);
         _S.centerAnchor(ctext);
@@ -228,7 +228,7 @@
                  "click.mp3","game_over.mp3","game_win.mp3","pop.mp3"],
     arena: {width: 1344, height: 840},
     scaleToWindow: "max",
-    scaleFit:"x",
+    //scaleFit:"x",
     start(...args){ scenes(...args) }
   });
 
