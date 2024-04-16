@@ -69,8 +69,8 @@
       st.y=y1;
       sb.x=x2;
       sb.y=y2;
-      st.m5.speed=SPEED_TOP * K; //3*K;
-      sb.m5.speed=SPEED_BOT * K; //5*K;
+      st.m5.speed= 3*K;
+      sb.m5.speed= 3*K;
       return [st,sb];
     }
 
