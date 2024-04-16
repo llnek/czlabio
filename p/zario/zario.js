@@ -247,7 +247,7 @@
       s.m5.heading= Mojo.RIGHT;
       _S.remove(_p);
 
-      if(0){
+      if(1){
         _Z.run("HotKeys",{
           cb(obj){
             _V.set(obj.right, Mojo.width-obj.right.width,Mojo.height-obj.right.height);
