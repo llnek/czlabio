@@ -56,34 +56,6 @@
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     /* */
     ////////////////////////////////////////////////////////////////////////////
-    _Z.scene("HUD",{
-      setup(){
-        let K=Mojo.getScaleFactor(true);
-        let cfg={fontName:UI_FONT,fontSize:48*K};
-        let alpha=0.5,grey=_S.color("#cccccc");
-        let L,R,F,offX, offY,r=32*K;
-        //////
-        R= _S.circle(r,grey,grey,4);
-        R.addChild(_S.centerAnchor(_S.bmpText(">",cfg)));
-        offY=K*R.height/2;
-        offX=offY;
-        _V.set(R, Mojo.width-offX-R.width/2, Mojo.height-offY-R.height/2);
-        this.insert(_S.opacity(_I.makeHotspot(R),alpha));
-        //////
-        L= _S.circle(r,grey,grey,4);
-        L.addChild(_S.centerAnchor(_S.bmpText("<",cfg)));
-        _S.pinLeft(R,L,offX/2);
-        this.insert(_S.opacity(_I.makeHotspot(L),alpha));
-        //////
-        //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-        R.m5.touch=(o,t)=>{ t?_I.setKeyOn(_I.RIGHT):_I.setKeyOff(_I.RIGHT) }
-        L.m5.touch=(o,t)=>{ t?_I.setKeyOn(_I.LEFT):_I.setKeyOff(_I.LEFT) }
-      }
-    });
-
-    //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    /* */
-    ////////////////////////////////////////////////////////////////////////////
     _Z.scene("PlayGame",{
       setup(){
         const
@@ -166,7 +138,7 @@
         });
         //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         this.g.initLevel();
-        _Z.run("HUD");
+        _Z.run("HotKeys",{ up:false,down:false });
         this.g.cam= _U.Camera(this, tiledWidth, tiledHeight,Mojo.canvas);
       },
       postUpdate(dt){

@@ -390,21 +390,11 @@
           this.g.initShip() && this.g.initHUD();
         //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         _Z.run("AudioIcon",{
-          xScale:K, yScale:K,
+          //xScale:K, yScale:K,
           xOffset: -10*K, yOffset:0
         });
         if(1){
-          _Z.run("HotKeys",{
-            fire:true,
-            cb(obj){
-              _V.set(obj.right, Mojo.width-obj.right.width, Mojo.height-obj.right.height);
-              _S.pinLeft(obj.right,obj.up,obj.right.width/4);
-              _S.pinLeft(obj.up,obj.left,obj.up.width/4);
-              _V.set(obj.fire,obj.fire.width,Mojo.height-obj.fire.height);
-              delete obj.down;
-              return obj;
-            }
-          });
+          _Z.run("HotKeys",{ down:false, fire:true });
         }
       },
       postUpdate(dt){

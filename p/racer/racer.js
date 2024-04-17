@@ -401,9 +401,10 @@
             _G.pos = increase(_G.pos, dt * _G.speed, _G.trackLength);
             _G.player.x += _I.keyDown(_I.LEFT) ? -dx : (_I.keyDown(_I.RIGHT) ? dx : 0);
             _G.player.x -= (dx * speedPercent * playerSeg.curve * _G.centrifugal);
-            _G.speed = _I.keyDown(_I.SPACE) ? Mojo.accel(_G.speed, _G.accel, dt)
-                                            : (_I.keyDown(_I.DOWN) ? Mojo.accel(_G.speed, _G.braking, dt)
-                                                                   : Mojo.accel(_G.speed, _G.decel, dt));
+            _G.speed = (_I.keyDown(_I.UP) || _I.keyDown(_I.SPACE)) ?
+                         Mojo.accel(_G.speed, _G.accel, dt)
+                         : (_I.keyDown(_I.DOWN) ? Mojo.accel(_G.speed, _G.braking, dt)
+                                                : Mojo.accel(_G.speed, _G.decel, dt));
 
             if(_G.player.x < -1 || _G.player.x > 1){
               if(_G.speed > _G.offRoadLimit)
@@ -446,7 +447,9 @@
           }
         });
         //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-        this.g.initLevel() && _Z.run("HUD");
+        this.g.initLevel();
+        _Z.run("HUD");
+        _Z.run("HotKeys",{ });
       },
       postUpdate(dt){
         this.removeChildren();
@@ -465,36 +468,6 @@
           K=Mojo.getScaleFactor(),
           s= _S.bmpText("0","unscii",36*K);
         this.insert(this.g.lapTime=s);
-        _.inject(this.g,{
-          initHotspots(){
-            let cfg={fontName:UI_FONT,fontSize:32*K};
-            let alpha=0.2,grey=_S.color("#cccccc");
-            let fw=132*K,fh=36*K,lw=4*K;
-            let L,U,R,D,offX, offY;
-            /////
-            R= _S.circle(fh,grey,grey,lw);
-            offX= R.width/4;
-            offY=offX;
-            R.addChild(_S.centerAnchor(_S.bmpText(">",cfg)));
-            _V.set(R, Mojo.width-R.width/2-offX,Mojo.height-R.height/2-offY);
-            self.insert(_S.opacity(_I.makeHotspot(R),alpha));
-            //////
-            L= _S.circle(fh,grey,grey,lw);
-            L.addChild(_S.centerAnchor(_S.bmpText("<",cfg)));
-            _S.pinLeft(R,L,offX);
-            self.insert(_S.opacity(_I.makeHotspot(L),alpha));
-            //////
-            U= _S.circle(fh,grey,grey,lw);
-            U.addChild(_S.centerAnchor(_S.bmpText("+",cfg)));
-            _V.set(U,offX+U.width/2,Mojo.height-U.height/2-offY);
-            self.insert(_S.opacity(_I.makeHotspot(U),alpha));
-            //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-            R.m5.touch=(o,t)=>{ t?_I.setKeyOn(_I.RIGHT):_I.setKeyOff(_I.RIGHT) }
-            L.m5.touch=(o,t)=>{ t?_I.setKeyOn(_I.LEFT):_I.setKeyOff(_I.LEFT) }
-            U.m5.touch=(o,t)=>{ t?_I.setKeyOn(_I.SPACE):_I.setKeyOff(_I.SPACE) }
-          }
-        });
-        this.g.initHotspots();
       },
       postUpdate(){
         this.g.lapTime.text=`Lap Time: ${Number(_G.lapTime).toFixed(3)}`;

@@ -256,15 +256,7 @@
         _Z.run("AudioIcon",{
           xOffset: -10*K, yOffset:0
         });
-        _Z.run("HotKeys",{
-          cb(obj){
-            _V.set(obj.down,Mojo.width-obj.down.width,Mojo.height-obj.down.height);
-            _S.pinLeft(obj.down,obj.up,obj.down.height/4);
-            delete obj.right;
-            delete obj.left;
-            return obj;
-          }
-        });
+        _Z.run("HotKeys",{left:false,right:false });
       },
       postUpdate(dt){
         if(_I.keyDown(_I.UP)){

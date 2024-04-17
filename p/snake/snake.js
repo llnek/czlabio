@@ -89,15 +89,7 @@
           xOffset: -10*K, yOffset:0
         });
         ////
-        _Z.run("HotKeys",{
-          cb(obj){
-            _V.set(obj.right,Mojo.width-obj.right.width,Mojo.height-obj.right.height);
-            _S.pinLeft(obj.right,obj.left,obj.right.width/4);
-            _V.set(obj.up,obj.up.width,Mojo.height-obj.up.height);
-            _S.pinRight(obj.up,obj.down,obj.up.width/4);
-            return obj;
-          }
-        });
+        _Z.run("HotKeys",{ });
         ////
         this.doMove();
         _G.growSnake(this);

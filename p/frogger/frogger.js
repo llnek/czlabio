@@ -599,10 +599,6 @@
         _Z.run("HotKeys",{
           buttons:true,
           cb(obj){
-            _V.set(obj.right,W-obj.right.width,H-obj.right.height);
-            _S.pinLeft(obj.right,obj.left,obj.right.width/4);
-            _V.set(obj.up,obj.up.width,H-obj.up.height);
-            _S.pinRight(obj.up,obj.down,obj.up.width/4);
             obj.up.m5.press=()=> _G.goUp();
             obj.down.m5.press=()=> _G.goDown();
             obj.left.m5.press=()=> _G.goLeft();
