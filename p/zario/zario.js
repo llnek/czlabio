@@ -247,40 +247,37 @@
       s.m5.heading= Mojo.RIGHT;
       _S.remove(_p);
 
+      const offleft=()=>{ s.m5.showFrame(0); _mode=null; }
+      const onleft=()=>{
+        if(s.scale.x>0) s.m5.flip="x";
+        if(_mode===null) s.m5.playFrames(PStates.walk_right);
+      }
+      const offright=()=>{ s.m5.showFrame(0); _mode=null; }
+      const onright=()=>{
+        if(s.scale.x<0) s.m5.flip="x";
+        if(_mode===null) s.m5.playFrames(PStates.walk_right);
+      }
+      const offup=()=>{ _mode=null; }
+      const onup=()=>{ s.m5.showFrame(PStates.jump_right); _mode=PStates.jump_right; }
+      const offdown=()=>{ s.m5.showFrame(0); s.g.hyper=true; _mode=null; }
+      const ondown=()=>{ s.m5.showFrame(PStates.crouch); _mode=PStates.crouch; }
+
       if(1){
-        _Z.run("HotKeys",{ });
+        _Z.run("HotKeys",{
+          cb(bs){
+            bs.right.m5.touch=(t)=>{ t ? onright() : offright() }
+            bs.left.m5.touch=(t)=>{ t ? onleft() : offleft() }
+            bs.up.m5.touch=(t)=>{ t ? onup() : offup() }
+            bs.down.m5.touch=(t)=>{ t ? ondown() : offdown() }
+            return bs;
+          }
+        });
       }
       //controls
-      let leftArrow = _I.keybd(_I.LEFT, ()=>{
-        if(s.scale.x>0) s.m5.flip="x";
-        if(_mode===null)
-          s.m5.playFrames(PStates.walk_right);
-      }, ()=>{
-          s.m5.showFrame(0);
-          _mode=null;
-      });
-      let rightArrow = _I.keybd(_I.RIGHT, ()=>{
-        if(s.scale.x<0) s.m5.flip="x";
-        if(_mode===null)
-          s.m5.playFrames(PStates.walk_right);
-      }, ()=>{
-          s.m5.showFrame(0);
-          _mode=null;
-      });
-      let upArrow = _I.keybd(_I.UP, ()=>{
-        s.m5.showFrame(PStates.jump_right);
-        _mode=PStates.jump_right;
-      }, ()=>{
-          _mode=null;
-      });
-      let downArrow = _I.keybd(_I.DOWN, ()=>{
-        s.m5.showFrame(PStates.crouch);
-        _mode=PStates.crouch;
-      }, ()=>{
-        s.m5.showFrame(0);
-        s.g.hyper=true;
-        _mode=null;
-      });
+      let leftArrow = _I.keybd(_I.LEFT, onleft, offleft);
+      let rightArrow = _I.keybd(_I.RIGHT, onright, offright);
+      let upArrow = _I.keybd(_I.UP, onup, offup);
+      let downArrow = _I.keybd(_I.DOWN, ondown, offdown);
 
       let signals=[[["bump.top",s],"breakTile"],
                    //[["hit",s],"onHit"],
