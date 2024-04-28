@@ -174,7 +174,7 @@
                  "start.png","bgblack.jpg","racing.json","click.mp3"],
     arena: {width: 1344, height: 840, scale:1},
     scaleToWindow:"max",
-    scaleFit:"x",
+    scaleFit:"y",
     start(...args){ scenes(...args) }
   });
 
