@@ -41,41 +41,46 @@
 				let
 				  K=Mojo.getScaleFactor(),
 					action=Mojo.touchDevice?"Tap":"Click",
-					m=Mojo.Sprites.bmpText(`${action} to warp!`, UI_FONT, 24*K);
+					m=Mojo.Sprites.bmpText(`${action} to warp!`, UI_FONT, 48*K);
 
 				let w= _Z.run("SpaceWarp", {static:true});
-				Mojo.Input.mkBtn(m);
 
-				this.g.warpBtn=m;
 				this.g.warpScene=w;
+				this.g.warpBtn=m;
 
-				m.m5.press=()=>{
+				function warping(){
 					if(!w.isBusy()){
+						Mojo.sound("warp.mp3").play();
 						w.warp();
 						Mojo.Sprites.hide(m);
 					}
+				}
+				const sub= function(){
+					warping();
         };
+				this.g.click=sub;
+        Mojo.Input.on(["single.tap"],sub);
 
 				if(!Mojo.touchDevice){
             this.g.space= Mojo.Input.keybd(Mojo.Input.SPACE,()=>{
-							if(!w.isBusy()){
-								w.warp();
-								Mojo.Sprites.hide(m);
-							}
+							warping()
             });
 				}
 
 				Mojo.Sprites.tint(m,"#81D4FA");
-				_V.set(m, Mojo.width/2,Mojo.height*0.8);
+				_V.set(m, Mojo.width/2,Mojo.height- m.height*3);
 				this.insert(Mojo.Sprites.centerAnchor(m));
       },
 			dispose(){
-				Mojo.Input.undoBtn(this.g.warpBtn);
+				Mojo.Input.off(["single.tap"],this.g.click);
 				this.g.space?.dispose();
 			},
       postUpdate(dt){
-				if(!this.g.warpScene.isBusy())
-					Mojo.Sprites.show(this.g.warpBtn);
+				if(!this.g.warpScene.isBusy()){
+					if(!this.g.warpBtn.visible){
+						_.delay(3000, ()=> Mojo.Sprites.show(this.g.warpBtn));
+					}
+				}
       }
     });
 
@@ -85,7 +90,7 @@
 	//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   //load and run
 	MojoH5Ldr({
-		assetFiles: ["click.mp3"],
+		assetFiles: ["click.mp3", "warp.mp3"],
 		arena: {width: 1344, height: 840},
     scaleToWindow:"max",
 		scaleFit:"x",
