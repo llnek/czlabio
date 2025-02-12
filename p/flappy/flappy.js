@@ -34,10 +34,18 @@
            v2:_V,
            ute:_,is}=Mojo;
 
-    //const GA= window["io/czlab/mcfud/algo/NEAT2"](Core);
-    const GA= window["io/czlab/mcfud/algo/NEAT"](
-      window["io/czlab/mcfud/core"]()
-    );
+    const NEAT_MODULES={
+      "Buckland": {
+        eng: window["io/czlab/mcfud/algo/NEAT_Buckland"](
+                  window["io/czlab/mcfud/core"](), window["io/czlab/mcfud/math"]()),
+        id: "MB"
+      },
+      "CBullet": {
+        eng: window["io/czlab/mcfud/algo/NEAT_CBullet"](
+                  window["io/czlab/mcfud/core"](), window["io/czlab/mcfud/math"]()),
+        id: "CB"
+      }
+    };
 
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const
@@ -51,8 +59,13 @@
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     const playClick=()=> Mojo.sound("click.mp3").play();
     const CLICK_DELAY=343;
-    const SPEED_TOP= _.randInt2(2,4);
-    const SPEED_BOT= _.randInt2(2,4);
+    const SPAWN_TIME= 90;
+
+    const FLAP_VALUE= 0.65;
+
+    const INPUTS=4;
+    const OUTPUTS=1;
+    const POPSIZE=50;
 
     ////////////////////////////////////////////////////////////////////////////
     /* */
@@ -61,31 +74,37 @@
       let
         st= _S.sprite("pipetop.png"),
         sb= _S.sprite("pipebottom.png");
-      _S.scaleXY(st,K,K);
-      _S.scaleXY(sb,K,K);
-      st.height=h1;
-      sb.height=h2;
+      _S.scaleXY(st,K,2);
+      _S.scaleXY(sb,K,2);
       st.x=x1;
-      st.y=y1;
+      st.y=h1-st.height;
       sb.x=x2;
       sb.y=y2;
-      st.m5.speed= 3*K;
-      sb.m5.speed= 3*K;
+      st.g.passed=false;
+      sb.g.passed=false;
+      st.m5.speed=3*K;
+      sb.m5.speed= st.m5.speed;
+
+      let c=_.randItem(["red","green","blue","orange", "purple"]);
+      c="magenta";
+      _S.tint(st, c);
+      _S.tint(sb, c);
       return [st,sb];
     }
 
     ////////////////////////////////////////////////////////////////////////////
     /* */
     //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    function Bird(self,K){
+    function Bird(self,K,g){
       let s= _S.sprite("bird.png");
       _S.centerAnchor(s);
       _S.scaleXY(s,K,K);
-      s.x = 80;
-      s.y = 250;
+      s.x = Mojo.width/3;
+      s.y = Mojo.height/2;
       s.m5.gravity = 0;
-      s.m5.speed = 0.3;
+      s.m5.speed = 0.5;
       s.m5.jump = -6;
+      s.g.brain=g;
       s.g.score=0;
       s.g.flap=()=>{
         s.m5.gravity = s.m5.jump
@@ -105,6 +124,31 @@
           }
         }
       };
+      s.g.think=(inputs)=>{
+        if(inputs && s.g.brain.compute(inputs)[0] > FLAP_VALUE){
+          s.g.flap();
+        }
+        return s.g;
+      };
+      s.g.look=(pipes)=>{
+        for(let p1,p2,i=0; i<pipes.length; i+=2){
+          p1=pipes[i];
+          p2=pipes[i+1];
+          if(p1.x+p1.width> s.x){
+            return [
+              _M.remap((p2.y - (p2.y-(p1.y+p1.height))/2)-s.y,0,Mojo.height,0,1),
+                    _M.remap(p1.x-s.x, 0, Mojo.width, 0,1),
+                    _M.remap(Math.max(0, p2.y - s.y), 0, Mojo.height, 0, 1),
+                    _M.remap(Math.max(0, s.y - p1.y+p1.height), 0, Mojo.height, 0, 1)
+            ];
+          }
+          if(s.x >= p1.x+p1.width){
+            p1.g.passed=true;
+            p2.g.passed=true;
+            s.g.score += 30;
+          }
+        }
+      };
       return self.insert(s);
     }
 
@@ -120,92 +164,110 @@
         _.inject(this.g,{
           initLevel(){
             this.bgs=_.fill(2, ()=> _S.sprite("background.png"));
+            this.spawnInterval = SPAWN_TIME;
+            this.NeatModule="CBullet";
             this.bgs.forEach(s=>{
               _S.scaleToCanvas(self.insert(s))
             });
             this.pipes = [];
             this.birds = [];
-            this.spawnInterval = 90;
             this.interval = 0;
+            this.waitNextWave=0;
+            this.pipesPassed=0;
+            this.bestCurScore=0;
             this.bgSpeed = 0.5;
             this.bgX = 0;
-
-            this.neatObj= new GA.NeatGA(50,2,1);
-            this.gen= this.neatObj.createPhenotypes();
-            this.birds=this.gen.map(g=> new Bird(self,K,g));
-            this.generation=1;
-            this.alives = this.birds.length;
+            this.swapEngine(this.NeatModule);
           },
-          resetNext(){
-            let scores=[];
-            this.interval = 0;
-            this.pipes.forEach(s=> _S.remove(s));
-            this.birds.forEach(s=>{
-              scores.push(s.g.score);
-              _S.remove(s);
-            });
-            this.gen = this.neatObj.epoch(scores);
-            this.birds=this.gen.map(g=> new Bird(self,K,g));
-            this.generation++;
-            this.pipes=[];
-            this.alives = this.birds.length;
+          swapEngine(e){
+            this.NeatModule=e;
+            this.Neat= NEAT_MODULES[this.NeatModule];
+            this.neatObj= new this.Neat.eng.NeatGA(POPSIZE, INPUTS, OUTPUTS);
+            this.birds.forEach(b=> _S.remove(b));
+            this.birds= this.neatObj.createPhenotypes().map(g=> new Bird(self,K,g));
+            this.resetNext(true);
           },
           tick(dt){
             this.bgX += this.bgSpeed;
-            let nextGap = 0;
-            if(this.birds.length > 0){
-              for(let i=0; i<this.pipes.length; i+=2){
-                if(this.pipes[i].x + this.pipes[i].width > this.birds[0].x){
-                  nextGap = this.pipes[i].height/Mojo.height;
-                  break;
-                }
-              }
-            }
-            this.birds.forEach((b,i)=>{
-              if(!b.m5.dead){
-                let inputs = [ b.y / Mojo.height, nextGap ];
-                let [res] = this.gen[i].update(inputs);
-                if(res>0.5){ b.g.flap() }
-                b.g.update();
-                if(b.g.isDead(Mojo.height, this.pipes)){
-                  b.m5.dead=true;
-                  this.alives--;
-                }else{
-                  b.rotation= Math.PI/2 * b.m5.gravity/20;
-                  b.g.score+=1;
-                }
-              }else{
-                b.visible=false;
-              }
-            });
-            this.isItEnd() && this.resetNext();
-            for(let p,i=0; i<this.pipes.length; ++i){
-              p=this.pipes[i];
-              p.x -= p.m5.speed;
-              if(p.x+p.width < 0){
-                this.pipes.splice(i, 1);
-                _S.remove(p);
-                i--;
-              }
-            }
-            if(this.interval == 0){
-              let deltaBord = 50*K,
-                  pipeHoll = 120*K,
-                  hollPos= Math.round(_.rand() * (Mojo.height - deltaBord * 2 - pipeHoll)) +  deltaBord,
-                  ps= Pipes(K,[Mojo.width, 0, hollPos], [Mojo.width, hollPos+pipeHoll, Mojo.height]);
-              ps.forEach(s=>{
-                this.pipes.push(self.insert(s))
-              });
-            }
-            if(++this.interval >= this.spawnInterval){
-              this.interval = 0;
+            if(this.waitNextWave>0){
+              --this.waitNextWave;
+            }else{
+              this.doMoreTick(dt);
             }
           },
-          isItEnd(){
-            for(let i=0; i<this.birds.length;++i){
-              if(!this.birds[i].m5.dead) return false;
+          doMoreTick(dt){
+            this.bestCurScore=0;
+            this.birds.forEach((b,i)=>{
+              if(b.m5.dead){
+                b.visible=false;
+              }else{
+                b.g.think( b.g.look(this.pipes)).update();
+                if(b.g.isDead(Mojo.height, this.pipes)){
+                  b.m5.dead=true;
+                }else{
+                  b.rotation= Math.PI/2 * b.m5.gravity/20;
+                  b.g.score +=1;
+                }
+                if(b.g.score>this.bestCurScore){
+                  this.bestCurScore=b.g.score;
+                }
+              }
+            });
+            this.isItEnd() ? this.resetNext() : this.checkPipes().morePipes()
+          },
+          resetNext(skip){
+            this.pipes.forEach(s=> _S.remove(s));
+            this.waitNextWave=30;
+            this.pipesPassed=0;
+            this.bestCurScore=0;
+            this.interval = 0;
+            _.trunc(this.pipes);
+            if(!skip){
+              this.birds = this.neatObj.epoch(this.birds.reduce((acc,s)=>{
+                return acc.push(s.g.score) && _S.remove(s) && acc
+              }, [])).map(g=> new Bird(self,K,g));
             }
-            return true;
+          },
+          checkPipes(){
+            let tmp=[];
+            for(let p1,p2,i=0; i<this.pipes.length; i += 2){
+              p2=this.pipes[i+1];
+              p1=this.pipes[i];
+              p1.x -= p1.m5.speed;
+              p2.x=p1.x;
+              if(p1.g.passed){
+                if(!p1.g.dead){
+                  this.pipesPassed+=1;
+                  p1.g.dead=true;
+                  p2.g.dead=true;
+                }
+              }
+              if(p1.x+p1.width < 0){
+                _S.remove(p1,p2);
+              }else{
+                tmp.push(p1,p2);
+              }
+            }
+            if(tmp.length<this.pipes.length){
+              _.append(this.pipes,tmp,true)
+            }
+            return this;
+          },
+          isItEnd(){
+            return this.birds.every(b=> b.m5.dead)
+          },
+          morePipes(){
+            if(this.interval == 0){
+              let delta= 50*K,
+                  pipeGap = 120*K,
+                  topHeight= Math.round(_.rand() * (Mojo.height - delta* 2 - pipeGap)) +  delta;
+              Pipes(K,[Mojo.width, 0, topHeight],
+                      [Mojo.width, topHeight+pipeGap, Mojo.height]).forEach(s=> this.pipes.push(self.insert(s)));
+            }
+            if(++this.interval >= this.spawnInterval){
+              this.interval = 0
+            }
+            return this;
           }
         });
         //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -222,12 +284,20 @@
         this.insert(_I.mkBtn(this.g.menu));
       },
       postUpdate(dt){
-        this.g.bgs.forEach((s,i)=>{
-          s.x= i * s.width - int(this.g.bgX % s.width);
-          s.y=0;
-        });
-        this.g.tick();
-        this.g.genText.text= `Generation: ${this.g.generation}`;
+        if(_I.keyDown(_I.TAB)){
+          if(this.g.NeatModule=="CBullet"){
+            this.g.swapEngine("Buckland");
+          }else if(this.g.NeatModule=="Buckland"){
+            this.g.swapEngine("CBullet");
+          }
+        }else{
+          this.g.bgs.forEach((s,i)=>{
+            s.x= i * s.width - int(this.g.bgX % s.width);
+            s.y=0;
+          });
+          this.g.tick();
+          this.g.genText.text= `Generation(${this.g.Neat.id}): ${this.g.neatObj.curGen()} - Pipes: ${this.g.pipesPassed} Score: ${this.g.bestCurScore}`;
+        }
       }
     });
 

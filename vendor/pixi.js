@@ -1,6 +1,6 @@
 /*!
- * PixiJS - v8.6.6
- * Compiled Wed, 18 Dec 2024 12:46:36 UTC
+ * PixiJS - v8.8.0
+ * Compiled Tue, 11 Feb 2025 15:45:29 UTC
  *
  * PixiJS is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -9,21 +9,21 @@ var PIXI = (function (exports) {
     'use strict';
 
     "use strict";
-    var __defProp$19 = Object.defineProperty;
+    var __defProp$1c = Object.defineProperty;
     var __defProps$r = Object.defineProperties;
     var __getOwnPropDescs$r = Object.getOwnPropertyDescriptors;
-    var __getOwnPropSymbols$19 = Object.getOwnPropertySymbols;
-    var __hasOwnProp$19 = Object.prototype.hasOwnProperty;
-    var __propIsEnum$19 = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$19 = (obj, key, value) => key in obj ? __defProp$19(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$19 = (a, b) => {
+    var __getOwnPropSymbols$1c = Object.getOwnPropertySymbols;
+    var __hasOwnProp$1c = Object.prototype.hasOwnProperty;
+    var __propIsEnum$1c = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$1c = (obj, key, value) => key in obj ? __defProp$1c(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$1c = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$19.call(b, prop))
-          __defNormalProp$19(a, prop, b[prop]);
-      if (__getOwnPropSymbols$19)
-        for (var prop of __getOwnPropSymbols$19(b)) {
-          if (__propIsEnum$19.call(b, prop))
-            __defNormalProp$19(a, prop, b[prop]);
+        if (__hasOwnProp$1c.call(b, prop))
+          __defNormalProp$1c(a, prop, b[prop]);
+      if (__getOwnPropSymbols$1c)
+        for (var prop of __getOwnPropSymbols$1c(b)) {
+          if (__propIsEnum$1c.call(b, prop))
+            __defNormalProp$1c(a, prop, b[prop]);
         }
       return a;
     };
@@ -58,10 +58,10 @@ var PIXI = (function (exports) {
           throw new Error("Extension class must have an extension object");
         }
         const metadata = typeof ext.extension !== "object" ? { type: ext.extension } : ext.extension;
-        ext = __spreadProps$r(__spreadValues$19({}, metadata), { ref: ext });
+        ext = __spreadProps$r(__spreadValues$1c({}, metadata), { ref: ext });
       }
       if (typeof ext === "object") {
-        ext = __spreadValues$19({}, ext);
+        ext = __spreadValues$1c({}, ext);
       } else {
         throw new Error("Invalid extension type");
       }
@@ -209,6 +209,16 @@ var PIXI = (function (exports) {
             }
           }
         );
+      },
+      /**
+       * Mixin the source object into the target object.
+       * @param Target - The target object to mix into.
+       * @param sources - The source(s) object to mix from
+       */
+      mixin(Target, ...sources) {
+        for (const source of sources) {
+          Object.defineProperties(Target.prototype, Object.getOwnPropertyDescriptors(source));
+        }
       }
     };
 
@@ -602,19 +612,19 @@ var PIXI = (function (exports) {
     function namesPlugin(e,f){var a={white:"#ffffff",bisque:"#ffe4c4",blue:"#0000ff",cadetblue:"#5f9ea0",chartreuse:"#7fff00",chocolate:"#d2691e",coral:"#ff7f50",antiquewhite:"#faebd7",aqua:"#00ffff",azure:"#f0ffff",whitesmoke:"#f5f5f5",papayawhip:"#ffefd5",plum:"#dda0dd",blanchedalmond:"#ffebcd",black:"#000000",gold:"#ffd700",goldenrod:"#daa520",gainsboro:"#dcdcdc",cornsilk:"#fff8dc",cornflowerblue:"#6495ed",burlywood:"#deb887",aquamarine:"#7fffd4",beige:"#f5f5dc",crimson:"#dc143c",cyan:"#00ffff",darkblue:"#00008b",darkcyan:"#008b8b",darkgoldenrod:"#b8860b",darkkhaki:"#bdb76b",darkgray:"#a9a9a9",darkgreen:"#006400",darkgrey:"#a9a9a9",peachpuff:"#ffdab9",darkmagenta:"#8b008b",darkred:"#8b0000",darkorchid:"#9932cc",darkorange:"#ff8c00",darkslateblue:"#483d8b",gray:"#808080",darkslategray:"#2f4f4f",darkslategrey:"#2f4f4f",deeppink:"#ff1493",deepskyblue:"#00bfff",wheat:"#f5deb3",firebrick:"#b22222",floralwhite:"#fffaf0",ghostwhite:"#f8f8ff",darkviolet:"#9400d3",magenta:"#ff00ff",green:"#008000",dodgerblue:"#1e90ff",grey:"#808080",honeydew:"#f0fff0",hotpink:"#ff69b4",blueviolet:"#8a2be2",forestgreen:"#228b22",lawngreen:"#7cfc00",indianred:"#cd5c5c",indigo:"#4b0082",fuchsia:"#ff00ff",brown:"#a52a2a",maroon:"#800000",mediumblue:"#0000cd",lightcoral:"#f08080",darkturquoise:"#00ced1",lightcyan:"#e0ffff",ivory:"#fffff0",lightyellow:"#ffffe0",lightsalmon:"#ffa07a",lightseagreen:"#20b2aa",linen:"#faf0e6",mediumaquamarine:"#66cdaa",lemonchiffon:"#fffacd",lime:"#00ff00",khaki:"#f0e68c",mediumseagreen:"#3cb371",limegreen:"#32cd32",mediumspringgreen:"#00fa9a",lightskyblue:"#87cefa",lightblue:"#add8e6",midnightblue:"#191970",lightpink:"#ffb6c1",mistyrose:"#ffe4e1",moccasin:"#ffe4b5",mintcream:"#f5fffa",lightslategray:"#778899",lightslategrey:"#778899",navajowhite:"#ffdead",navy:"#000080",mediumvioletred:"#c71585",powderblue:"#b0e0e6",palegoldenrod:"#eee8aa",oldlace:"#fdf5e6",paleturquoise:"#afeeee",mediumturquoise:"#48d1cc",mediumorchid:"#ba55d3",rebeccapurple:"#663399",lightsteelblue:"#b0c4de",mediumslateblue:"#7b68ee",thistle:"#d8bfd8",tan:"#d2b48c",orchid:"#da70d6",mediumpurple:"#9370db",purple:"#800080",pink:"#ffc0cb",skyblue:"#87ceeb",springgreen:"#00ff7f",palegreen:"#98fb98",red:"#ff0000",yellow:"#ffff00",slateblue:"#6a5acd",lavenderblush:"#fff0f5",peru:"#cd853f",palevioletred:"#db7093",violet:"#ee82ee",teal:"#008080",slategray:"#708090",slategrey:"#708090",aliceblue:"#f0f8ff",darkseagreen:"#8fbc8f",darkolivegreen:"#556b2f",greenyellow:"#adff2f",seagreen:"#2e8b57",seashell:"#fff5ee",tomato:"#ff6347",silver:"#c0c0c0",sienna:"#a0522d",lavender:"#e6e6fa",lightgreen:"#90ee90",orange:"#ffa500",orangered:"#ff4500",steelblue:"#4682b4",royalblue:"#4169e1",turquoise:"#40e0d0",yellowgreen:"#9acd32",salmon:"#fa8072",saddlebrown:"#8b4513",sandybrown:"#f4a460",rosybrown:"#bc8f8f",darksalmon:"#e9967a",lightgoldenrodyellow:"#fafad2",snow:"#fffafa",lightgrey:"#d3d3d3",lightgray:"#d3d3d3",dimgray:"#696969",dimgrey:"#696969",olivedrab:"#6b8e23",olive:"#808000"},r={};for(var d in a)r[a[d]]=d;var l={};e.prototype.toName=function(f){if(!(this.rgba.a||this.rgba.r||this.rgba.g||this.rgba.b))return "transparent";var d,i,n=r[this.toHex()];if(n)return n;if(null==f?void 0:f.closest){var o=this.toRgb(),t=1/0,b="black";if(!l.length)for(var c in a)l[c]=new e(a[c]).toRgb();for(var g in a){var u=(d=o,i=l[g],Math.pow(d.r-i.r,2)+Math.pow(d.g-i.g,2)+Math.pow(d.b-i.b,2));u<t&&(t=u,b=g);}return b}};f.string.push([function(f){var r=f.toLowerCase(),d="transparent"===r?"#0000":a[r];return d?new e(d).toRgb():null},"name"]);}
 
     "use strict";
-    var __defProp$18 = Object.defineProperty;
-    var __getOwnPropSymbols$18 = Object.getOwnPropertySymbols;
-    var __hasOwnProp$18 = Object.prototype.hasOwnProperty;
-    var __propIsEnum$18 = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$18 = (obj, key, value) => key in obj ? __defProp$18(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$18 = (a, b) => {
+    var __defProp$1b = Object.defineProperty;
+    var __getOwnPropSymbols$1b = Object.getOwnPropertySymbols;
+    var __hasOwnProp$1b = Object.prototype.hasOwnProperty;
+    var __propIsEnum$1b = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$1b = (obj, key, value) => key in obj ? __defProp$1b(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$1b = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$18.call(b, prop))
-          __defNormalProp$18(a, prop, b[prop]);
-      if (__getOwnPropSymbols$18)
-        for (var prop of __getOwnPropSymbols$18(b)) {
-          if (__propIsEnum$18.call(b, prop))
-            __defNormalProp$18(a, prop, b[prop]);
+        if (__hasOwnProp$1b.call(b, prop))
+          __defNormalProp$1b(a, prop, b[prop]);
+      if (__getOwnPropSymbols$1b)
+        for (var prop of __getOwnPropSymbols$1b(b)) {
+          if (__propIsEnum$1b.call(b, prop))
+            __defNormalProp$1b(a, prop, b[prop]);
         }
       return a;
     };
@@ -696,7 +706,7 @@ var PIXI = (function (exports) {
         } else if (Array.isArray(value) || ArrayBuffer.isView(value)) {
           return value.slice(0);
         } else if (typeof value === "object" && value !== null) {
-          return __spreadValues$18({}, value);
+          return __spreadValues$1b({}, value);
         }
         return value;
       }
@@ -1870,6 +1880,9 @@ Deprecated since v${version}`);
             this.emit("childRemoved", removed[i], this, i);
             removed[i].emit("removed", this);
           }
+          if (removed.length > 0) {
+            this._didViewChangeTick++;
+          }
           return removed;
         } else if (range === 0 && this.children.length === 0) {
           return removed;
@@ -2031,6 +2044,69 @@ Deprecated since v${version}`);
     };
 
     "use strict";
+    const collectRenderablesMixin = {
+      /**
+       * Main method to collect renderables from the container and its children.
+       * It checks the container's properties to decide whether to use a simple or advanced collection method.
+       * @param {InstructionSet} instructionSet - The set of instructions to which the renderables will be added.
+       * @param {Renderer} renderer - The renderer responsible for rendering the scene.
+       * @param {IRenderLayer} currentLayer - The current render layer being processed.
+       * @memberof scene.Container#
+       */
+      collectRenderables(instructionSet, renderer, currentLayer) {
+        if (this.parentRenderLayer && this.parentRenderLayer !== currentLayer || this.globalDisplayStatus < 7 || !this.includeInBuild)
+          return;
+        if (this.sortableChildren) {
+          this.sortChildren();
+        }
+        if (this.isSimple) {
+          this.collectRenderablesSimple(instructionSet, renderer, currentLayer);
+        } else if (this.renderGroup) {
+          renderer.renderPipes.renderGroup.addRenderGroup(this.renderGroup, instructionSet);
+        } else {
+          this.collectRenderablesWithEffects(instructionSet, renderer, currentLayer);
+        }
+      },
+      /**
+       * Simple method for collecting renderables from the container's children.
+       * This method is efficient and used when the container is marked as simple.
+       * @param {InstructionSet} instructionSet - The set of instructions to which the renderables will be added.
+       * @param {Renderer} renderer - The renderer responsible for rendering the scene.
+       * @param {IRenderLayer} currentLayer - The current render layer being processed.
+       * @memberof scene.Container#
+       */
+      collectRenderablesSimple(instructionSet, renderer, currentLayer) {
+        const children = this.children;
+        const length = children.length;
+        for (let i = 0; i < length; i++) {
+          children[i].collectRenderables(instructionSet, renderer, currentLayer);
+        }
+      },
+      /**
+       * Advanced method for collecting renderables, which handles additional effects.
+       * This method is used when the container has complex processing needs.
+       * @param {InstructionSet} instructionSet - The set of instructions to which the renderables will be added.
+       * @param {Renderer} renderer - The renderer responsible for rendering the scene.
+       * @param {IRenderLayer} currentLayer - The current render layer being processed.
+       * @memberof scene.Container#
+       */
+      collectRenderablesWithEffects(instructionSet, renderer, currentLayer) {
+        const { renderPipes } = renderer;
+        for (let i = 0; i < this.effects.length; i++) {
+          const effect = this.effects[i];
+          const pipe = renderPipes[effect.pipe];
+          pipe.push(effect, this, instructionSet);
+        }
+        this.collectRenderablesSimple(instructionSet, renderer, currentLayer);
+        for (let i = this.effects.length - 1; i >= 0; i--) {
+          const effect = this.effects[i];
+          const pipe = renderPipes[effect.pipe];
+          pipe.pop(effect, this, instructionSet);
+        }
+      }
+    };
+
+    "use strict";
     class FilterEffect {
       constructor() {
         /** the pipe that knows how to handle this effect */
@@ -2090,19 +2166,19 @@ Deprecated since v${version}`);
     extensions.handleByList(ExtensionType.MaskEffect, MaskEffectManager._effectClasses);
 
     "use strict";
-    var __defProp$17 = Object.defineProperty;
-    var __getOwnPropSymbols$17 = Object.getOwnPropertySymbols;
-    var __hasOwnProp$17 = Object.prototype.hasOwnProperty;
-    var __propIsEnum$17 = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$17 = (obj, key, value) => key in obj ? __defProp$17(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$17 = (a, b) => {
+    var __defProp$1a = Object.defineProperty;
+    var __getOwnPropSymbols$1a = Object.getOwnPropertySymbols;
+    var __hasOwnProp$1a = Object.prototype.hasOwnProperty;
+    var __propIsEnum$1a = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$1a = (obj, key, value) => key in obj ? __defProp$1a(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$1a = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$17.call(b, prop))
-          __defNormalProp$17(a, prop, b[prop]);
-      if (__getOwnPropSymbols$17)
-        for (var prop of __getOwnPropSymbols$17(b)) {
-          if (__propIsEnum$17.call(b, prop))
-            __defNormalProp$17(a, prop, b[prop]);
+        if (__hasOwnProp$1a.call(b, prop))
+          __defNormalProp$1a(a, prop, b[prop]);
+      if (__getOwnPropSymbols$1a)
+        for (var prop of __getOwnPropSymbols$1a(b)) {
+          if (__propIsEnum$1a.call(b, prop))
+            __defNormalProp$1a(a, prop, b[prop]);
         }
       return a;
     };
@@ -2186,7 +2262,7 @@ Deprecated since v${version}`);
        * @memberof scene.Container#
        */
       setMask(options) {
-        this._maskOptions = __spreadValues$17(__spreadValues$17({}, this._maskOptions), options);
+        this._maskOptions = __spreadValues$1a(__spreadValues$1a({}, this._maskOptions), options);
         if (options.mask) {
           this.mask = options.mask;
         }
@@ -2614,6 +2690,35 @@ Deprecated since v${version}`);
         out.copyFrom(this);
         return out;
       }
+      /**
+       * Checks if this rectangle fully contains another rectangle.
+       *
+       * A rectangle contains another rectangle if all four corners of the other rectangle
+       * lie within the bounds of this rectangle.
+       *
+       * ```ts
+       * const container = new Rectangle(0, 0, 100, 100);
+       * const inside = new Rectangle(25, 25, 50, 50);
+       * const partial = new Rectangle(75, 75, 50, 50);
+       *
+       * container.containsRect(inside); // Returns true
+       * container.containsRect(partial); // Returns false - partial overlap
+       * ```
+       *
+       * Note: If either rectangle has a width or height of 0, this method returns false
+       * since a zero-area rectangle cannot meaningfully contain another rectangle.
+       * @param other - The rectangle to check if it is contained within this one
+       * @returns True if the other rectangle is fully contained within this one
+       */
+      containsRect(other) {
+        if (this.width <= 0 || this.height <= 0)
+          return false;
+        const x1 = other.x;
+        const y1 = other.y;
+        const x2 = other.x + other.width;
+        const y2 = other.y + other.height;
+        return x1 >= this.x && x1 < this.x + this.width && y1 >= this.y && y1 < this.y + this.height && x2 >= this.x && x2 < this.x + this.width && y2 >= this.y && y2 < this.y + this.height;
+      }
       toString() {
         return `[pixi.js/math:Rectangle x=${this.x} y=${this.y} width=${this.width} height=${this.height}]`;
       }
@@ -3000,6 +3105,92 @@ Deprecated since v${version}`);
     const boundsPool = new Pool(Bounds);
 
     "use strict";
+    const tempMatrix$5 = new Matrix();
+    const getFastGlobalBoundsMixin = {
+      /**
+       * Computes the global bounds for the container, considering its children and optionally
+       * factoring in render layers. It starts by clearing the provided bounds object, then
+       * recursively calculates the bounds, and finally applies the world transformation.
+       * @param {boolean} [factorRenderLayers] - Whether to consider render layers in the calculation.
+       * @param {Bounds} [bounds] - The bounds object to store the result. If not provided, a new one is created.
+       * @returns {Bounds} The computed bounds.
+       * @memberof scene.Container#
+       */
+      getFastGlobalBounds(factorRenderLayers, bounds) {
+        bounds || (bounds = new Bounds());
+        bounds.clear();
+        this._getGlobalBoundsRecursive(!!factorRenderLayers, bounds, this.parentRenderLayer);
+        if (!bounds.isValid) {
+          bounds.set(0, 0, 0, 0);
+        }
+        const renderGroup = this.renderGroup || this.parentRenderGroup;
+        bounds.applyMatrix(renderGroup.worldTransform);
+        return bounds;
+      },
+      /**
+       * Recursively calculates the global bounds for the container and its children.
+       * It considers visibility, measurability, and effects, and applies transformations
+       * as necessary to compute the bounds accurately.
+       * @param {boolean} factorRenderLayers - Whether to consider render layers in the calculation.
+       * @param {Bounds} bounds - The bounds object to update with the calculated values.
+       * @param {IRenderLayer} currentLayer - The current render layer being processed.
+       * @memberof scene.Container#
+       */
+      _getGlobalBoundsRecursive(factorRenderLayers, bounds, currentLayer) {
+        let localBounds = bounds;
+        if (factorRenderLayers && this.parentRenderLayer && this.parentRenderLayer !== currentLayer)
+          return;
+        if (this.localDisplayStatus !== 7 || !this.measurable) {
+          return;
+        }
+        const manageEffects = !!this.effects.length;
+        if (this.renderGroup || manageEffects) {
+          localBounds = boundsPool.get().clear();
+        }
+        if (this.boundsArea) {
+          bounds.addRect(this.boundsArea, this.worldTransform);
+        } else {
+          if (this.renderPipeId) {
+            const viewBounds = this.bounds;
+            localBounds.addFrame(
+              viewBounds.minX,
+              viewBounds.minY,
+              viewBounds.maxX,
+              viewBounds.maxY,
+              this.groupTransform
+            );
+          }
+          const children = this.children;
+          for (let i = 0; i < children.length; i++) {
+            children[i]._getGlobalBoundsRecursive(factorRenderLayers, localBounds, currentLayer);
+          }
+        }
+        if (manageEffects) {
+          let advanced = false;
+          const renderGroup = this.renderGroup || this.parentRenderGroup;
+          for (let i = 0; i < this.effects.length; i++) {
+            if (this.effects[i].addBounds) {
+              if (!advanced) {
+                advanced = true;
+                localBounds.applyMatrix(renderGroup.worldTransform);
+              }
+              this.effects[i].addBounds(localBounds, true);
+            }
+          }
+          if (advanced) {
+            localBounds.applyMatrix(renderGroup.worldTransform.copyTo(tempMatrix$5).invert());
+            bounds.addBounds(localBounds, this.relativeGroupTransform);
+          }
+          bounds.addBounds(localBounds);
+          boundsPool.return(localBounds);
+        } else if (this.renderGroup) {
+          bounds.addBounds(localBounds, this.relativeGroupTransform);
+          boundsPool.return(localBounds);
+        }
+      }
+    };
+
+    "use strict";
     function getGlobalBounds(target, skipUpdateTransform, bounds) {
       bounds.clear();
       let parentTransform;
@@ -3300,7 +3491,7 @@ Deprecated since v${version}`);
     }
 
     "use strict";
-    const tempMatrix$5 = new Matrix();
+    const tempMatrix$4 = new Matrix();
     const measureMixin = {
       _localBoundsCacheId: -1,
       _localBoundsCacheData: null,
@@ -3343,7 +3534,7 @@ Deprecated since v${version}`);
         }
         checkChildrenDidChange(this, localBoundsCacheData);
         if (localBoundsCacheData.didChange) {
-          getLocalBounds(this, localBoundsCacheData.localBounds, tempMatrix$5);
+          getLocalBounds(this, localBoundsCacheData.localBounds, tempMatrix$4);
         }
         return localBoundsCacheData.localBounds;
       },
@@ -3593,19 +3784,19 @@ Deprecated since v${version}`);
     }
 
     "use strict";
-    var __defProp$16 = Object.defineProperty;
-    var __getOwnPropSymbols$16 = Object.getOwnPropertySymbols;
-    var __hasOwnProp$16 = Object.prototype.hasOwnProperty;
-    var __propIsEnum$16 = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$16 = (obj, key, value) => key in obj ? __defProp$16(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$16 = (a, b) => {
+    var __defProp$19 = Object.defineProperty;
+    var __getOwnPropSymbols$19 = Object.getOwnPropertySymbols;
+    var __hasOwnProp$19 = Object.prototype.hasOwnProperty;
+    var __propIsEnum$19 = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$19 = (obj, key, value) => key in obj ? __defProp$19(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$19 = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$16.call(b, prop))
-          __defNormalProp$16(a, prop, b[prop]);
-      if (__getOwnPropSymbols$16)
-        for (var prop of __getOwnPropSymbols$16(b)) {
-          if (__propIsEnum$16.call(b, prop))
-            __defNormalProp$16(a, prop, b[prop]);
+        if (__hasOwnProp$19.call(b, prop))
+          __defNormalProp$19(a, prop, b[prop]);
+      if (__getOwnPropSymbols$19)
+        for (var prop of __getOwnPropSymbols$19(b)) {
+          if (__propIsEnum$19.call(b, prop))
+            __defNormalProp$19(a, prop, b[prop]);
         }
       return a;
     };
@@ -3640,7 +3831,7 @@ Deprecated since v${version}`);
          * @readonly
          */
         this.destroyed = false;
-        options = __spreadValues$16(__spreadValues$16({}, _TextureStyle.defaultOptions), options);
+        options = __spreadValues$19(__spreadValues$19({}, _TextureStyle.defaultOptions), options);
         this.addressMode = options.addressMode;
         this.addressModeU = (_a = options.addressModeU) != null ? _a : this.addressModeU;
         this.addressModeV = (_b = options.addressModeV) != null ? _b : this.addressModeV;
@@ -3718,19 +3909,19 @@ Deprecated since v${version}`);
     let TextureStyle = _TextureStyle;
 
     "use strict";
-    var __defProp$15 = Object.defineProperty;
-    var __getOwnPropSymbols$15 = Object.getOwnPropertySymbols;
-    var __hasOwnProp$15 = Object.prototype.hasOwnProperty;
-    var __propIsEnum$15 = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$15 = (obj, key, value) => key in obj ? __defProp$15(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$15 = (a, b) => {
+    var __defProp$18 = Object.defineProperty;
+    var __getOwnPropSymbols$18 = Object.getOwnPropertySymbols;
+    var __hasOwnProp$18 = Object.prototype.hasOwnProperty;
+    var __propIsEnum$18 = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$18 = (obj, key, value) => key in obj ? __defProp$18(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$18 = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$15.call(b, prop))
-          __defNormalProp$15(a, prop, b[prop]);
-      if (__getOwnPropSymbols$15)
-        for (var prop of __getOwnPropSymbols$15(b)) {
-          if (__propIsEnum$15.call(b, prop))
-            __defNormalProp$15(a, prop, b[prop]);
+        if (__hasOwnProp$18.call(b, prop))
+          __defNormalProp$18(a, prop, b[prop]);
+      if (__getOwnPropSymbols$18)
+        for (var prop of __getOwnPropSymbols$18(b)) {
+          if (__propIsEnum$18.call(b, prop))
+            __defNormalProp$18(a, prop, b[prop]);
         }
       return a;
     };
@@ -3823,7 +4014,7 @@ Deprecated since v${version}`);
          * @protected
          */
         this._textureBindLocation = -1;
-        options = __spreadValues$15(__spreadValues$15({}, _TextureSource.defaultOptions), options);
+        options = __spreadValues$18(__spreadValues$18({}, _TextureSource.defaultOptions), options);
         this.label = (_a = options.label) != null ? _a : "";
         this.resource = options.resource;
         this.autoGarbageCollect = options.autoGarbageCollect;
@@ -4322,21 +4513,21 @@ Deprecated since v${version}`);
     };
 
     "use strict";
-    var __defProp$14 = Object.defineProperty;
+    var __defProp$17 = Object.defineProperty;
     var __defProps$q = Object.defineProperties;
     var __getOwnPropDescs$q = Object.getOwnPropertyDescriptors;
-    var __getOwnPropSymbols$14 = Object.getOwnPropertySymbols;
-    var __hasOwnProp$14 = Object.prototype.hasOwnProperty;
-    var __propIsEnum$14 = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$14 = (obj, key, value) => key in obj ? __defProp$14(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$14 = (a, b) => {
+    var __getOwnPropSymbols$17 = Object.getOwnPropertySymbols;
+    var __hasOwnProp$17 = Object.prototype.hasOwnProperty;
+    var __propIsEnum$17 = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$17 = (obj, key, value) => key in obj ? __defProp$17(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$17 = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$14.call(b, prop))
-          __defNormalProp$14(a, prop, b[prop]);
-      if (__getOwnPropSymbols$14)
-        for (var prop of __getOwnPropSymbols$14(b)) {
-          if (__propIsEnum$14.call(b, prop))
-            __defNormalProp$14(a, prop, b[prop]);
+        if (__hasOwnProp$17.call(b, prop))
+          __defNormalProp$17(a, prop, b[prop]);
+      if (__getOwnPropSymbols$17)
+        for (var prop of __getOwnPropSymbols$17(b)) {
+          if (__propIsEnum$17.call(b, prop))
+            __defNormalProp$17(a, prop, b[prop]);
         }
       return a;
     };
@@ -4362,7 +4553,7 @@ Deprecated since v${version}`);
             format = "bgra8unorm";
           }
         }
-        super(__spreadProps$q(__spreadValues$14({}, options), {
+        super(__spreadProps$q(__spreadValues$17({}, options), {
           resource: buffer,
           format
         }));
@@ -4651,21 +4842,21 @@ Deprecated since v${version}`);
     Texture.WHITE.destroy = NOOP;
 
     "use strict";
-    var __defProp$13 = Object.defineProperty;
+    var __defProp$16 = Object.defineProperty;
     var __defProps$p = Object.defineProperties;
     var __getOwnPropDescs$p = Object.getOwnPropertyDescriptors;
-    var __getOwnPropSymbols$13 = Object.getOwnPropertySymbols;
-    var __hasOwnProp$13 = Object.prototype.hasOwnProperty;
-    var __propIsEnum$13 = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$13 = (obj, key, value) => key in obj ? __defProp$13(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$13 = (a, b) => {
+    var __getOwnPropSymbols$16 = Object.getOwnPropertySymbols;
+    var __hasOwnProp$16 = Object.prototype.hasOwnProperty;
+    var __propIsEnum$16 = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$16 = (obj, key, value) => key in obj ? __defProp$16(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$16 = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$13.call(b, prop))
-          __defNormalProp$13(a, prop, b[prop]);
-      if (__getOwnPropSymbols$13)
-        for (var prop of __getOwnPropSymbols$13(b)) {
-          if (__propIsEnum$13.call(b, prop))
-            __defNormalProp$13(a, prop, b[prop]);
+        if (__hasOwnProp$16.call(b, prop))
+          __defNormalProp$16(a, prop, b[prop]);
+      if (__getOwnPropSymbols$16)
+        for (var prop of __getOwnPropSymbols$16(b)) {
+          if (__propIsEnum$16.call(b, prop))
+            __defNormalProp$16(a, prop, b[prop]);
         }
       return a;
     };
@@ -4689,12 +4880,12 @@ Deprecated since v${version}`);
        * @param antialias
        */
       createTexture(pixelWidth, pixelHeight, antialias) {
-        const textureSource = new TextureSource(__spreadProps$p(__spreadValues$13({}, this.textureOptions), {
+        const textureSource = new TextureSource(__spreadProps$p(__spreadValues$16({}, this.textureOptions), {
           width: pixelWidth,
           height: pixelHeight,
           resolution: 1,
           antialias,
-          autoGarbageCollect: true
+          autoGarbageCollect: false
         }));
         return new Texture({
           source: textureSource,
@@ -4945,9 +5136,9 @@ Deprecated since v${version}`);
       removeOnRender(container) {
         this._onRenderContainers.splice(this._onRenderContainers.indexOf(container), 1);
       }
-      runOnRender() {
+      runOnRender(renderer) {
         for (let i = 0; i < this._onRenderContainers.length; i++) {
-          this._onRenderContainers[i]._onRender();
+          this._onRenderContainers[i]._onRender(renderer);
         }
       }
       destroy() {
@@ -5256,10 +5447,13 @@ Deprecated since v${version}`);
       /**
        * Mixes all enumerable properties and methods from a source object to Container.
        * @param source - The source of properties and methods to mix in.
+       * @deprecated since 8.8.0
        */
       static mixin(source) {
-        Object.defineProperties(Container.prototype, Object.getOwnPropertyDescriptors(source));
+        deprecation("8.8.0", "Container.mixin is deprecated, please use extensions.mixin instead.");
+        extensions.mixin(Container, source);
       }
+      // = 'default';
       /**
        * We now use the _didContainerChangeTick and _didViewChangeTick to track changes
        * @deprecated since 8.2.6
@@ -5340,6 +5534,9 @@ Deprecated since v${version}`);
             this.renderGroup.removeChild(child);
           } else if (this.parentRenderGroup) {
             this.parentRenderGroup.removeChild(child);
+          }
+          if (child.parentRenderLayer) {
+            child.parentRenderLayer.detach(child);
           }
           child.parent = null;
           this.emit("childRemoved", child, this, index);
@@ -5798,16 +5995,21 @@ Deprecated since v${version}`);
         this.renderGroup = null;
       }
     }
-    Container.mixin(childrenHelperMixin);
-    Container.mixin(toLocalGlobalMixin);
-    Container.mixin(onRenderMixin);
-    Container.mixin(measureMixin);
-    Container.mixin(effectsMixin);
-    Container.mixin(findMixin);
-    Container.mixin(sortMixin);
-    Container.mixin(cullingMixin);
-    Container.mixin(cacheAsTextureMixin);
-    Container.mixin(getGlobalMixin);
+    extensions.mixin(
+      Container,
+      childrenHelperMixin,
+      getFastGlobalBoundsMixin,
+      toLocalGlobalMixin,
+      onRenderMixin,
+      measureMixin,
+      effectsMixin,
+      findMixin,
+      sortMixin,
+      cullingMixin,
+      cacheAsTextureMixin,
+      getGlobalMixin,
+      collectRenderablesMixin
+    );
 
     "use strict";
     class FederatedEvent {
@@ -6059,6 +6261,22 @@ Deprecated since v${version}`);
     const isMobile = isMobileCall(globalThis.navigator);
 
     "use strict";
+    var __defProp$15 = Object.defineProperty;
+    var __getOwnPropSymbols$15 = Object.getOwnPropertySymbols;
+    var __hasOwnProp$15 = Object.prototype.hasOwnProperty;
+    var __propIsEnum$15 = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$15 = (obj, key, value) => key in obj ? __defProp$15(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$15 = (a, b) => {
+      for (var prop in b || (b = {}))
+        if (__hasOwnProp$15.call(b, prop))
+          __defNormalProp$15(a, prop, b[prop]);
+      if (__getOwnPropSymbols$15)
+        for (var prop of __getOwnPropSymbols$15(b)) {
+          if (__propIsEnum$15.call(b, prop))
+            __defNormalProp$15(a, prop, b[prop]);
+        }
+      return a;
+    };
     const KEY_CODE_TAB = 9;
     const DIV_TOUCH_SIZE = 100;
     const DIV_TOUCH_POS_X = 0;
@@ -6068,7 +6286,7 @@ Deprecated since v${version}`);
     const DIV_HOOK_POS_X = -1e3;
     const DIV_HOOK_POS_Y = -1e3;
     const DIV_HOOK_ZINDEX = 2;
-    class AccessibilitySystem {
+    const _AccessibilitySystem = class _AccessibilitySystem {
       // 2fps
       // eslint-disable-next-line jsdoc/require-param
       /**
@@ -6076,12 +6294,18 @@ Deprecated since v${version}`);
        */
       constructor(renderer, _mobileInfo = isMobile) {
         this._mobileInfo = _mobileInfo;
-        /** Setting this to true will visually show the divs. */
+        /** Whether accessibility divs are visible for debugging */
         this.debug = false;
+        /** Whether to activate on tab key press */
+        this._activateOnTab = true;
+        /** Whether to deactivate accessibility when mouse moves */
+        this._deactivateOnMouseMove = true;
         /** Internal variable, see isActive getter. */
         this._isActive = false;
         /** Internal variable, see isMobileAccessibility getter. */
         this._isMobileAccessibility = false;
+        /** This is the dom element that will sit over the PixiJS element. This is where the div overlays will go. */
+        this._div = null;
         /** A simple pool for storing divs. */
         this._pool = [];
         /** This is a tick used to check if an object is no longer being rendered. */
@@ -6096,18 +6320,7 @@ Deprecated since v${version}`);
         if (_mobileInfo.tablet || _mobileInfo.phone) {
           this._createTouchHook();
         }
-        const div = document.createElement("div");
-        div.style.width = `${DIV_TOUCH_SIZE}px`;
-        div.style.height = `${DIV_TOUCH_SIZE}px`;
-        div.style.position = "absolute";
-        div.style.top = `${DIV_TOUCH_POS_X}px`;
-        div.style.left = `${DIV_TOUCH_POS_Y}px`;
-        div.style.zIndex = DIV_TOUCH_ZINDEX.toString();
-        this._div = div;
         this._renderer = renderer;
-        this._onKeyDown = this._onKeyDown.bind(this);
-        this._onMouseMove = this._onMouseMove.bind(this);
-        globalThis.addEventListener("keydown", this._onKeyDown, false);
       }
       /**
        * Value of `true` if accessibility is currently active and accessibility layers are showing.
@@ -6167,31 +6380,81 @@ Deprecated since v${version}`);
        * @private
        */
       _activate() {
-        var _a;
         if (this._isActive) {
           return;
         }
         this._isActive = true;
-        globalThis.document.addEventListener("mousemove", this._onMouseMove, true);
-        globalThis.removeEventListener("keydown", this._onKeyDown, false);
+        if (!this._div) {
+          this._div = document.createElement("div");
+          this._div.style.width = `${DIV_TOUCH_SIZE}px`;
+          this._div.style.height = `${DIV_TOUCH_SIZE}px`;
+          this._div.style.position = "absolute";
+          this._div.style.top = `${DIV_TOUCH_POS_X}px`;
+          this._div.style.left = `${DIV_TOUCH_POS_Y}px`;
+          this._div.style.zIndex = DIV_TOUCH_ZINDEX.toString();
+          this._div.style.pointerEvents = "none";
+        }
+        if (this._activateOnTab) {
+          this._onKeyDown = this._onKeyDown.bind(this);
+          globalThis.addEventListener("keydown", this._onKeyDown, false);
+        }
+        if (this._deactivateOnMouseMove) {
+          this._onMouseMove = this._onMouseMove.bind(this);
+          globalThis.document.addEventListener("mousemove", this._onMouseMove, true);
+        }
+        const canvas = this._renderer.view.canvas;
+        if (!canvas.parentNode) {
+          const observer = new MutationObserver(() => {
+            if (canvas.parentNode) {
+              canvas.parentNode.appendChild(this._div);
+              observer.disconnect();
+              this._initAccessibilitySetup();
+            }
+          });
+          observer.observe(document.body, { childList: true, subtree: true });
+        } else {
+          canvas.parentNode.appendChild(this._div);
+          this._initAccessibilitySetup();
+        }
+      }
+      // New method to handle initialization after div is ready
+      _initAccessibilitySetup() {
         this._renderer.runners.postrender.add(this);
-        (_a = this._renderer.view.canvas.parentNode) == null ? void 0 : _a.appendChild(this._div);
+        if (this._renderer.lastObjectRendered) {
+          this._updateAccessibleObjects(this._renderer.lastObjectRendered);
+        }
       }
       /**
-       * Deactivating will cause the Accessibility layer to be hidden.
-       * This is called when a user moves the mouse.
+       * Deactivates the accessibility system. Removes listeners and accessibility elements.
        * @private
        */
       _deactivate() {
-        var _a;
         if (!this._isActive || this._isMobileAccessibility) {
           return;
         }
         this._isActive = false;
         globalThis.document.removeEventListener("mousemove", this._onMouseMove, true);
-        globalThis.addEventListener("keydown", this._onKeyDown, false);
+        if (this._activateOnTab) {
+          globalThis.addEventListener("keydown", this._onKeyDown, false);
+        }
         this._renderer.runners.postrender.remove(this);
-        (_a = this._div.parentNode) == null ? void 0 : _a.removeChild(this._div);
+        for (const child of this._children) {
+          if (child._accessibleDiv && child._accessibleDiv.parentNode) {
+            child._accessibleDiv.parentNode.removeChild(child._accessibleDiv);
+            child._accessibleDiv = null;
+          }
+          child._accessibleActive = false;
+        }
+        this._pool.forEach((div) => {
+          if (div.parentNode) {
+            div.parentNode.removeChild(div);
+          }
+        });
+        if (this._div && this._div.parentNode) {
+          this._div.parentNode.removeChild(this._div);
+        }
+        this._pool = [];
+        this._children = [];
       }
       /**
        * This recursive function will run through the scene graph and add any new accessible objects to the DOM layer.
@@ -6202,7 +6465,7 @@ Deprecated since v${version}`);
         if (!container.visible || !container.accessibleChildren) {
           return;
         }
-        if (container.accessible && container.isInteractive()) {
+        if (container.accessible) {
           if (!container._accessibleActive) {
             this._addChild(container);
           }
@@ -6220,13 +6483,27 @@ Deprecated since v${version}`);
        * @ignore
        */
       init(options) {
-        var _a;
-        this.debug = (_a = options == null ? void 0 : options.debug) != null ? _a : this.debug;
+        const defaultOpts = _AccessibilitySystem.defaultOptions;
+        const mergedOptions = {
+          accessibilityOptions: __spreadValues$15(__spreadValues$15({}, defaultOpts), (options == null ? void 0 : options.accessibilityOptions) || {})
+        };
+        this.debug = mergedOptions.accessibilityOptions.debug;
+        this._activateOnTab = mergedOptions.accessibilityOptions.activateOnTab;
+        this._deactivateOnMouseMove = mergedOptions.accessibilityOptions.deactivateOnMouseMove;
+        if (mergedOptions.accessibilityOptions.enabledByDefault) {
+          this._activate();
+        } else if (this._activateOnTab) {
+          this._onKeyDown = this._onKeyDown.bind(this);
+          globalThis.addEventListener("keydown", this._onKeyDown, false);
+        }
         this._renderer.runners.postrender.remove(this);
       }
       /**
-       * Runner postrender was called, ensure that all divs are mapped correctly to their Containers.
-       * Only fires while active.
+       * Updates the accessibility layer during rendering.
+       * - Removes divs for containers no longer in the scene
+       * - Updates the position and dimensions of the root div
+       * - Updates positions of active accessibility divs
+       * Only fires while the accessibility system is active.
        * @ignore
        */
       postrender() {
@@ -6238,57 +6515,58 @@ Deprecated since v${version}`);
         if (!this._renderer.renderingToScreen || !this._renderer.view.canvas) {
           return;
         }
+        const activeIds = /* @__PURE__ */ new Set();
         if (this._renderer.lastObjectRendered) {
           this._updateAccessibleObjects(this._renderer.lastObjectRendered);
+          for (const child of this._children) {
+            if (child._renderId === this._renderId) {
+              activeIds.add(this._children.indexOf(child));
+            }
+          }
         }
-        const { x, y, width, height } = this._renderer.view.canvas.getBoundingClientRect();
-        const { width: viewWidth, height: viewHeight, resolution } = this._renderer;
-        const sx = width / viewWidth * resolution;
-        const sy = height / viewHeight * resolution;
-        let div = this._div;
-        div.style.left = `${x}px`;
-        div.style.top = `${y}px`;
-        div.style.width = `${viewWidth}px`;
-        div.style.height = `${viewHeight}px`;
-        for (let i = 0; i < this._children.length; i++) {
+        for (let i = this._children.length - 1; i >= 0; i--) {
           const child = this._children[i];
-          if (child._renderId !== this._renderId) {
+          if (!activeIds.has(i)) {
+            if (child._accessibleDiv && child._accessibleDiv.parentNode) {
+              child._accessibleDiv.parentNode.removeChild(child._accessibleDiv);
+              this._pool.push(child._accessibleDiv);
+              child._accessibleDiv = null;
+            }
             child._accessibleActive = false;
             removeItems(this._children, i, 1);
-            this._div.removeChild(child._accessibleDiv);
-            this._pool.push(child._accessibleDiv);
-            child._accessibleDiv = null;
-            i--;
-          } else {
-            div = child._accessibleDiv;
-            let hitArea = child.hitArea;
+          }
+        }
+        if (this._renderer.renderingToScreen) {
+          const { x, y, width: viewWidth, height: viewHeight } = this._renderer.screen;
+          const div = this._div;
+          div.style.left = `${x}px`;
+          div.style.top = `${y}px`;
+          div.style.width = `${viewWidth}px`;
+          div.style.height = `${viewHeight}px`;
+        }
+        for (let i = 0; i < this._children.length; i++) {
+          const child = this._children[i];
+          if (!child._accessibleActive || !child._accessibleDiv) {
+            continue;
+          }
+          const div = child._accessibleDiv;
+          const hitArea = child.hitArea || child.getBounds().rectangle;
+          if (child.hitArea) {
             const wt = child.worldTransform;
-            if (child.hitArea) {
-              div.style.left = `${(wt.tx + hitArea.x * wt.a) * sx}px`;
-              div.style.top = `${(wt.ty + hitArea.y * wt.d) * sy}px`;
-              div.style.width = `${hitArea.width * wt.a * sx}px`;
-              div.style.height = `${hitArea.height * wt.d * sy}px`;
-            } else {
-              hitArea = child.getBounds().rectangle;
-              this._capHitArea(hitArea);
-              div.style.left = `${hitArea.x * sx}px`;
-              div.style.top = `${hitArea.y * sy}px`;
-              div.style.width = `${hitArea.width * sx}px`;
-              div.style.height = `${hitArea.height * sy}px`;
-              if (div.title !== child.accessibleTitle && child.accessibleTitle !== null) {
-                div.title = child.accessibleTitle || "";
-              }
-              if (div.getAttribute("aria-label") !== child.accessibleHint && child.accessibleHint !== null) {
-                div.setAttribute("aria-label", child.accessibleHint || "");
-              }
-            }
-            if (child.accessibleTitle !== div.title || child.tabIndex !== div.tabIndex) {
-              div.title = child.accessibleTitle || "";
-              div.tabIndex = child.tabIndex;
-              if (this.debug) {
-                this._updateDebugHTML(div);
-              }
-            }
+            const sx = this._renderer.resolution;
+            const sy = this._renderer.resolution;
+            div.style.left = `${(wt.tx + hitArea.x * wt.a) * sx}px`;
+            div.style.top = `${(wt.ty + hitArea.y * wt.d) * sy}px`;
+            div.style.width = `${hitArea.width * wt.a * sx}px`;
+            div.style.height = `${hitArea.height * wt.d * sy}px`;
+          } else {
+            this._capHitArea(hitArea);
+            const sx = this._renderer.resolution;
+            const sy = this._renderer.resolution;
+            div.style.left = `${hitArea.x * sx}px`;
+            div.style.top = `${hitArea.y * sy}px`;
+            div.style.width = `${hitArea.width * sx}px`;
+            div.style.height = `${hitArea.height * sy}px`;
           }
         }
         this._renderId++;
@@ -6323,14 +6601,36 @@ Deprecated since v${version}`);
         }
       }
       /**
-       * Adds a Container to the accessibility manager
+       * Creates or reuses a div element for a Container and adds it to the accessibility layer.
+       * Sets up ARIA attributes, event listeners, and positioning based on the container's properties.
        * @private
        * @param {Container} container - The child to make accessible.
        */
       _addChild(container) {
         let div = this._pool.pop();
         if (!div) {
-          div = document.createElement("button");
+          if (container.accessibleType === "button") {
+            div = document.createElement("button");
+          } else {
+            div = document.createElement(container.accessibleType);
+            div.style.cssText = `
+                        color: transparent;
+                        pointer-events: none;
+                        padding: 0;
+                        margin: 0;
+                        border: 0;
+                        outline: 0;
+                        background: transparent;
+                        box-sizing: border-box;
+                        user-select: none;
+                        -webkit-user-select: none;
+                        -moz-user-select: none;
+                        -ms-user-select: none;
+                    `;
+            if (container.accessibleText) {
+              div.innerText = container.accessibleText;
+            }
+          }
           div.style.width = `${DIV_TOUCH_SIZE}px`;
           div.style.height = `${DIV_TOUCH_SIZE}px`;
           div.style.backgroundColor = this.debug ? "rgba(255,255,255,0.5)" : "transparent";
@@ -6369,7 +6669,9 @@ Deprecated since v${version}`);
         div.container = container;
         this._children.push(container);
         this._div.appendChild(container._accessibleDiv);
-        container._accessibleDiv.tabIndex = container.tabIndex;
+        if (container.interactive) {
+          container._accessibleDiv.tabIndex = container.tabIndex;
+        }
       }
       /**
        * Dispatch events with the EventSystem.
@@ -6420,7 +6722,7 @@ Deprecated since v${version}`);
        * @param {KeyboardEvent} e - The keydown event.
        */
       _onKeyDown(e) {
-        if (e.keyCode !== KEY_CODE_TAB) {
+        if (e.keyCode !== KEY_CODE_TAB || !this._activateOnTab) {
           return;
         }
         this._activate();
@@ -6436,25 +6738,62 @@ Deprecated since v${version}`);
         }
         this._deactivate();
       }
-      /** Destroys the accessibility manager */
+      /** Destroys the accessibility system. Removes all elements and listeners. */
       destroy() {
+        this._deactivate();
         this._destroyTouchHook();
         this._div = null;
-        globalThis.document.removeEventListener("mousemove", this._onMouseMove, true);
-        globalThis.removeEventListener("keydown", this._onKeyDown);
         this._pool = null;
         this._children = null;
         this._renderer = null;
+        if (this._activateOnTab) {
+          globalThis.removeEventListener("keydown", this._onKeyDown);
+        }
       }
-    }
+      /**
+       * Enables or disables the accessibility system.
+       * @param enabled - Whether to enable or disable accessibility.
+       */
+      setAccessibilityEnabled(enabled) {
+        if (enabled) {
+          this._activate();
+        } else {
+          this._deactivate();
+        }
+      }
+    };
     /** @ignore */
-    AccessibilitySystem.extension = {
+    _AccessibilitySystem.extension = {
       type: [
         ExtensionType.WebGLSystem,
         ExtensionType.WebGPUSystem
       ],
       name: "accessibility"
     };
+    /** default options used by the system */
+    _AccessibilitySystem.defaultOptions = {
+      /**
+       * Whether to enable accessibility features on initialization
+       * @default false
+       */
+      enabledByDefault: false,
+      /**
+       * Whether to visually show the accessibility divs for debugging
+       * @default false
+       */
+      debug: false,
+      /**
+       * Whether to activate accessibility when tab key is pressed
+       * @default true
+       */
+      activateOnTab: true,
+      /**
+       * Whether to deactivate accessibility when mouse moves
+       * @default true
+       */
+      deactivateOnMouseMove: true
+    };
+    let AccessibilitySystem = _AccessibilitySystem;
 
     "use strict";
     const accessibilityTarget = {
@@ -6504,6 +6843,12 @@ Deprecated since v${version}`);
        */
       accessibleType: "button",
       /**
+       * Sets the text content of the shadow div
+       * @member {string}
+       * @memberof scene.Container#
+       */
+      accessibleText: null,
+      /**
        * Specify the pointer-events the accessible div will use
        * Defaults to auto.
        * @type {PointerEvents}
@@ -6529,7 +6874,7 @@ Deprecated since v${version}`);
 
     "use strict";
     extensions.add(AccessibilitySystem);
-    Container.mixin(accessibilityTarget);
+    extensions.mixin(Container, accessibilityTarget);
 
     "use strict";
     class ResizePlugin {
@@ -8386,19 +8731,19 @@ Deprecated since v${version}`);
     }
 
     "use strict";
-    var __defProp$12 = Object.defineProperty;
-    var __getOwnPropSymbols$12 = Object.getOwnPropertySymbols;
-    var __hasOwnProp$12 = Object.prototype.hasOwnProperty;
-    var __propIsEnum$12 = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$12 = (obj, key, value) => key in obj ? __defProp$12(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$12 = (a, b) => {
+    var __defProp$14 = Object.defineProperty;
+    var __getOwnPropSymbols$14 = Object.getOwnPropertySymbols;
+    var __hasOwnProp$14 = Object.prototype.hasOwnProperty;
+    var __propIsEnum$14 = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$14 = (obj, key, value) => key in obj ? __defProp$14(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$14 = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$12.call(b, prop))
-          __defNormalProp$12(a, prop, b[prop]);
-      if (__getOwnPropSymbols$12)
-        for (var prop of __getOwnPropSymbols$12(b)) {
-          if (__propIsEnum$12.call(b, prop))
-            __defNormalProp$12(a, prop, b[prop]);
+        if (__hasOwnProp$14.call(b, prop))
+          __defNormalProp$14(a, prop, b[prop]);
+      if (__getOwnPropSymbols$14)
+        for (var prop of __getOwnPropSymbols$14(b)) {
+          if (__propIsEnum$14.call(b, prop))
+            __defNormalProp$14(a, prop, b[prop]);
         }
       return a;
     };
@@ -8437,7 +8782,7 @@ Deprecated since v${version}`);
           default: "inherit",
           pointer: "pointer"
         };
-        this.features = new Proxy(__spreadValues$12({}, _EventSystem.defaultEventFeatures), {
+        this.features = new Proxy(__spreadValues$14({}, _EventSystem.defaultEventFeatures), {
           set: (target, key, value) => {
             if (key === "globalMove") {
               this.rootBoundary.enableGlobalMoveEvents = value;
@@ -9417,7 +9762,7 @@ Deprecated since v${version}`);
 
     "use strict";
     extensions.add(EventSystem);
-    Container.mixin(FederatedContainer);
+    extensions.mixin(Container, FederatedContainer);
 
     "use strict";
     var LoaderParserPriority = /* @__PURE__ */ ((LoaderParserPriority2) => {
@@ -9982,19 +10327,19 @@ Deprecated since v${version}`);
     const isSingleItem = (item) => !Array.isArray(item);
 
     "use strict";
-    var __defProp$11 = Object.defineProperty;
-    var __getOwnPropSymbols$11 = Object.getOwnPropertySymbols;
-    var __hasOwnProp$11 = Object.prototype.hasOwnProperty;
-    var __propIsEnum$11 = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$11 = (obj, key, value) => key in obj ? __defProp$11(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$11 = (a, b) => {
+    var __defProp$13 = Object.defineProperty;
+    var __getOwnPropSymbols$13 = Object.getOwnPropertySymbols;
+    var __hasOwnProp$13 = Object.prototype.hasOwnProperty;
+    var __propIsEnum$13 = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$13 = (obj, key, value) => key in obj ? __defProp$13(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$13 = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$11.call(b, prop))
-          __defNormalProp$11(a, prop, b[prop]);
-      if (__getOwnPropSymbols$11)
-        for (var prop of __getOwnPropSymbols$11(b)) {
-          if (__propIsEnum$11.call(b, prop))
-            __defNormalProp$11(a, prop, b[prop]);
+        if (__hasOwnProp$13.call(b, prop))
+          __defNormalProp$13(a, prop, b[prop]);
+      if (__getOwnPropSymbols$13)
+        for (var prop of __getOwnPropSymbols$13(b)) {
+          if (__propIsEnum$13.call(b, prop))
+            __defNormalProp$13(a, prop, b[prop]);
         }
       return a;
     };
@@ -10227,7 +10572,7 @@ Deprecated since v${version}`);
             if (typeof src === "string" || Array.isArray(src)) {
               return { alias, src };
             }
-            return __spreadValues$11({ alias }, src);
+            return __spreadValues$13({ alias }, src);
           });
         }
         convertedAssets.forEach((asset) => {
@@ -10243,7 +10588,7 @@ Deprecated since v${version}`);
             assetNames.push(...bundleIds);
             ids = [...aliases, ...bundleIds];
           }
-          this.add(__spreadValues$11(__spreadValues$11({}, asset), {
+          this.add(__spreadValues$13(__spreadValues$13({}, asset), {
             alias: ids,
             src: srcs
           }));
@@ -10320,7 +10665,7 @@ Deprecated since v${version}`);
                 data = (_a = src2.data) != null ? _a : data;
                 format = (_b = src2.format) != null ? _b : format;
                 loadParser = (_c = src2.loadParser) != null ? _c : loadParser;
-                formattedAsset = __spreadValues$11(__spreadValues$11({}, formattedAsset), src2);
+                formattedAsset = __spreadValues$13(__spreadValues$13({}, formattedAsset), src2);
               }
               if (!aliasesToUse) {
                 throw new Error(`[Resolver] alias is undefined for this asset: ${formattedAsset.src}`);
@@ -10469,7 +10814,7 @@ Deprecated since v${version}`);
        */
       _getPreferredOrder(assets) {
         for (let i = 0; i < assets.length; i++) {
-          const asset = assets[0];
+          const asset = assets[i];
           const preferred = this._preferredOrder.find((preference) => preference.params.format.includes(asset.format));
           if (preferred) {
             return preferred;
@@ -10496,7 +10841,7 @@ Deprecated since v${version}`);
         }
         formattedAsset.alias = (_a = aliases != null ? aliases : formattedAsset.alias) != null ? _a : [formattedAsset.src];
         formattedAsset.src = this._appendDefaultSearchParams(formattedAsset.src);
-        formattedAsset.data = __spreadValues$11(__spreadValues$11({}, assetData || {}), formattedAsset.data);
+        formattedAsset.data = __spreadValues$13(__spreadValues$13({}, assetData || {}), formattedAsset.data);
         formattedAsset.loadParser = loadParser != null ? loadParser : formattedAsset.loadParser;
         formattedAsset.format = (_b = format != null ? format : formattedAsset.format) != null ? _b : getUrlExtension(formattedAsset.src);
         return formattedAsset;
@@ -10769,8 +11114,10 @@ Deprecated since v${version}`);
           const {
             texture: imageTexture,
             // if user need to use preloaded texture
-            imageFilename
+            imageFilename,
             // if user need to use custom filename (not from jsonFile.meta.image)
+            textureOptions
+            // if user need to set texture options on texture
           } = (_a = options == null ? void 0 : options.data) != null ? _a : {};
           let basePath = path.dirname(options.src);
           if (basePath && basePath.lastIndexOf("/") !== basePath.length - 1) {
@@ -10781,7 +11128,7 @@ Deprecated since v${version}`);
             texture = imageTexture;
           } else {
             const imagePath = copySearchParams(basePath + (imageFilename != null ? imageFilename : asset.meta.image), options.src);
-            const assets = await loader.load([imagePath]);
+            const assets = await loader.load([{ src: imagePath, data: textureOptions }]);
             texture = assets[imagePath];
           }
           const spritesheet = new Spritesheet(
@@ -10804,6 +11151,7 @@ Deprecated since v${version}`);
               promises.push(loader.load({
                 src: itemUrl,
                 data: {
+                  textureOptions,
                   ignoreMultiPack: true
                 }
               }));
@@ -10827,29 +11175,29 @@ Deprecated since v${version}`);
     extensions.add(spritesheetAsset);
 
     "use strict";
-    function updateQuadBounds(bounds, anchor, texture, padding) {
+    function updateQuadBounds(bounds, anchor, texture) {
       const { width, height } = texture.orig;
       const trim = texture.trim;
       if (trim) {
         const sourceWidth = trim.width;
         const sourceHeight = trim.height;
-        bounds.minX = trim.x - anchor._x * width - padding;
+        bounds.minX = trim.x - anchor._x * width;
         bounds.maxX = bounds.minX + sourceWidth;
-        bounds.minY = trim.y - anchor._y * height - padding;
+        bounds.minY = trim.y - anchor._y * height;
         bounds.maxY = bounds.minY + sourceHeight;
       } else {
-        bounds.minX = -anchor._x * width - padding;
+        bounds.minX = -anchor._x * width;
         bounds.maxX = bounds.minX + width;
-        bounds.minY = -anchor._y * height - padding;
+        bounds.minY = -anchor._y * height;
         bounds.maxY = bounds.minY + height;
       }
-      return;
     }
 
     "use strict";
     class ViewContainer extends Container {
-      constructor() {
-        super(...arguments);
+      // eslint-disable-next-line @typescript-eslint/no-useless-constructor
+      constructor(options) {
+        super(options);
         /** @private */
         this.canBundle = true;
         /** @private */
@@ -10907,33 +11255,46 @@ Deprecated since v${version}`);
         super.destroy(options);
         this._bounds = null;
       }
+      collectRenderablesSimple(instructionSet, renderer, currentLayer) {
+        const { renderPipes, renderableGC } = renderer;
+        renderPipes.blendMode.setBlendMode(this, this.groupBlendMode, instructionSet);
+        const rp = renderPipes;
+        rp[this.renderPipeId].addRenderable(this, instructionSet);
+        renderableGC.addRenderable(this);
+        this.didViewUpdate = false;
+        const children = this.children;
+        const length = children.length;
+        for (let i = 0; i < length; i++) {
+          children[i].collectRenderables(instructionSet, renderer, currentLayer);
+        }
+      }
     }
 
     "use strict";
-    var __defProp$10 = Object.defineProperty;
-    var __getOwnPropSymbols$10 = Object.getOwnPropertySymbols;
-    var __hasOwnProp$10 = Object.prototype.hasOwnProperty;
-    var __propIsEnum$10 = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$10 = (obj, key, value) => key in obj ? __defProp$10(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$10 = (a, b) => {
+    var __defProp$12 = Object.defineProperty;
+    var __getOwnPropSymbols$12 = Object.getOwnPropertySymbols;
+    var __hasOwnProp$12 = Object.prototype.hasOwnProperty;
+    var __propIsEnum$12 = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$12 = (obj, key, value) => key in obj ? __defProp$12(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$12 = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$10.call(b, prop))
-          __defNormalProp$10(a, prop, b[prop]);
-      if (__getOwnPropSymbols$10)
-        for (var prop of __getOwnPropSymbols$10(b)) {
-          if (__propIsEnum$10.call(b, prop))
-            __defNormalProp$10(a, prop, b[prop]);
+        if (__hasOwnProp$12.call(b, prop))
+          __defNormalProp$12(a, prop, b[prop]);
+      if (__getOwnPropSymbols$12)
+        for (var prop of __getOwnPropSymbols$12(b)) {
+          if (__propIsEnum$12.call(b, prop))
+            __defNormalProp$12(a, prop, b[prop]);
         }
       return a;
     };
     var __objRest$l = (source, exclude) => {
       var target = {};
       for (var prop in source)
-        if (__hasOwnProp$10.call(source, prop) && exclude.indexOf(prop) < 0)
+        if (__hasOwnProp$12.call(source, prop) && exclude.indexOf(prop) < 0)
           target[prop] = source[prop];
-      if (source != null && __getOwnPropSymbols$10)
-        for (var prop of __getOwnPropSymbols$10(source)) {
-          if (exclude.indexOf(prop) < 0 && __propIsEnum$10.call(source, prop))
+      if (source != null && __getOwnPropSymbols$12)
+        for (var prop of __getOwnPropSymbols$12(source)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum$12.call(source, prop))
             target[prop] = source[prop];
         }
       return target;
@@ -10947,7 +11308,7 @@ Deprecated since v${version}`);
           options = { texture: options };
         }
         const _a = options, { texture = Texture.EMPTY, anchor, roundPixels, width, height } = _a, rest = __objRest$l(_a, ["texture", "anchor", "roundPixels", "width", "height"]);
-        super(__spreadValues$10({
+        super(__spreadValues$12({
           label: "Sprite"
         }, rest));
         this.renderPipeId = "sprite";
@@ -11013,7 +11374,7 @@ Deprecated since v${version}`);
        * @type {rendering.Bounds}
        */
       get visualBounds() {
-        updateQuadBounds(this._visualBounds, this._anchor, this._texture, 0);
+        updateQuadBounds(this._visualBounds, this._anchor, this._texture);
         return this._visualBounds;
       }
       /**
@@ -11381,21 +11742,21 @@ Deprecated since v${version}`);
     }
 
     "use strict";
-    var __defProp$$ = Object.defineProperty;
+    var __defProp$11 = Object.defineProperty;
     var __defProps$o = Object.defineProperties;
     var __getOwnPropDescs$o = Object.getOwnPropertyDescriptors;
-    var __getOwnPropSymbols$$ = Object.getOwnPropertySymbols;
-    var __hasOwnProp$$ = Object.prototype.hasOwnProperty;
-    var __propIsEnum$$ = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$$ = (obj, key, value) => key in obj ? __defProp$$(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$$ = (a, b) => {
+    var __getOwnPropSymbols$11 = Object.getOwnPropertySymbols;
+    var __hasOwnProp$11 = Object.prototype.hasOwnProperty;
+    var __propIsEnum$11 = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$11 = (obj, key, value) => key in obj ? __defProp$11(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$11 = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$$.call(b, prop))
-          __defNormalProp$$(a, prop, b[prop]);
-      if (__getOwnPropSymbols$$)
-        for (var prop of __getOwnPropSymbols$$(b)) {
-          if (__propIsEnum$$.call(b, prop))
-            __defNormalProp$$(a, prop, b[prop]);
+        if (__hasOwnProp$11.call(b, prop))
+          __defNormalProp$11(a, prop, b[prop]);
+      if (__getOwnPropSymbols$11)
+        for (var prop of __getOwnPropSymbols$11(b)) {
+          if (__propIsEnum$11.call(b, prop))
+            __defNormalProp$11(a, prop, b[prop]);
         }
       return a;
     };
@@ -11409,7 +11770,7 @@ Deprecated since v${version}`);
         this.isReady = false;
         /** The upload method for this texture. */
         this.uploadMethodId = "video";
-        options = __spreadValues$$(__spreadValues$$({}, _VideoSource.defaultOptions), options);
+        options = __spreadValues$11(__spreadValues$11({}, _VideoSource.defaultOptions), options);
         this._autoUpdate = true;
         this._isConnectedToTicker = false;
         this._updateFPS = options.updateFPS || 0;
@@ -11685,7 +12046,7 @@ Deprecated since v${version}`);
     };
     _VideoSource.extension = ExtensionType.TextureSource;
     /** The default options for video sources. */
-    _VideoSource.defaultOptions = __spreadProps$o(__spreadValues$$({}, TextureSource.defaultOptions), {
+    _VideoSource.defaultOptions = __spreadProps$o(__spreadValues$11({}, TextureSource.defaultOptions), {
       /** If true, the video will start loading immediately. */
       autoLoad: true,
       /** If true, the video will start playing as soon as it is loaded. */
@@ -12211,19 +12572,19 @@ Deprecated since v${version}`);
     }
 
     "use strict";
-    var __defProp$_ = Object.defineProperty;
-    var __getOwnPropSymbols$_ = Object.getOwnPropertySymbols;
-    var __hasOwnProp$_ = Object.prototype.hasOwnProperty;
-    var __propIsEnum$_ = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$_ = (obj, key, value) => key in obj ? __defProp$_(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$_ = (a, b) => {
+    var __defProp$10 = Object.defineProperty;
+    var __getOwnPropSymbols$10 = Object.getOwnPropertySymbols;
+    var __hasOwnProp$10 = Object.prototype.hasOwnProperty;
+    var __propIsEnum$10 = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$10 = (obj, key, value) => key in obj ? __defProp$10(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$10 = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$_.call(b, prop))
-          __defNormalProp$_(a, prop, b[prop]);
-      if (__getOwnPropSymbols$_)
-        for (var prop of __getOwnPropSymbols$_(b)) {
-          if (__propIsEnum$_.call(b, prop))
-            __defNormalProp$_(a, prop, b[prop]);
+        if (__hasOwnProp$10.call(b, prop))
+          __defNormalProp$10(a, prop, b[prop]);
+      if (__getOwnPropSymbols$10)
+        for (var prop of __getOwnPropSymbols$10(b)) {
+          if (__propIsEnum$10.call(b, prop))
+            __defNormalProp$10(a, prop, b[prop]);
         }
       return a;
     };
@@ -12271,7 +12632,7 @@ Deprecated since v${version}`);
         this._elements = [];
         var _a;
         _Batcher.defaultOptions.maxTextures = (_a = _Batcher.defaultOptions.maxTextures) != null ? _a : getMaxTexturesPerBatch();
-        options = __spreadValues$_(__spreadValues$_({}, _Batcher.defaultOptions), options);
+        options = __spreadValues$10(__spreadValues$10({}, _Batcher.defaultOptions), options);
         const { maxTextures, attributesInitialSize, indicesInitialSize } = options;
         this.attributeBuffer = new ViewableBuffer(attributesInitialSize * 4);
         this.indexBuffer = new Uint16Array(indicesInitialSize);
@@ -13084,19 +13445,19 @@ ${src}`;
     }
 
     "use strict";
-    var __defProp$Z = Object.defineProperty;
-    var __getOwnPropSymbols$Z = Object.getOwnPropertySymbols;
-    var __hasOwnProp$Z = Object.prototype.hasOwnProperty;
-    var __propIsEnum$Z = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$Z = (obj, key, value) => key in obj ? __defProp$Z(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$Z = (a, b) => {
+    var __defProp$$ = Object.defineProperty;
+    var __getOwnPropSymbols$$ = Object.getOwnPropertySymbols;
+    var __hasOwnProp$$ = Object.prototype.hasOwnProperty;
+    var __propIsEnum$$ = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$$ = (obj, key, value) => key in obj ? __defProp$$(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$$ = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$Z.call(b, prop))
-          __defNormalProp$Z(a, prop, b[prop]);
-      if (__getOwnPropSymbols$Z)
-        for (var prop of __getOwnPropSymbols$Z(b)) {
-          if (__propIsEnum$Z.call(b, prop))
-            __defNormalProp$Z(a, prop, b[prop]);
+        if (__hasOwnProp$$.call(b, prop))
+          __defNormalProp$$(a, prop, b[prop]);
+      if (__getOwnPropSymbols$$)
+        for (var prop of __getOwnPropSymbols$$(b)) {
+          if (__propIsEnum$$.call(b, prop))
+            __defNormalProp$$(a, prop, b[prop]);
         }
       return a;
     };
@@ -13119,7 +13480,7 @@ ${src}`;
        * @param options - The options for the program.
        */
       constructor(options) {
-        options = __spreadValues$Z(__spreadValues$Z({}, _GlProgram.defaultOptions), options);
+        options = __spreadValues$$(__spreadValues$$({}, _GlProgram.defaultOptions), options);
         const isES300 = options.fragment.indexOf("#version 300 es") !== -1;
         const preprocessorOptions = {
           stripVersion: isES300,
@@ -13837,19 +14198,19 @@ ${parts.join("\n")}
     };
 
     "use strict";
-    var __defProp$Y = Object.defineProperty;
-    var __getOwnPropSymbols$Y = Object.getOwnPropertySymbols;
-    var __hasOwnProp$Y = Object.prototype.hasOwnProperty;
-    var __propIsEnum$Y = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$Y = (obj, key, value) => key in obj ? __defProp$Y(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$Y = (a, b) => {
+    var __defProp$_ = Object.defineProperty;
+    var __getOwnPropSymbols$_ = Object.getOwnPropertySymbols;
+    var __hasOwnProp$_ = Object.prototype.hasOwnProperty;
+    var __propIsEnum$_ = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$_ = (obj, key, value) => key in obj ? __defProp$_(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$_ = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$Y.call(b, prop))
-          __defNormalProp$Y(a, prop, b[prop]);
-      if (__getOwnPropSymbols$Y)
-        for (var prop of __getOwnPropSymbols$Y(b)) {
-          if (__propIsEnum$Y.call(b, prop))
-            __defNormalProp$Y(a, prop, b[prop]);
+        if (__hasOwnProp$_.call(b, prop))
+          __defNormalProp$_(a, prop, b[prop]);
+      if (__getOwnPropSymbols$_)
+        for (var prop of __getOwnPropSymbols$_(b)) {
+          if (__propIsEnum$_.call(b, prop))
+            __defNormalProp$_(a, prop, b[prop]);
         }
       return a;
     };
@@ -13877,7 +14238,7 @@ ${parts.join("\n")}
       });
     }
     function compileHighShaderGlProgram({ bits, name }) {
-      return new GlProgram(__spreadValues$Y({
+      return new GlProgram(__spreadValues$_({
         name
       }, compileHighShaderGl({
         template: {
@@ -14160,19 +14521,19 @@ ${parts.join("\n")}
     }
 
     "use strict";
-    var __defProp$X = Object.defineProperty;
-    var __getOwnPropSymbols$X = Object.getOwnPropertySymbols;
-    var __hasOwnProp$X = Object.prototype.hasOwnProperty;
-    var __propIsEnum$X = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$X = (obj, key, value) => key in obj ? __defProp$X(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$X = (a, b) => {
+    var __defProp$Z = Object.defineProperty;
+    var __getOwnPropSymbols$Z = Object.getOwnPropertySymbols;
+    var __hasOwnProp$Z = Object.prototype.hasOwnProperty;
+    var __propIsEnum$Z = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$Z = (obj, key, value) => key in obj ? __defProp$Z(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$Z = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$X.call(b, prop))
-          __defNormalProp$X(a, prop, b[prop]);
-      if (__getOwnPropSymbols$X)
-        for (var prop of __getOwnPropSymbols$X(b)) {
-          if (__propIsEnum$X.call(b, prop))
-            __defNormalProp$X(a, prop, b[prop]);
+        if (__hasOwnProp$Z.call(b, prop))
+          __defNormalProp$Z(a, prop, b[prop]);
+      if (__getOwnPropSymbols$Z)
+        for (var prop of __getOwnPropSymbols$Z(b)) {
+          if (__propIsEnum$Z.call(b, prop))
+            __defNormalProp$Z(a, prop, b[prop]);
         }
       return a;
     };
@@ -14202,7 +14563,7 @@ ${parts.join("\n")}
         // implementing the interface - UniformGroup are not destroyed
         this.destroyed = false;
         var _a, _b;
-        options = __spreadValues$X(__spreadValues$X({}, _UniformGroup.defaultOptions), options);
+        options = __spreadValues$Z(__spreadValues$Z({}, _UniformGroup.defaultOptions), options);
         this.uniformStructures = uniformStructures;
         const uniforms = {};
         for (const i in uniformStructures) {
@@ -14262,30 +14623,30 @@ ${parts.join("\n")}
     })(RendererType || {});
 
     "use strict";
-    var __defProp$W = Object.defineProperty;
-    var __getOwnPropSymbols$W = Object.getOwnPropertySymbols;
-    var __hasOwnProp$W = Object.prototype.hasOwnProperty;
-    var __propIsEnum$W = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$W = (obj, key, value) => key in obj ? __defProp$W(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$W = (a, b) => {
+    var __defProp$Y = Object.defineProperty;
+    var __getOwnPropSymbols$Y = Object.getOwnPropertySymbols;
+    var __hasOwnProp$Y = Object.prototype.hasOwnProperty;
+    var __propIsEnum$Y = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$Y = (obj, key, value) => key in obj ? __defProp$Y(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$Y = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$W.call(b, prop))
-          __defNormalProp$W(a, prop, b[prop]);
-      if (__getOwnPropSymbols$W)
-        for (var prop of __getOwnPropSymbols$W(b)) {
-          if (__propIsEnum$W.call(b, prop))
-            __defNormalProp$W(a, prop, b[prop]);
+        if (__hasOwnProp$Y.call(b, prop))
+          __defNormalProp$Y(a, prop, b[prop]);
+      if (__getOwnPropSymbols$Y)
+        for (var prop of __getOwnPropSymbols$Y(b)) {
+          if (__propIsEnum$Y.call(b, prop))
+            __defNormalProp$Y(a, prop, b[prop]);
         }
       return a;
     };
     var __objRest$k = (source, exclude) => {
       var target = {};
       for (var prop in source)
-        if (__hasOwnProp$W.call(source, prop) && exclude.indexOf(prop) < 0)
+        if (__hasOwnProp$Y.call(source, prop) && exclude.indexOf(prop) < 0)
           target[prop] = source[prop];
-      if (source != null && __getOwnPropSymbols$W)
-        for (var prop of __getOwnPropSymbols$W(source)) {
-          if (exclude.indexOf(prop) < 0 && __propIsEnum$W.call(source, prop))
+      if (source != null && __getOwnPropSymbols$Y)
+        for (var prop of __getOwnPropSymbols$Y(source)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum$Y.call(source, prop))
             target[prop] = source[prop];
         }
       return target;
@@ -14293,6 +14654,8 @@ ${parts.join("\n")}
     class Shader extends EventEmitter {
       constructor(options) {
         super();
+        /** A unique identifier for the shader */
+        this.uid = uid$1("shader");
         /**
          * A record of the uniform groups and resources used by the shader.
          * This is used by WebGL renderer to sync uniform data.
@@ -14455,7 +14818,7 @@ ${parts.join("\n")}
         if (gl) {
           glProgram = GlProgram.from(gl);
         }
-        return new Shader(__spreadValues$W({
+        return new Shader(__spreadValues$Y({
           gpuProgram,
           glProgram
         }, rest));
@@ -14707,21 +15070,21 @@ ${parts.join("\n")}
     }
 
     "use strict";
-    var __defProp$V = Object.defineProperty;
+    var __defProp$X = Object.defineProperty;
     var __defProps$n = Object.defineProperties;
     var __getOwnPropDescs$n = Object.getOwnPropertyDescriptors;
-    var __getOwnPropSymbols$V = Object.getOwnPropertySymbols;
-    var __hasOwnProp$V = Object.prototype.hasOwnProperty;
-    var __propIsEnum$V = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$V = (obj, key, value) => key in obj ? __defProp$V(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$V = (a, b) => {
+    var __getOwnPropSymbols$X = Object.getOwnPropertySymbols;
+    var __hasOwnProp$X = Object.prototype.hasOwnProperty;
+    var __propIsEnum$X = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$X = (obj, key, value) => key in obj ? __defProp$X(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$X = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$V.call(b, prop))
-          __defNormalProp$V(a, prop, b[prop]);
-      if (__getOwnPropSymbols$V)
-        for (var prop of __getOwnPropSymbols$V(b)) {
-          if (__propIsEnum$V.call(b, prop))
-            __defNormalProp$V(a, prop, b[prop]);
+        if (__hasOwnProp$X.call(b, prop))
+          __defNormalProp$X(a, prop, b[prop]);
+      if (__getOwnPropSymbols$X)
+        for (var prop of __getOwnPropSymbols$X(b)) {
+          if (__propIsEnum$X.call(b, prop))
+            __defNormalProp$X(a, prop, b[prop]);
         }
       return a;
     };
@@ -14862,8 +15225,8 @@ ${parts.join("\n")}
         indices[indicesOffset++] = count - 1;
       }
     };
-    const buildEllipse = __spreadProps$n(__spreadValues$V({}, buildCircle), { extension: __spreadProps$n(__spreadValues$V({}, buildCircle.extension), { name: "ellipse" }) });
-    const buildRoundedRectangle = __spreadProps$n(__spreadValues$V({}, buildCircle), { extension: __spreadProps$n(__spreadValues$V({}, buildCircle.extension), { name: "roundedRectangle" }) });
+    const buildEllipse = __spreadProps$n(__spreadValues$X({}, buildCircle), { extension: __spreadProps$n(__spreadValues$X({}, buildCircle.extension), { name: "ellipse" }) });
+    const buildRoundedRectangle = __spreadProps$n(__spreadValues$X({}, buildCircle), { extension: __spreadProps$n(__spreadValues$X({}, buildCircle.extension), { name: "roundedRectangle" }) });
 
     "use strict";
     const closePointEps = 1e-4;
@@ -16082,10 +16445,35 @@ ${parts.join("\n")}
     };
 
     "use strict";
+    const tempTextureMatrix$1 = new Matrix();
+    const tempRect$3 = new Rectangle();
+    function generateTextureMatrix(out, style, shape, matrix) {
+      const textureMatrix = style.matrix ? out.copyFrom(style.matrix).invert() : out.identity();
+      if (style.textureSpace === "local") {
+        const bounds = shape.getBounds(tempRect$3);
+        textureMatrix.translate(-bounds.x, -bounds.y);
+        textureMatrix.scale(1 / bounds.width, 1 / bounds.height);
+      } else {
+        textureMatrix.translate(style.texture.frame.x, style.texture.frame.y);
+        textureMatrix.scale(1 / style.texture.source.width, 1 / style.texture.source.height);
+        const sourceStyle = style.texture.source.style;
+        if (sourceStyle.addressMode === "clamp-to-edge") {
+          sourceStyle.addressMode = "repeat";
+          sourceStyle.update();
+        }
+      }
+      if (matrix) {
+        textureMatrix.append(tempTextureMatrix$1.copyFrom(matrix).invert());
+      }
+      return textureMatrix;
+    }
+
+    "use strict";
     const shapeBuilders = {};
     extensions.handleByMap(ExtensionType.ShapeBuilder, shapeBuilders);
     extensions.add(buildRectangle, buildPolygon, buildTriangle, buildCircle, buildEllipse, buildRoundedRectangle);
-    const tempRect$1 = new Rectangle();
+    const tempRect$2 = new Rectangle();
+    const tempTextureMatrix = new Matrix();
     function buildContextBatches(context, gpuContext) {
       const { geometryData, batches } = gpuContext;
       batches.length = 0;
@@ -16102,9 +16490,12 @@ ${parts.join("\n")}
           const style = instruction.data.style;
           const hole = instruction.data.hole;
           if (isStroke && hole) {
-            addShapePathToGeometryData(hole.shapePath, style, null, true, batches, geometryData);
+            addShapePathToGeometryData(hole.shapePath, style, true, batches, geometryData);
           }
-          addShapePathToGeometryData(shapePath, style, hole, isStroke, batches, geometryData);
+          if (hole) {
+            shapePath.shapePrimitives[shapePath.shapePrimitives.length - 1].holes = hole.shapePath.shapePrimitives;
+          }
+          addShapePathToGeometryData(shapePath, style, isStroke, batches, geometryData);
         }
       }
     }
@@ -16114,7 +16505,7 @@ ${parts.join("\n")}
       const vertOffset = vertices.length / 2;
       const points = [];
       const build = shapeBuilders.rectangle;
-      const rect = tempRect$1;
+      const rect = tempRect$2;
       const texture = data.image;
       rect.x = data.dx;
       rect.y = data.dy;
@@ -16148,10 +16539,9 @@ ${parts.join("\n")}
       graphicsBatch.geometryData = geometryData;
       batches.push(graphicsBatch);
     }
-    function addShapePathToGeometryData(shapePath, style, hole, isStroke, batches, geometryData) {
+    function addShapePathToGeometryData(shapePath, style, isStroke, batches, geometryData) {
       const { vertices, uvs, indices } = geometryData;
-      const lastIndex = shapePath.shapePrimitives.length - 1;
-      shapePath.shapePrimitives.forEach(({ shape, transform: matrix }, i) => {
+      shapePath.shapePrimitives.forEach(({ shape, transform: matrix, holes }) => {
         var _a;
         const indexOffset = indices.length;
         const vertOffset = vertices.length / 2;
@@ -16163,13 +16553,10 @@ ${parts.join("\n")}
           transformVertices(points, matrix);
         }
         if (!isStroke) {
-          if (hole && lastIndex === i) {
-            if (lastIndex !== 0) {
-              console.warn("[Pixi Graphics] only the last shape have be cut out");
-            }
+          if (holes) {
             const holeIndices = [];
             const otherPoints = points.slice();
-            const holeArrays = getHoleArrays(hole.shapePath);
+            const holeArrays = getHoleArrays(holes);
             holeArrays.forEach((holePoints) => {
               holeIndices.push(otherPoints.length / 2);
               otherPoints.push(...holePoints);
@@ -16191,13 +16578,8 @@ ${parts.join("\n")}
         const uvsOffset = uvs.length / 2;
         const texture = style.texture;
         if (texture !== Texture.WHITE) {
-          const textureMatrix = style.matrix;
-          if (textureMatrix) {
-            if (matrix) {
-              textureMatrix.append(matrix.clone().invert());
-            }
-            buildUvs(vertices, 2, vertOffset, uvs, uvsOffset, 2, vertices.length / 2 - vertOffset, textureMatrix);
-          }
+          const textureMatrix = generateTextureMatrix(tempTextureMatrix, style, shape, matrix);
+          buildUvs(vertices, 2, vertOffset, uvs, uvsOffset, 2, vertices.length / 2 - vertOffset, textureMatrix);
         } else {
           buildSimpleUvs(uvs, uvsOffset, 2, vertices.length / 2 - vertOffset);
         }
@@ -16214,10 +16596,7 @@ ${parts.join("\n")}
         batches.push(graphicsBatch);
       });
     }
-    function getHoleArrays(shape) {
-      if (!shape)
-        return [];
-      const holePrimitives = shape.shapePrimitives;
+    function getHoleArrays(holePrimitives) {
       const holeArrays = [];
       for (let k = 0; k < holePrimitives.length; k++) {
         const holePrimitive = holePrimitives[k].shape;
@@ -16703,8 +17082,8 @@ ${parts.join("\n")}
         this.roundPixels = 0;
         this._batcher = null;
         this._batch = null;
-        this._uvUpdateId = -1;
         this._textureMatrixUpdateId = -1;
+        this._uvUpdateId = -1;
       }
       get blendMode() {
         return this.renderable.groupBlendMode;
@@ -16722,6 +17101,18 @@ ${parts.join("\n")}
         this._batch = null;
         this.geometry = null;
         this._uvUpdateId = -1;
+        this._textureMatrixUpdateId = -1;
+      }
+      /**
+       * Sets the texture for the batchable mesh.
+       * As it does so, it resets the texture matrix update ID.
+       * this is to ensure that the texture matrix is recalculated when the uvs are referenced
+       * @param value - The texture to set.
+       */
+      setTexture(value) {
+        if (this.texture === value)
+          return;
+        this.texture = value;
         this._textureMatrixUpdateId = -1;
       }
       get uvs() {
@@ -16798,9 +17189,12 @@ ${parts.join("\n")}
             return true;
           }
           const batchableMesh = this._getBatchableMesh(mesh);
+          if (batchableMesh.texture.uid !== mesh._texture.uid) {
+            batchableMesh._textureMatrixUpdateId = -1;
+          }
           return !batchableMesh._batcher.checkAndUpdateTexture(
             batchableMesh,
-            mesh.texture
+            mesh._texture
           );
         }
         return false;
@@ -16810,7 +17204,7 @@ ${parts.join("\n")}
         const { batched } = this._getMeshData(mesh);
         if (batched) {
           const gpuBatchableMesh = this._getBatchableMesh(mesh);
-          gpuBatchableMesh.texture = mesh._texture;
+          gpuBatchableMesh.setTexture(mesh._texture);
           gpuBatchableMesh.geometry = mesh._geometry;
           batcher.addToBatch(gpuBatchableMesh, instructionSet);
         } else {
@@ -16821,7 +17215,7 @@ ${parts.join("\n")}
       updateRenderable(mesh) {
         if (mesh.batched) {
           const gpuBatchableMesh = this._gpuBatchableMeshHash[mesh.uid];
-          gpuBatchableMesh.texture = mesh._texture;
+          gpuBatchableMesh.setTexture(mesh._texture);
           gpuBatchableMesh.geometry = mesh._geometry;
           gpuBatchableMesh._batcher.updateElement(gpuBatchableMesh);
         }
@@ -16869,7 +17263,7 @@ ${parts.join("\n")}
       _initBatchableMesh(mesh) {
         const gpuMesh = BigPool.get(BatchableMesh);
         gpuMesh.renderable = mesh;
-        gpuMesh.texture = mesh._texture;
+        gpuMesh.setTexture(mesh._texture);
         gpuMesh.transform = mesh.groupTransform;
         gpuMesh.roundPixels = this.renderer._roundPixels | mesh._roundPixels;
         this._gpuBatchableMeshHash[mesh.uid] = gpuMesh;
@@ -17311,6 +17705,17 @@ ${parts.join("\n")}
     }
 
     "use strict";
+    function updateTextBounds(batchableSprite, text) {
+      const { texture, bounds } = batchableSprite;
+      updateQuadBounds(bounds, text._anchor, texture);
+      const padding = text._style.padding;
+      bounds.minX -= padding;
+      bounds.minY -= padding;
+      bounds.maxX -= padding;
+      bounds.maxY -= padding;
+    }
+
+    "use strict";
     class CanvasTextPipe {
       constructor(renderer) {
         this._gpuText = /* @__PURE__ */ Object.create(null);
@@ -17373,8 +17778,7 @@ ${parts.join("\n")}
           this._updateGpuText(text);
         }
         text._didTextUpdate = false;
-        const padding = text._style.padding;
-        updateQuadBounds(batchableSprite.bounds, text._anchor, batchableSprite.texture, padding);
+        updateTextBounds(batchableSprite, text);
       }
       _updateGpuText(text) {
         const gpuText = this._getGpuText(text);
@@ -17527,72 +17931,231 @@ ${parts.join("\n")}
     }
 
     "use strict";
+    var __defProp$W = Object.defineProperty;
+    var __getOwnPropSymbols$W = Object.getOwnPropertySymbols;
+    var __hasOwnProp$W = Object.prototype.hasOwnProperty;
+    var __propIsEnum$W = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$W = (obj, key, value) => key in obj ? __defProp$W(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$W = (a, b) => {
+      for (var prop in b || (b = {}))
+        if (__hasOwnProp$W.call(b, prop))
+          __defNormalProp$W(a, prop, b[prop]);
+      if (__getOwnPropSymbols$W)
+        for (var prop of __getOwnPropSymbols$W(b)) {
+          if (__propIsEnum$W.call(b, prop))
+            __defNormalProp$W(a, prop, b[prop]);
+        }
+      return a;
+    };
+    const emptyColorStops = [{ offset: 0, color: "white" }, { offset: 1, color: "black" }];
     const _FillGradient = class _FillGradient {
-      constructor(x0, y0, x1, y1) {
-        /** unique id for this fill gradient */
+      constructor(...args) {
+        /** Unique identifier for this gradient instance */
         this.uid = uid$1("fillGradient");
+        /** Type of gradient - currently only supports 'linear' */
         this.type = "linear";
-        this.gradientStops = [];
-        this._styleKey = null;
-        this.x0 = x0;
-        this.y0 = y0;
-        this.x1 = x1;
-        this.y1 = y1;
+        /** Array of color stops defining the gradient */
+        this.colorStops = [];
+        var _a;
+        let options = ensureGradientOptions(args);
+        const defaults = options.type === "radial" ? _FillGradient.defaultRadialOptions : _FillGradient.defaultLinearOptions;
+        options = __spreadValues$W(__spreadValues$W({}, defaults), definedProps(options));
+        this._textureSize = options.textureSize;
+        if (options.type === "radial") {
+          this.center = options.center;
+          this.outerCenter = (_a = options.outerCenter) != null ? _a : this.center;
+          this.innerRadius = options.innerRadius;
+          this.outerRadius = options.outerRadius;
+          this.scale = options.scale;
+          this.rotation = options.rotation;
+        } else {
+          this.start = options.start;
+          this.end = options.end;
+        }
+        this.textureSpace = options.textureSpace;
+        this.type = options.type;
+        options.colorStops.forEach((stop) => {
+          this.addColorStop(stop.offset, stop.color);
+        });
       }
+      /**
+       * Adds a color stop to the gradient
+       * @param offset - Position of the stop (0-1)
+       * @param color - Color of the stop
+       * @returns This gradient instance for chaining
+       */
       addColorStop(offset, color) {
-        this.gradientStops.push({ offset, color: Color.shared.setValue(color).toHexa() });
-        this._styleKey = null;
+        this.colorStops.push({ offset, color: Color.shared.setValue(color).toHexa() });
         return this;
       }
-      // TODO move to the system!
+      /**
+       * Builds the internal texture and transform for the gradient.
+       * Called automatically when the gradient is first used.
+       * @internal
+       */
       buildLinearGradient() {
         if (this.texture)
           return;
-        const defaultSize = _FillGradient.defaultTextureSize;
-        const { gradientStops } = this;
-        const canvas = DOMAdapter.get().createCanvas();
-        canvas.width = defaultSize;
-        canvas.height = defaultSize;
-        const ctx = canvas.getContext("2d");
-        const gradient = ctx.createLinearGradient(0, 0, _FillGradient.defaultTextureSize, 1);
-        for (let i = 0; i < gradientStops.length; i++) {
-          const stop = gradientStops[i];
-          gradient.addColorStop(stop.offset, stop.color);
-        }
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, defaultSize, defaultSize);
+        const colorStops = this.colorStops.length ? this.colorStops : emptyColorStops;
+        const defaultSize = this._textureSize;
+        const { canvas, context } = getCanvas(defaultSize, 1);
+        const gradient = context.createLinearGradient(0, 0, this._textureSize, 0);
+        addColorStops(gradient, colorStops);
+        context.fillStyle = gradient;
+        context.fillRect(0, 0, defaultSize, 1);
         this.texture = new Texture({
           source: new ImageSource({
-            resource: canvas,
-            addressModeU: "clamp-to-edge",
-            addressModeV: "repeat"
+            resource: canvas
           })
         });
-        const { x0, y0, x1, y1 } = this;
+        const { x: x0, y: y0 } = this.start;
+        const { x: x1, y: y1 } = this.end;
         const m = new Matrix();
         const dx = x1 - x0;
         const dy = y1 - y0;
         const dist = Math.sqrt(dx * dx + dy * dy);
         const angle = Math.atan2(dy, dx);
-        m.translate(-x0, -y0);
-        m.scale(1 / defaultSize, 1 / defaultSize);
-        m.rotate(-angle);
-        m.scale(256 / dist, 1);
-        this.transform = m;
-        this._styleKey = null;
-      }
-      get styleKey() {
-        if (this._styleKey) {
-          return this._styleKey;
+        m.scale(dist / defaultSize, 1);
+        m.rotate(angle);
+        m.translate(x0, y0);
+        if (this.textureSpace === "local") {
+          m.scale(defaultSize, defaultSize);
         }
-        const stops = this.gradientStops.map((stop) => `${stop.offset}-${stop.color}`).join("-");
-        const texture = this.texture.uid;
-        const transform = this.transform.toArray().join("-");
-        return `fill-gradient-${this.uid}-${stops}-${texture}-${transform}-${this.x0}-${this.y0}-${this.x1}-${this.y1}`;
+        this.transform = m;
+      }
+      buildGradient() {
+        if (this.type === "linear") {
+          this.buildLinearGradient();
+        } else {
+          this.buildRadialGradient();
+        }
+      }
+      buildRadialGradient() {
+        if (this.texture)
+          return;
+        const colorStops = this.colorStops.length ? this.colorStops : emptyColorStops;
+        const defaultSize = this._textureSize;
+        const { canvas, context } = getCanvas(defaultSize, defaultSize);
+        const { x: x0, y: y0 } = this.center;
+        const { x: x1, y: y1 } = this.outerCenter;
+        const r0 = this.innerRadius;
+        const r1 = this.outerRadius;
+        const ox = x1 - r1;
+        const oy = y1 - r1;
+        const scale = defaultSize / (r1 * 2);
+        const cx = (x0 - ox) * scale;
+        const cy = (y0 - oy) * scale;
+        const gradient = context.createRadialGradient(
+          cx,
+          cy,
+          r0 * scale,
+          (x1 - ox) * scale,
+          (y1 - oy) * scale,
+          r1 * scale
+        );
+        addColorStops(gradient, colorStops);
+        context.fillStyle = colorStops[colorStops.length - 1].color;
+        context.fillRect(0, 0, defaultSize, defaultSize);
+        context.fillStyle = gradient;
+        context.translate(cx, cy);
+        context.rotate(this.rotation);
+        context.scale(1, this.scale);
+        context.translate(-cx, -cy);
+        context.fillRect(0, 0, defaultSize, defaultSize);
+        this.texture = new Texture({
+          source: new ImageSource({
+            resource: canvas,
+            addressModeU: "clamp-to-edge",
+            addressModeV: "clamp-to-edge"
+          })
+        });
+        const m = new Matrix();
+        m.scale(1 / scale, 1 / scale);
+        m.translate(ox, oy);
+        if (this.textureSpace === "local") {
+          m.scale(defaultSize, defaultSize);
+        }
+        this.transform = m;
+      }
+      /**
+       * Gets a unique key representing the current state of the gradient.
+       * Used internally for caching.
+       * @returns Unique string key
+       */
+      get styleKey() {
+        return this.uid;
+      }
+      destroy() {
+        var _a;
+        (_a = this.texture) == null ? void 0 : _a.destroy(true);
+        this.texture = null;
       }
     };
-    _FillGradient.defaultTextureSize = 256;
+    /**
+     * Default options for creating a gradient fill
+     * @property {PointData} start - Start point of the gradient (default: { x: 0, y: 0 })
+     * @property {PointData} end - End point of the gradient (default: { x: 0, y: 1 })
+     * @property {TextureSpace} textureSpace - Whether coordinates are 'global' or 'local' (default: 'local')
+     * @property {number} textureSize - The size of the texture to use for the gradient (default: 256)
+     * @property {Array<{offset: number, color: ColorSource}>} colorStops - Array of color stops (default: empty array)
+     * @property {GradientType} type - Type of gradient (default: 'linear')
+     */
+    _FillGradient.defaultLinearOptions = {
+      start: { x: 0, y: 0 },
+      end: { x: 0, y: 1 },
+      colorStops: [],
+      textureSpace: "local",
+      type: "linear",
+      textureSize: 256
+    };
+    /**
+     * Default options for creating a radial gradient fill
+     * @property {PointData} innerCenter - Center of the inner circle (default: { x: 0.5, y: 0.5 })
+     * @property {number} innerRadius - Radius of the inner circle (default: 0)
+     * @property {PointData} outerCenter - Center of the outer circle (default: { x: 0.5, y: 0.5 })
+     * @property {number} outerRadius - Radius of the outer circle (default: 0.5)
+     * @property {TextureSpace} textureSpace - Whether coordinates are 'global' or 'local' (default: 'local')
+     * @property {number} textureSize - The size of the texture to use for the gradient (default: 256)
+     * @property {Array<{offset: number, color: ColorSource}>} colorStops - Array of color stops (default: empty array)
+     * @property {GradientType} type - Type of gradient (default: 'radial')
+     */
+    _FillGradient.defaultRadialOptions = {
+      center: { x: 0.5, y: 0.5 },
+      innerRadius: 0,
+      outerRadius: 0.5,
+      colorStops: [],
+      scale: 1,
+      textureSpace: "local",
+      type: "radial",
+      textureSize: 256
+    };
     let FillGradient = _FillGradient;
+    function addColorStops(gradient, colorStops) {
+      for (let i = 0; i < colorStops.length; i++) {
+        const stop = colorStops[i];
+        gradient.addColorStop(stop.offset, stop.color);
+      }
+    }
+    function getCanvas(width, height) {
+      const canvas = DOMAdapter.get().createCanvas(width, height);
+      const context = canvas.getContext("2d");
+      return { canvas, context };
+    }
+    function ensureGradientOptions(args) {
+      var _a, _b;
+      let options = (_a = args[0]) != null ? _a : {};
+      if (typeof options === "number" || args[1]) {
+        deprecation("8.5.2", `use options object instead`);
+        options = {
+          type: "linear",
+          start: { x: args[0], y: args[1] },
+          end: { x: args[2], y: args[3] },
+          textureSpace: args[4],
+          textureSize: (_b = args[5]) != null ? _b : FillGradient.defaultLinearOptions.textureSize
+        };
+      }
+      return options;
+    }
 
     "use strict";
     const repetitionMap = {
@@ -17707,7 +18270,7 @@ ${parts.join("\n")}
     var parse$1 = /*@__PURE__*/getDefaultExportFromCjs(parseSvgPath);
 
     "use strict";
-    function SVGToGraphicsPath(svgPath, path) {
+    function parseSVGPath(svgPath, path) {
       const commands = parse$1(svgPath);
       const subpaths = [];
       let currentSubPath = null;
@@ -17760,20 +18323,26 @@ ${parts.join("\n")}
             path.bezierCurveTo(
               data[1],
               data[2],
+              // First control point
               data[3],
               data[4],
+              // Second control point
               lastX,
               lastY
+              // End point
             );
             break;
           case "c":
             path.bezierCurveTo(
               lastX + data[1],
               lastY + data[2],
+              // First control point
               lastX + data[3],
               lastY + data[4],
+              // Second control point
               lastX + data[5],
               lastY + data[6]
+              // End point
             );
             lastX += data[5];
             lastY += data[6];
@@ -17784,16 +18353,20 @@ ${parts.join("\n")}
             path.bezierCurveToShort(
               data[1],
               data[2],
+              // Control point
               lastX,
               lastY
+              // End point
             );
             break;
           case "s":
             path.bezierCurveToShort(
               lastX + data[1],
               lastY + data[2],
+              // Control point
               lastX + data[3],
               lastY + data[4]
+              // End point
             );
             lastX += data[3];
             lastY += data[4];
@@ -17804,16 +18377,20 @@ ${parts.join("\n")}
             path.quadraticCurveTo(
               data[1],
               data[2],
+              // Control point
               lastX,
               lastY
+              // End point
             );
             break;
           case "q":
             path.quadraticCurveTo(
               lastX + data[1],
               lastY + data[2],
+              // Control point
               lastX + data[3],
               lastY + data[4]
+              // End point
             );
             lastX += data[3];
             lastY += data[4];
@@ -17824,6 +18401,7 @@ ${parts.join("\n")}
             path.quadraticCurveToShort(
               lastX,
               lastY
+              // End point
             );
             break;
           case "t":
@@ -17832,6 +18410,7 @@ ${parts.join("\n")}
             path.quadraticCurveToShort(
               lastX,
               lastY
+              // End point
             );
             break;
           case "A":
@@ -17839,12 +18418,18 @@ ${parts.join("\n")}
             lastY = data[7];
             path.arcToSvg(
               data[1],
+              // rx
               data[2],
+              // ry
               data[3],
+              // x-axis-rotation
               data[4],
+              // large-arc-flag
               data[5],
+              // sweep-flag
               lastX,
               lastY
+              // End point
             );
             break;
           case "a":
@@ -17852,12 +18437,18 @@ ${parts.join("\n")}
             lastY += data[7];
             path.arcToSvg(
               data[1],
+              // rx
               data[2],
+              // ry
               data[3],
+              // x-axis-rotation
               data[4],
+              // large-arc-flag
               data[5],
+              // sweep-flag
               lastX,
               lastY
+              // End point
             );
             break;
           case "Z":
@@ -18120,6 +18711,8 @@ ${parts.join("\n")}
     }
 
     "use strict";
+    let tempRect$1;
+    let tempRect2;
     class Polygon {
       /**
        * @param points - This can be an array of Points
@@ -18144,6 +18737,60 @@ ${parts.join("\n")}
         }
         this.points = flat;
         this.closePath = true;
+      }
+      /**
+       * Determines whether the polygon's points are arranged in a clockwise direction.
+       * This is calculated using the "shoelace formula" (also known as surveyor's formula) to find the signed area.
+       * A positive area indicates clockwise winding, while negative indicates counter-clockwise.
+       *
+       * The formula sums up the cross products of adjacent vertices:
+       * For each pair of adjacent points (x1,y1) and (x2,y2), we calculate (x1*y2 - x2*y1)
+       * The final sum divided by 2 gives the signed area - positive for clockwise.
+       * @returns `true` if the polygon's points are arranged clockwise, `false` if counter-clockwise
+       */
+      isClockwise() {
+        let area = 0;
+        const points = this.points;
+        const length = points.length;
+        for (let i = 0; i < length; i += 2) {
+          const x1 = points[i];
+          const y1 = points[i + 1];
+          const x2 = points[(i + 2) % length];
+          const y2 = points[(i + 3) % length];
+          area += (x2 - x1) * (y2 + y1);
+        }
+        return area < 0;
+      }
+      /**
+       * Checks if this polygon completely contains another polygon.
+       *
+       * This is useful for detecting holes in shapes, like when parsing SVG paths.
+       * For example, if you have two polygons:
+       * ```ts
+       * const outerSquare = new Polygon([0,0, 100,0, 100,100, 0,100]); // A square
+       * const innerSquare = new Polygon([25,25, 75,25, 75,75, 25,75]); // A smaller square inside
+       *
+       * outerSquare.containsPolygon(innerSquare); // Returns true
+       * innerSquare.containsPolygon(outerSquare); // Returns false
+       * ```
+       * @param polygon - The polygon to test for containment
+       * @returns True if this polygon completely contains the other polygon
+       */
+      containsPolygon(polygon) {
+        const thisBounds = this.getBounds(tempRect$1);
+        const otherBounds = polygon.getBounds(tempRect2);
+        if (!thisBounds.containsRect(otherBounds)) {
+          return false;
+        }
+        const points = polygon.points;
+        for (let i = 0; i < points.length; i += 2) {
+          const x = points[i];
+          const y = points[i + 1];
+          if (!this.contains(x, y)) {
+            return false;
+          }
+        }
+        return true;
       }
       /**
        * Creates a clone of this polygon.
@@ -18995,6 +19642,7 @@ ${parts.join("\n")}
         this._currentPoly = null;
         this._bounds = new Bounds();
         this._graphicsPath2D = graphicsPath2D;
+        this.signed = graphicsPath2D.checkForHoles;
       }
       /**
        * Sets the starting point for a new sub-path. Any subsequent drawing commands are considered part of this path.
@@ -19159,9 +19807,30 @@ ${parts.join("\n")}
           path = path.clone(true);
           path.transform(transform);
         }
+        const shapePrimitives = this.shapePrimitives;
+        const start = shapePrimitives.length;
         for (let i = 0; i < path.instructions.length; i++) {
           const instruction = path.instructions[i];
           this[instruction.action](...instruction.data);
+        }
+        if (path.checkForHoles && shapePrimitives.length - start > 1) {
+          let mainShape = null;
+          for (let i = start; i < shapePrimitives.length; i++) {
+            const shapePrimitive = shapePrimitives[i];
+            if (shapePrimitive.shape.type === "polygon") {
+              const polygon = shapePrimitive.shape;
+              const mainPolygon = mainShape == null ? void 0 : mainShape.shape;
+              if (mainPolygon && mainPolygon.containsPolygon(polygon)) {
+                mainShape.holes || (mainShape.holes = []);
+                mainShape.holes.push(shapePrimitive);
+                shapePrimitives.copyWithin(i, i + 1);
+                shapePrimitives.length--;
+                i--;
+              } else {
+                mainShape = shapePrimitive;
+              }
+            }
+          }
         }
         return this;
       }
@@ -19496,15 +20165,17 @@ ${parts.join("\n")}
       /**
        * Creates a `GraphicsPath` instance optionally from an SVG path string or an array of `PathInstruction`.
        * @param instructions - An SVG path string or an array of `PathInstruction` objects.
+       * @param signed
        */
-      constructor(instructions) {
+      constructor(instructions, signed = false) {
         this.instructions = [];
         /** unique id for this graphics path */
         this.uid = uid$1("graphicsPath");
         this._dirty = true;
         var _a;
+        this.checkForHoles = signed;
         if (typeof instructions === "string") {
-          SVGToGraphicsPath(instructions, this);
+          parseSVGPath(instructions, this);
         } else {
           this.instructions = (_a = instructions == null ? void 0 : instructions.slice()) != null ? _a : [];
         }
@@ -19750,6 +20421,7 @@ ${parts.join("\n")}
        */
       clone(deep = false) {
         const newGraphicsPath2D = new GraphicsPath();
+        newGraphicsPath2D.checkForHoles = this.checkForHoles;
         if (!deep) {
           newGraphicsPath2D.instructions = this.instructions.slice();
         } else {
@@ -19935,19 +20607,178 @@ ${parts.join("\n")}
     }
 
     "use strict";
-    var __defProp$U = Object.defineProperty;
-    var __getOwnPropSymbols$U = Object.getOwnPropertySymbols;
-    var __hasOwnProp$U = Object.prototype.hasOwnProperty;
-    var __propIsEnum$U = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$U = (obj, key, value) => key in obj ? __defProp$U(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$U = (a, b) => {
+    function parseSVGFloatAttribute(svg, id, defaultValue) {
+      const value = svg.getAttribute(id);
+      return value ? Number(value) : defaultValue;
+    }
+
+    "use strict";
+    function parseSVGDefinitions(svg, session) {
+      const definitions = svg.querySelectorAll("defs");
+      for (let i = 0; i < definitions.length; i++) {
+        const definition = definitions[i];
+        for (let j = 0; j < definition.children.length; j++) {
+          const child = definition.children[j];
+          switch (child.nodeName.toLowerCase()) {
+            case "lineargradient":
+              session.defs[child.id] = parseLinearGradient(child);
+              break;
+            case "radialgradient":
+              session.defs[child.id] = parseRadialGradient(child);
+              break;
+            default:
+              break;
+          }
+        }
+      }
+    }
+    function parseLinearGradient(child) {
+      const x0 = parseSVGFloatAttribute(child, "x1", 0);
+      const y0 = parseSVGFloatAttribute(child, "y1", 0);
+      const x1 = parseSVGFloatAttribute(child, "x2", 1);
+      const y1 = parseSVGFloatAttribute(child, "y2", 0);
+      const gradientUnit = child.getAttribute("gradientUnits") || "objectBoundingBox";
+      const gradient = new FillGradient(
+        x0,
+        y0,
+        x1,
+        y1,
+        gradientUnit === "objectBoundingBox" ? "local" : "global"
+      );
+      for (let k = 0; k < child.children.length; k++) {
+        const stop = child.children[k];
+        const offset = parseSVGFloatAttribute(stop, "offset", 0);
+        const color = Color.shared.setValue(stop.getAttribute("stop-color")).toNumber();
+        gradient.addColorStop(offset, color);
+      }
+      return gradient;
+    }
+    function parseRadialGradient(_child) {
+      warn("[SVG Parser] Radial gradients are not yet supported");
+      return new FillGradient(0, 0, 1, 0);
+    }
+
+    "use strict";
+    function extractSvgUrlId(url) {
+      const match = url.match(/url\s*\(\s*['"]?\s*#([^'"\s)]+)\s*['"]?\s*\)/i);
+      return match ? match[1] : "";
+    }
+
+    "use strict";
+    const styleAttributes = {
+      // Fill properties
+      fill: { type: "paint", default: 0 },
+      // Fill color/gradient
+      "fill-opacity": { type: "number", default: 1 },
+      // Fill transparency
+      // Stroke properties
+      stroke: { type: "paint", default: 0 },
+      // Stroke color/gradient
+      "stroke-width": { type: "number", default: 1 },
+      // Width of stroke
+      "stroke-opacity": { type: "number", default: 1 },
+      // Stroke transparency
+      "stroke-linecap": { type: "string", default: "butt" },
+      // End cap style: butt, round, square
+      "stroke-linejoin": { type: "string", default: "miter" },
+      // Join style: miter, round, bevel
+      "stroke-miterlimit": { type: "number", default: 10 },
+      // Limit on miter join sharpness
+      "stroke-dasharray": { type: "string", default: "none" },
+      // Dash pattern
+      "stroke-dashoffset": { type: "number", default: 0 },
+      // Offset for dash pattern
+      // Global properties
+      opacity: { type: "number", default: 1 }
+      // Overall opacity
+    };
+    function parseSVGStyle(svg, session) {
+      const style = svg.getAttribute("style");
+      const strokeStyle = {};
+      const fillStyle = {};
+      const result = {
+        strokeStyle,
+        fillStyle,
+        useFill: false,
+        useStroke: false
+      };
+      for (const key in styleAttributes) {
+        const attribute = svg.getAttribute(key);
+        if (attribute) {
+          parseAttribute(session, result, key, attribute.trim());
+        }
+      }
+      if (style) {
+        const styleParts = style.split(";");
+        for (let i = 0; i < styleParts.length; i++) {
+          const stylePart = styleParts[i].trim();
+          const [key, value] = stylePart.split(":");
+          if (styleAttributes[key]) {
+            parseAttribute(session, result, key, value.trim());
+          }
+        }
+      }
+      return {
+        strokeStyle: result.useStroke ? strokeStyle : null,
+        fillStyle: result.useFill ? fillStyle : null,
+        useFill: result.useFill,
+        useStroke: result.useStroke
+      };
+    }
+    function parseAttribute(session, result, id, value) {
+      switch (id) {
+        case "stroke":
+          if (value !== "none") {
+            if (value.startsWith("url(")) {
+              const id2 = extractSvgUrlId(value);
+              result.strokeStyle.fill = session.defs[id2];
+            } else {
+              result.strokeStyle.color = Color.shared.setValue(value).toNumber();
+            }
+            result.useStroke = true;
+          }
+          break;
+        case "stroke-width":
+          result.strokeStyle.width = Number(value);
+          break;
+        case "fill":
+          if (value !== "none") {
+            if (value.startsWith("url(")) {
+              const id2 = extractSvgUrlId(value);
+              result.fillStyle.fill = session.defs[id2];
+            } else {
+              result.fillStyle.color = Color.shared.setValue(value).toNumber();
+            }
+            result.useFill = true;
+          }
+          break;
+        case "fill-opacity":
+          result.fillStyle.alpha = Number(value);
+          break;
+        case "stroke-opacity":
+          result.strokeStyle.alpha = Number(value);
+          break;
+        case "opacity":
+          result.fillStyle.alpha = Number(value);
+          result.strokeStyle.alpha = Number(value);
+          break;
+      }
+    }
+
+    "use strict";
+    var __defProp$V = Object.defineProperty;
+    var __getOwnPropSymbols$V = Object.getOwnPropertySymbols;
+    var __hasOwnProp$V = Object.prototype.hasOwnProperty;
+    var __propIsEnum$V = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$V = (obj, key, value) => key in obj ? __defProp$V(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$V = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$U.call(b, prop))
-          __defNormalProp$U(a, prop, b[prop]);
-      if (__getOwnPropSymbols$U)
-        for (var prop of __getOwnPropSymbols$U(b)) {
-          if (__propIsEnum$U.call(b, prop))
-            __defNormalProp$U(a, prop, b[prop]);
+        if (__hasOwnProp$V.call(b, prop))
+          __defNormalProp$V(a, prop, b[prop]);
+      if (__getOwnPropSymbols$V)
+        for (var prop of __getOwnPropSymbols$V(b)) {
+          if (__propIsEnum$V.call(b, prop))
+            __defNormalProp$V(a, prop, b[prop]);
         }
       return a;
     };
@@ -19959,26 +20790,37 @@ ${parts.join("\n")}
       }
       const session = {
         context: graphicsContext,
+        defs: {},
         path: new GraphicsPath()
       };
-      renderChildren(svg, session, null, null);
+      parseSVGDefinitions(svg, session);
+      const children = svg.children;
+      const { fillStyle, strokeStyle } = parseSVGStyle(svg, session);
+      for (let i = 0; i < children.length; i++) {
+        const child = children[i];
+        if (child.nodeName.toLowerCase() === "defs")
+          continue;
+        renderChildren(child, session, fillStyle, strokeStyle);
+      }
       return graphicsContext;
     }
     function renderChildren(svg, session, fillStyle, strokeStyle) {
       const children = svg.children;
-      const { fillStyle: f1, strokeStyle: s1 } = parseStyle(svg);
+      const { fillStyle: f1, strokeStyle: s1 } = parseSVGStyle(svg, session);
       if (f1 && fillStyle) {
-        fillStyle = __spreadValues$U(__spreadValues$U({}, fillStyle), f1);
+        fillStyle = __spreadValues$V(__spreadValues$V({}, fillStyle), f1);
       } else if (f1) {
         fillStyle = f1;
       }
       if (s1 && strokeStyle) {
-        strokeStyle = __spreadValues$U(__spreadValues$U({}, strokeStyle), s1);
+        strokeStyle = __spreadValues$V(__spreadValues$V({}, strokeStyle), s1);
       } else if (s1) {
         strokeStyle = s1;
       }
-      session.context.fillStyle = fillStyle;
-      session.context.strokeStyle = strokeStyle;
+      const noStyle = !fillStyle && !strokeStyle;
+      if (noStyle) {
+        fillStyle = { color: 0 };
+      }
       let x;
       let y;
       let x1;
@@ -19999,151 +20841,208 @@ ${parts.join("\n")}
       switch (svg.nodeName.toLowerCase()) {
         case "path":
           d = svg.getAttribute("d");
-          graphicsPath = new GraphicsPath(d);
+          if (svg.getAttribute("fill-rule") === "evenodd") {
+            warn("SVG Evenodd fill rule not supported, your svg may render incorrectly");
+          }
+          graphicsPath = new GraphicsPath(d, true);
           session.context.path(graphicsPath);
           if (fillStyle)
-            session.context.fill();
+            session.context.fill(fillStyle);
           if (strokeStyle)
-            session.context.stroke();
+            session.context.stroke(strokeStyle);
           break;
         case "circle":
-          cx = parseFloatAttribute(svg, "cx", 0);
-          cy = parseFloatAttribute(svg, "cy", 0);
-          r = parseFloatAttribute(svg, "r", 0);
+          cx = parseSVGFloatAttribute(svg, "cx", 0);
+          cy = parseSVGFloatAttribute(svg, "cy", 0);
+          r = parseSVGFloatAttribute(svg, "r", 0);
           session.context.ellipse(cx, cy, r, r);
           if (fillStyle)
-            session.context.fill();
+            session.context.fill(fillStyle);
           if (strokeStyle)
-            session.context.stroke();
+            session.context.stroke(strokeStyle);
           break;
         case "rect":
-          x = parseFloatAttribute(svg, "x", 0);
-          y = parseFloatAttribute(svg, "y", 0);
-          width = parseFloatAttribute(svg, "width", 0);
-          height = parseFloatAttribute(svg, "height", 0);
-          rx = parseFloatAttribute(svg, "rx", 0);
-          ry = parseFloatAttribute(svg, "ry", 0);
+          x = parseSVGFloatAttribute(svg, "x", 0);
+          y = parseSVGFloatAttribute(svg, "y", 0);
+          width = parseSVGFloatAttribute(svg, "width", 0);
+          height = parseSVGFloatAttribute(svg, "height", 0);
+          rx = parseSVGFloatAttribute(svg, "rx", 0);
+          ry = parseSVGFloatAttribute(svg, "ry", 0);
           if (rx || ry) {
             session.context.roundRect(x, y, width, height, rx || ry);
           } else {
             session.context.rect(x, y, width, height);
           }
           if (fillStyle)
-            session.context.fill();
+            session.context.fill(fillStyle);
           if (strokeStyle)
-            session.context.stroke();
+            session.context.stroke(strokeStyle);
           break;
         case "ellipse":
-          cx = parseFloatAttribute(svg, "cx", 0);
-          cy = parseFloatAttribute(svg, "cy", 0);
-          rx = parseFloatAttribute(svg, "rx", 0);
-          ry = parseFloatAttribute(svg, "ry", 0);
+          cx = parseSVGFloatAttribute(svg, "cx", 0);
+          cy = parseSVGFloatAttribute(svg, "cy", 0);
+          rx = parseSVGFloatAttribute(svg, "rx", 0);
+          ry = parseSVGFloatAttribute(svg, "ry", 0);
           session.context.beginPath();
           session.context.ellipse(cx, cy, rx, ry);
           if (fillStyle)
-            session.context.fill();
+            session.context.fill(fillStyle);
           if (strokeStyle)
-            session.context.stroke();
+            session.context.stroke(strokeStyle);
           break;
         case "line":
-          x1 = parseFloatAttribute(svg, "x1", 0);
-          y1 = parseFloatAttribute(svg, "y1", 0);
-          x2 = parseFloatAttribute(svg, "x2", 0);
-          y2 = parseFloatAttribute(svg, "y2", 0);
+          x1 = parseSVGFloatAttribute(svg, "x1", 0);
+          y1 = parseSVGFloatAttribute(svg, "y1", 0);
+          x2 = parseSVGFloatAttribute(svg, "x2", 0);
+          y2 = parseSVGFloatAttribute(svg, "y2", 0);
           session.context.beginPath();
           session.context.moveTo(x1, y1);
           session.context.lineTo(x2, y2);
           if (strokeStyle)
-            session.context.stroke();
+            session.context.stroke(strokeStyle);
           break;
         case "polygon":
           pointsString = svg.getAttribute("points");
           points = pointsString.match(/\d+/g).map((n) => parseInt(n, 10));
           session.context.poly(points, true);
           if (fillStyle)
-            session.context.fill();
+            session.context.fill(fillStyle);
           if (strokeStyle)
-            session.context.stroke();
+            session.context.stroke(strokeStyle);
           break;
         case "polyline":
           pointsString = svg.getAttribute("points");
           points = pointsString.match(/\d+/g).map((n) => parseInt(n, 10));
           session.context.poly(points, false);
           if (strokeStyle)
-            session.context.stroke();
+            session.context.stroke(strokeStyle);
           break;
         case "g":
         case "svg":
           break;
         default: {
-          console.info(`[SVG parser] <${svg.nodeName}> elements unsupported`);
+          warn(`[SVG parser] <${svg.nodeName}> elements unsupported`);
           break;
         }
+      }
+      if (noStyle) {
+        fillStyle = null;
       }
       for (let i = 0; i < children.length; i++) {
         renderChildren(children[i], session, fillStyle, strokeStyle);
       }
     }
-    function parseFloatAttribute(svg, id, defaultValue) {
-      const value = svg.getAttribute(id);
-      return value ? Number(value) : defaultValue;
+
+    "use strict";
+    var __defProp$U = Object.defineProperty;
+    var __getOwnPropSymbols$U = Object.getOwnPropertySymbols;
+    var __hasOwnProp$U = Object.prototype.hasOwnProperty;
+    var __propIsEnum$U = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$U = (obj, key, value) => key in obj ? __defProp$U(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$U = (a, b) => {
+      for (var prop in b || (b = {}))
+        if (__hasOwnProp$U.call(b, prop))
+          __defNormalProp$U(a, prop, b[prop]);
+      if (__getOwnPropSymbols$U)
+        for (var prop of __getOwnPropSymbols$U(b)) {
+          if (__propIsEnum$U.call(b, prop))
+            __defNormalProp$U(a, prop, b[prop]);
+        }
+      return a;
+    };
+    var __objRest$j = (source, exclude) => {
+      var target = {};
+      for (var prop in source)
+        if (__hasOwnProp$U.call(source, prop) && exclude.indexOf(prop) < 0)
+          target[prop] = source[prop];
+      if (source != null && __getOwnPropSymbols$U)
+        for (var prop of __getOwnPropSymbols$U(source)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum$U.call(source, prop))
+            target[prop] = source[prop];
+        }
+      return target;
+    };
+    function isColorLike(value) {
+      return Color.isColorLike(value);
     }
-    function parseStyle(svg) {
-      const style = svg.getAttribute("style");
-      const strokeStyle = {};
-      const fillStyle = {};
-      let useFill = false;
-      let useStroke = false;
-      if (style) {
-        const styleParts = style.split(";");
-        for (let i = 0; i < styleParts.length; i++) {
-          const stylePart = styleParts[i];
-          const [key, value] = stylePart.split(":");
-          switch (key) {
-            case "stroke":
-              if (value !== "none") {
-                strokeStyle.color = Color.shared.setValue(value).toNumber();
-                useStroke = true;
-              }
-              break;
-            case "stroke-width":
-              strokeStyle.width = Number(value);
-              break;
-            case "fill":
-              if (value !== "none") {
-                useFill = true;
-                fillStyle.color = Color.shared.setValue(value).toNumber();
-              }
-              break;
-            case "fill-opacity":
-              fillStyle.alpha = Number(value);
-              break;
-            case "stroke-opacity":
-              strokeStyle.alpha = Number(value);
-              break;
-            case "opacity":
-              fillStyle.alpha = Number(value);
-              strokeStyle.alpha = Number(value);
-              break;
-          }
-        }
-      } else {
-        const stroke = svg.getAttribute("stroke");
-        if (stroke && stroke !== "none") {
-          useStroke = true;
-          strokeStyle.color = Color.shared.setValue(stroke).toNumber();
-          strokeStyle.width = parseFloatAttribute(svg, "stroke-width", 1);
-        }
-        const fill = svg.getAttribute("fill");
-        if (fill && fill !== "none") {
-          useFill = true;
-          fillStyle.color = Color.shared.setValue(fill).toNumber();
-        }
+    function isFillPattern(value) {
+      return value instanceof FillPattern;
+    }
+    function isFillGradient(value) {
+      return value instanceof FillGradient;
+    }
+    function isTexture(value) {
+      return value instanceof Texture;
+    }
+    function handleColorLike(fill, value, defaultStyle) {
+      const temp = Color.shared.setValue(value != null ? value : 0);
+      fill.color = temp.toNumber();
+      fill.alpha = temp.alpha === 1 ? defaultStyle.alpha : temp.alpha;
+      fill.texture = Texture.WHITE;
+      return __spreadValues$U(__spreadValues$U({}, defaultStyle), fill);
+    }
+    function handleTexture(fill, value, defaultStyle) {
+      fill.texture = value;
+      return __spreadValues$U(__spreadValues$U({}, defaultStyle), fill);
+    }
+    function handleFillPattern(fill, value, defaultStyle) {
+      fill.fill = value;
+      fill.color = 16777215;
+      fill.texture = value.texture;
+      fill.matrix = value.transform;
+      return __spreadValues$U(__spreadValues$U({}, defaultStyle), fill);
+    }
+    function handleFillGradient(fill, value, defaultStyle) {
+      value.buildGradient();
+      fill.fill = value;
+      fill.color = 16777215;
+      fill.texture = value.texture;
+      fill.matrix = value.transform;
+      fill.textureSpace = value.textureSpace;
+      return __spreadValues$U(__spreadValues$U({}, defaultStyle), fill);
+    }
+    function handleFillObject(value, defaultStyle) {
+      const style = __spreadValues$U(__spreadValues$U({}, defaultStyle), value);
+      const color = Color.shared.setValue(style.color);
+      style.alpha *= color.alpha;
+      style.color = color.toNumber();
+      return style;
+    }
+    function toFillStyle(value, defaultStyle) {
+      if (value === void 0 || value === null) {
+        return null;
       }
-      return {
-        strokeStyle: useStroke ? strokeStyle : null,
-        fillStyle: useFill ? fillStyle : null
-      };
+      const fill = {};
+      const objectStyle = value;
+      if (isColorLike(value)) {
+        return handleColorLike(fill, value, defaultStyle);
+      } else if (isTexture(value)) {
+        return handleTexture(fill, value, defaultStyle);
+      } else if (isFillPattern(value)) {
+        return handleFillPattern(fill, value, defaultStyle);
+      } else if (isFillGradient(value)) {
+        return handleFillGradient(fill, value, defaultStyle);
+      } else if (objectStyle.fill && isFillPattern(objectStyle.fill)) {
+        return handleFillPattern(objectStyle, objectStyle.fill, defaultStyle);
+      } else if (objectStyle.fill && isFillGradient(objectStyle.fill)) {
+        return handleFillGradient(objectStyle, objectStyle.fill, defaultStyle);
+      }
+      return handleFillObject(objectStyle, defaultStyle);
+    }
+    function toStrokeStyle(value, defaultStyle) {
+      const _a = defaultStyle, { width, alignment, miterLimit, cap, join, pixelLine } = _a, rest = __objRest$j(_a, ["width", "alignment", "miterLimit", "cap", "join", "pixelLine"]);
+      const fill = toFillStyle(value, rest);
+      if (!fill) {
+        return null;
+      }
+      return __spreadValues$U({
+        width,
+        alignment,
+        miterLimit,
+        cap,
+        join,
+        pixelLine
+      }, fill);
     }
 
     "use strict";
@@ -20163,125 +21062,8 @@ ${parts.join("\n")}
         }
       return a;
     };
-    var __objRest$j = (source, exclude) => {
-      var target = {};
-      for (var prop in source)
-        if (__hasOwnProp$T.call(source, prop) && exclude.indexOf(prop) < 0)
-          target[prop] = source[prop];
-      if (source != null && __getOwnPropSymbols$T)
-        for (var prop of __getOwnPropSymbols$T(source)) {
-          if (exclude.indexOf(prop) < 0 && __propIsEnum$T.call(source, prop))
-            target[prop] = source[prop];
-        }
-      return target;
-    };
-    function isColorLike(value) {
-      return Color.isColorLike(value);
-    }
-    function isFillPattern(value) {
-      return value instanceof FillPattern;
-    }
-    function isFillGradient(value) {
-      return value instanceof FillGradient;
-    }
-    function handleColorLike(fill, value, defaultStyle) {
-      const temp = Color.shared.setValue(value != null ? value : 0);
-      fill.color = temp.toNumber();
-      fill.alpha = temp.alpha === 1 ? defaultStyle.alpha : temp.alpha;
-      fill.texture = Texture.WHITE;
-      return __spreadValues$T(__spreadValues$T({}, defaultStyle), fill);
-    }
-    function handleFillPattern(fill, value, defaultStyle) {
-      fill.fill = value;
-      fill.color = 16777215;
-      fill.texture = value.texture;
-      fill.matrix = value.transform;
-      return __spreadValues$T(__spreadValues$T({}, defaultStyle), fill);
-    }
-    function handleFillGradient(fill, value, defaultStyle) {
-      value.buildLinearGradient();
-      fill.fill = value;
-      fill.color = 16777215;
-      fill.texture = value.texture;
-      fill.matrix = value.transform;
-      return __spreadValues$T(__spreadValues$T({}, defaultStyle), fill);
-    }
-    function handleFillObject(value, defaultStyle) {
-      var _a;
-      const style = __spreadValues$T(__spreadValues$T({}, defaultStyle), value);
-      if (style.texture) {
-        if (style.texture !== Texture.WHITE) {
-          const m = ((_a = style.matrix) == null ? void 0 : _a.clone().invert()) || new Matrix();
-          m.translate(style.texture.frame.x, style.texture.frame.y);
-          m.scale(1 / style.texture.source.width, 1 / style.texture.source.height);
-          style.matrix = m;
-        }
-        const sourceStyle = style.texture.source.style;
-        if (sourceStyle.addressMode === "clamp-to-edge") {
-          sourceStyle.addressMode = "repeat";
-          sourceStyle.update();
-        }
-      }
-      const color = Color.shared.setValue(style.color);
-      style.alpha *= color.alpha;
-      style.color = color.toNumber();
-      style.matrix = style.matrix ? style.matrix.clone() : null;
-      return style;
-    }
-    function toFillStyle(value, defaultStyle) {
-      if (value === void 0 || value === null) {
-        return null;
-      }
-      const fill = {};
-      const objectStyle = value;
-      if (isColorLike(value)) {
-        return handleColorLike(fill, value, defaultStyle);
-      } else if (isFillPattern(value)) {
-        return handleFillPattern(fill, value, defaultStyle);
-      } else if (isFillGradient(value)) {
-        return handleFillGradient(fill, value, defaultStyle);
-      } else if (objectStyle.fill && isFillPattern(objectStyle.fill)) {
-        return handleFillPattern(objectStyle, objectStyle.fill, defaultStyle);
-      } else if (objectStyle.fill && isFillGradient(objectStyle.fill)) {
-        return handleFillGradient(objectStyle, objectStyle.fill, defaultStyle);
-      }
-      return handleFillObject(objectStyle, defaultStyle);
-    }
-    function toStrokeStyle(value, defaultStyle) {
-      const _a = defaultStyle, { width, alignment, miterLimit, cap, join, pixelLine } = _a, rest = __objRest$j(_a, ["width", "alignment", "miterLimit", "cap", "join", "pixelLine"]);
-      const fill = toFillStyle(value, rest);
-      if (!fill) {
-        return null;
-      }
-      return __spreadValues$T({
-        width,
-        alignment,
-        miterLimit,
-        cap,
-        join,
-        pixelLine
-      }, fill);
-    }
-
-    "use strict";
-    var __defProp$S = Object.defineProperty;
-    var __getOwnPropSymbols$S = Object.getOwnPropertySymbols;
-    var __hasOwnProp$S = Object.prototype.hasOwnProperty;
-    var __propIsEnum$S = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$S = (obj, key, value) => key in obj ? __defProp$S(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$S = (a, b) => {
-      for (var prop in b || (b = {}))
-        if (__hasOwnProp$S.call(b, prop))
-          __defNormalProp$S(a, prop, b[prop]);
-      if (__getOwnPropSymbols$S)
-        for (var prop of __getOwnPropSymbols$S(b)) {
-          if (__propIsEnum$S.call(b, prop))
-            __defNormalProp$S(a, prop, b[prop]);
-        }
-      return a;
-    };
     const tmpPoint = new Point();
-    const tempMatrix$4 = new Matrix();
+    const tempMatrix$3 = new Matrix();
     const _GraphicsContext = class _GraphicsContext extends EventEmitter {
       constructor() {
         super(...arguments);
@@ -20292,8 +21074,8 @@ ${parts.join("\n")}
         this.instructions = [];
         this._activePath = new GraphicsPath();
         this._transform = new Matrix();
-        this._fillStyle = __spreadValues$S({}, _GraphicsContext.defaultFillStyle);
-        this._strokeStyle = __spreadValues$S({}, _GraphicsContext.defaultStrokeStyle);
+        this._fillStyle = __spreadValues$T({}, _GraphicsContext.defaultFillStyle);
+        this._strokeStyle = __spreadValues$T({}, _GraphicsContext.defaultStrokeStyle);
         this._stateStack = [];
         this._tick = 0;
         this._bounds = new Bounds();
@@ -20310,8 +21092,8 @@ ${parts.join("\n")}
         clone.instructions = this.instructions.slice();
         clone._activePath = this._activePath.clone();
         clone._transform = this._transform.clone();
-        clone._fillStyle = __spreadValues$S({}, this._fillStyle);
-        clone._strokeStyle = __spreadValues$S({}, this._strokeStyle);
+        clone._fillStyle = __spreadValues$T({}, this._fillStyle);
+        clone._strokeStyle = __spreadValues$T({}, this._strokeStyle);
         clone._stateStack = this._stateStack.slice();
         clone._bounds = this._bounds.clone();
         clone._boundsDirty = true;
@@ -20842,8 +21624,8 @@ ${parts.join("\n")}
       save() {
         this._stateStack.push({
           transform: this._transform.clone(),
-          fillStyle: __spreadValues$S({}, this._fillStyle),
-          strokeStyle: __spreadValues$S({}, this._strokeStyle)
+          fillStyle: __spreadValues$T({}, this._fillStyle),
+          strokeStyle: __spreadValues$T({}, this._strokeStyle)
         });
         return this;
       }
@@ -20894,8 +21676,8 @@ ${parts.join("\n")}
           this._transform.append(a);
           return this;
         }
-        tempMatrix$4.set(a, b, c, d, dx, dy);
-        this._transform.append(tempMatrix$4);
+        tempMatrix$3.set(a, b, c, d, dx, dy);
+        this._transform.append(tempMatrix$3);
         return this;
       }
       /**
@@ -21050,7 +21832,9 @@ ${parts.join("\n")}
       /** The matrix to apply. */
       matrix: null,
       /** The fill pattern to use. */
-      fill: null
+      fill: null,
+      /** Whether coordinates are 'global' or 'local' */
+      textureSpace: "local"
     };
     /** The default stroke style to use when none is provided. */
     _GraphicsContext.defaultStrokeStyle = {
@@ -21074,6 +21858,8 @@ ${parts.join("\n")}
       matrix: null,
       /** The fill pattern to use. */
       fill: null,
+      /** Whether coordinates are 'global' or 'local' */
+      textureSpace: "local",
       /** If the stroke is a pixel line. */
       pixelLine: false
     };
@@ -21143,21 +21929,21 @@ ${parts.join("\n")}
     }
 
     "use strict";
-    var __defProp$R = Object.defineProperty;
+    var __defProp$S = Object.defineProperty;
     var __defProps$m = Object.defineProperties;
     var __getOwnPropDescs$m = Object.getOwnPropertyDescriptors;
-    var __getOwnPropSymbols$R = Object.getOwnPropertySymbols;
-    var __hasOwnProp$R = Object.prototype.hasOwnProperty;
-    var __propIsEnum$R = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$R = (obj, key, value) => key in obj ? __defProp$R(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$R = (a, b) => {
+    var __getOwnPropSymbols$S = Object.getOwnPropertySymbols;
+    var __hasOwnProp$S = Object.prototype.hasOwnProperty;
+    var __propIsEnum$S = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$S = (obj, key, value) => key in obj ? __defProp$S(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$S = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$R.call(b, prop))
-          __defNormalProp$R(a, prop, b[prop]);
-      if (__getOwnPropSymbols$R)
-        for (var prop of __getOwnPropSymbols$R(b)) {
-          if (__propIsEnum$R.call(b, prop))
-            __defNormalProp$R(a, prop, b[prop]);
+        if (__hasOwnProp$S.call(b, prop))
+          __defNormalProp$S(a, prop, b[prop]);
+      if (__getOwnPropSymbols$S)
+        for (var prop of __getOwnPropSymbols$S(b)) {
+          if (__propIsEnum$S.call(b, prop))
+            __defNormalProp$S(a, prop, b[prop]);
         }
       return a;
     };
@@ -21166,7 +21952,7 @@ ${parts.join("\n")}
       constructor(style = {}) {
         super();
         convertV7Tov8Style(style);
-        const fullStyle = __spreadValues$R(__spreadValues$R({}, _TextStyle.defaultTextStyle), style);
+        const fullStyle = __spreadValues$S(__spreadValues$S({}, _TextStyle.defaultTextStyle), style);
         for (const key in fullStyle) {
           const thisKey = key;
           this[thisKey] = fullStyle[key];
@@ -21198,9 +21984,9 @@ ${parts.join("\n")}
       }
       set dropShadow(value) {
         if (value !== null && typeof value === "object") {
-          this._dropShadow = this._createProxy(__spreadValues$R(__spreadValues$R({}, _TextStyle.defaultDropShadow), value));
+          this._dropShadow = this._createProxy(__spreadValues$S(__spreadValues$S({}, _TextStyle.defaultDropShadow), value));
         } else {
-          this._dropShadow = value ? this._createProxy(__spreadValues$R({}, _TextStyle.defaultDropShadow)) : null;
+          this._dropShadow = value ? this._createProxy(__spreadValues$S({}, _TextStyle.defaultDropShadow)) : null;
         }
         this.update();
       }
@@ -21345,7 +22131,31 @@ ${parts.join("\n")}
         this._wordWrapWidth = value;
         this.update();
       }
-      /** A fillstyle that will be used on the text e.g., 'red', '#00FF00'. */
+      /**
+       * The fill style that will be used to color the text.
+       * This can be:
+       * - A color string like 'red', '#00FF00', or 'rgba(255,0,0,0.5)'
+       * - A hex number like 0xff0000 for red
+       * - A FillStyle object with properties like { color: 0xff0000, alpha: 0.5 }
+       * - A FillGradient for gradient fills
+       * - A FillPattern for pattern/texture fills
+       *
+       * When using a FillGradient, vertical gradients (angle of 90 degrees) are applied per line of text,
+       * while gradients at any other angle are spread across the entire text body as a whole.
+       * @example
+       * // Vertical gradient applied per line
+       * const verticalGradient = new FillGradient(0, 0, 0, 1)
+       *     .addColorStop(0, 0xff0000)
+       *     .addColorStop(1, 0x0000ff);
+       *
+       * const text = new Text({
+       *     text: 'Line 1\nLine 2',
+       *     style: { fill: verticalGradient }
+       * });
+       *
+       * To manage the gradient in a global scope, set the textureSpace property of the FillGradient to 'global'.
+       * @type {string|number|FillStyle|FillGradient|FillPattern}
+       */
       get fill() {
         return this._originalFill;
       }
@@ -21354,9 +22164,9 @@ ${parts.join("\n")}
           return;
         this._originalFill = value;
         if (this._isFillStyle(value)) {
-          this._originalFill = this._createProxy(__spreadValues$R(__spreadValues$R({}, GraphicsContext.defaultFillStyle), value), () => {
+          this._originalFill = this._createProxy(__spreadValues$S(__spreadValues$S({}, GraphicsContext.defaultFillStyle), value), () => {
             this._fill = toFillStyle(
-              __spreadValues$R({}, this._originalFill),
+              __spreadValues$S({}, this._originalFill),
               GraphicsContext.defaultFillStyle
             );
           });
@@ -21376,9 +22186,9 @@ ${parts.join("\n")}
           return;
         this._originalStroke = value;
         if (this._isFillStyle(value)) {
-          this._originalStroke = this._createProxy(__spreadValues$R(__spreadValues$R({}, GraphicsContext.defaultStrokeStyle), value), () => {
+          this._originalStroke = this._createProxy(__spreadValues$S(__spreadValues$S({}, GraphicsContext.defaultStrokeStyle), value), () => {
             this._stroke = toStrokeStyle(
-              __spreadValues$R({}, this._originalStroke),
+              __spreadValues$S({}, this._originalStroke),
               GraphicsContext.defaultStrokeStyle
             );
           });
@@ -21412,7 +22222,7 @@ ${parts.join("\n")}
         return new _TextStyle({
           align: this.align,
           breakWords: this.breakWords,
-          dropShadow: this._dropShadow ? __spreadValues$R({}, this._dropShadow) : null,
+          dropShadow: this._dropShadow ? __spreadValues$S({}, this._dropShadow) : null,
           fill: this._fill,
           fontFamily: this.fontFamily,
           fontSize: this.fontSize,
@@ -21587,7 +22397,7 @@ ${parts.join("\n")}
         } else {
           throw new Error("Invalid stroke value.");
         }
-        style.stroke = __spreadProps$m(__spreadValues$R({}, obj), {
+        style.stroke = __spreadProps$m(__spreadValues$S({}, obj), {
           width: oldStyle.strokeThickness
         });
       }
@@ -21601,7 +22411,10 @@ ${parts.join("\n")}
         } else {
           fontSize = style.fontSize;
         }
-        const gradientFill = new FillGradient(0, 0, 0, fontSize * 1.7);
+        const gradientFill = new FillGradient({
+          start: { x: 0, y: 0 },
+          end: { x: 0, y: (fontSize || 0) * 1.7 }
+        });
         const fills = oldStyle.fillGradientStops.map((color) => Color.shared.setValue(color).toNumber());
         fills.forEach((number, index) => {
           const ratio = index / (fills.length - 1);
@@ -22196,7 +23009,8 @@ ${parts.join("\n")}
     let CanvasTextMetrics = _CanvasTextMetrics;
 
     "use strict";
-    function getCanvasFillStyle(fillStyle, context) {
+    const PRECISION = 1e5;
+    function getCanvasFillStyle(fillStyle, context, textMetrics, padding = 0) {
       var _a;
       if (fillStyle.texture === Texture.WHITE && !fillStyle.fill) {
         return Color.shared.setValue(fillStyle.color).setAlpha((_a = fillStyle.alpha) != null ? _a : 1).toHexa();
@@ -22218,18 +23032,55 @@ ${parts.join("\n")}
         return pattern;
       } else if (fillStyle.fill instanceof FillGradient) {
         const fillGradient = fillStyle.fill;
-        if (fillGradient.type === "linear") {
-          const gradient = context.createLinearGradient(
-            fillGradient.x0,
-            fillGradient.y0,
-            fillGradient.x1,
-            fillGradient.y1
+        const isLinear = fillGradient.type === "linear";
+        const isLocal = fillGradient.textureSpace === "local";
+        let width = 1;
+        let height = 1;
+        if (isLocal && textMetrics) {
+          width = textMetrics.width + padding;
+          height = textMetrics.height + padding;
+        }
+        let gradient;
+        let isNearlyVertical = false;
+        if (isLinear) {
+          const { start, end } = fillGradient;
+          gradient = context.createLinearGradient(
+            start.x * width,
+            start.y * height,
+            end.x * width,
+            end.y * height
           );
-          fillGradient.gradientStops.forEach((stop) => {
+          isNearlyVertical = Math.abs(end.x - start.x) < Math.abs((end.y - start.y) * 0.1);
+        } else {
+          const { center, innerRadius, outerCenter, outerRadius } = fillGradient;
+          gradient = context.createRadialGradient(
+            center.x * width,
+            center.y * height,
+            innerRadius * width,
+            outerCenter.x * width,
+            outerCenter.y * height,
+            outerRadius * width
+          );
+        }
+        if (isNearlyVertical && isLocal && textMetrics) {
+          const ratio = textMetrics.lineHeight / height;
+          for (let i = 0; i < textMetrics.lines.length; i++) {
+            const start = (i * textMetrics.lineHeight + padding / 2) / height;
+            fillGradient.colorStops.forEach((stop) => {
+              const globalStop = start + stop.offset * ratio;
+              gradient.addColorStop(
+                // fix to 5 decimal places to avoid floating point precision issues
+                Math.floor(globalStop * PRECISION) / PRECISION,
+                Color.shared.setValue(stop.color).toHex()
+              );
+            });
+          }
+        } else {
+          fillGradient.colorStops.forEach((stop) => {
             gradient.addColorStop(stop.offset, Color.shared.setValue(stop.color).toHex());
           });
-          return gradient;
         }
+        return gradient;
       }
       warn("FillStyle not recognised", fillStyle);
       return "red";
@@ -22306,16 +23157,24 @@ ${parts.join("\n")}
       _increaseReferenceCount(textKey) {
         this._activeTextures[textKey].usageCount++;
       }
+      /**
+       * Returns a texture that was created wit the above `getTexture` function.
+       * Handy if you are done with a texture and want to return it to the pool.
+       * @param texture - The texture to be returned.
+       */
+      returnTexture(texture) {
+        const source = texture.source;
+        source.resource = null;
+        source.uploadMethodId = "unknown";
+        source.alphaMode = "no-premultiply-alpha";
+        TexturePool.returnTexture(texture);
+      }
       decreaseReferenceCount(textKey) {
         const activeTexture = this._activeTextures[textKey];
         activeTexture.usageCount--;
         if (activeTexture.usageCount === 0) {
           CanvasPool.returnCanvasAndContext(activeTexture.canvasAndContext);
-          TexturePool.returnTexture(activeTexture.texture);
-          const source = activeTexture.texture.source;
-          source.resource = null;
-          source.uploadMethodId = "unknown";
-          source.alphaMode = "no-premultiply-alpha";
+          this.returnTexture(activeTexture.texture);
           this._activeTextures[textKey] = null;
         }
       }
@@ -22375,9 +23234,10 @@ ${parts.join("\n")}
             context.shadowOffsetX = Math.cos(shadowOptions.angle) * dropShadowDistance;
             context.shadowOffsetY = Math.sin(shadowOptions.angle) * dropShadowDistance + dsOffsetShadow;
           } else {
-            context.fillStyle = style._fill ? getCanvasFillStyle(style._fill, context) : null;
+            context.fillStyle = style._fill ? getCanvasFillStyle(style._fill, context, measured) : null;
             if ((_b = style._stroke) == null ? void 0 : _b.width) {
-              context.strokeStyle = getCanvasFillStyle(style._stroke, context);
+              const padding = style._stroke.width * style._stroke.alignment;
+              context.strokeStyle = getCanvasFillStyle(style._stroke, context, measured, padding);
             }
             context.shadowColor = "black";
           }
@@ -22487,30 +23347,30 @@ ${parts.join("\n")}
     extensions.add(CanvasTextPipe);
 
     "use strict";
-    var __defProp$Q = Object.defineProperty;
-    var __getOwnPropSymbols$Q = Object.getOwnPropertySymbols;
-    var __hasOwnProp$Q = Object.prototype.hasOwnProperty;
-    var __propIsEnum$Q = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$Q = (obj, key, value) => key in obj ? __defProp$Q(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$Q = (a, b) => {
+    var __defProp$R = Object.defineProperty;
+    var __getOwnPropSymbols$R = Object.getOwnPropertySymbols;
+    var __hasOwnProp$R = Object.prototype.hasOwnProperty;
+    var __propIsEnum$R = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$R = (obj, key, value) => key in obj ? __defProp$R(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$R = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$Q.call(b, prop))
-          __defNormalProp$Q(a, prop, b[prop]);
-      if (__getOwnPropSymbols$Q)
-        for (var prop of __getOwnPropSymbols$Q(b)) {
-          if (__propIsEnum$Q.call(b, prop))
-            __defNormalProp$Q(a, prop, b[prop]);
+        if (__hasOwnProp$R.call(b, prop))
+          __defNormalProp$R(a, prop, b[prop]);
+      if (__getOwnPropSymbols$R)
+        for (var prop of __getOwnPropSymbols$R(b)) {
+          if (__propIsEnum$R.call(b, prop))
+            __defNormalProp$R(a, prop, b[prop]);
         }
       return a;
     };
     var __objRest$i = (source, exclude) => {
       var target = {};
       for (var prop in source)
-        if (__hasOwnProp$Q.call(source, prop) && exclude.indexOf(prop) < 0)
+        if (__hasOwnProp$R.call(source, prop) && exclude.indexOf(prop) < 0)
           target[prop] = source[prop];
-      if (source != null && __getOwnPropSymbols$Q)
-        for (var prop of __getOwnPropSymbols$Q(source)) {
-          if (exclude.indexOf(prop) < 0 && __propIsEnum$Q.call(source, prop))
+      if (source != null && __getOwnPropSymbols$R)
+        for (var prop of __getOwnPropSymbols$R(source)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum$R.call(source, prop))
             target[prop] = source[prop];
         }
       return target;
@@ -22524,7 +23384,7 @@ ${parts.join("\n")}
           options = { context: options };
         }
         const _a = options || {}, { context, roundPixels } = _a, rest = __objRest$i(_a, ["context", "roundPixels"]);
-        super(__spreadValues$Q({
+        super(__spreadValues$R({
           label: "Graphics"
         }, rest));
         this.renderPipeId = "graphics";
@@ -23233,19 +24093,19 @@ ${parts.join("\n")}
     }
 
     "use strict";
-    var __defProp$P = Object.defineProperty;
-    var __getOwnPropSymbols$P = Object.getOwnPropertySymbols;
-    var __hasOwnProp$P = Object.prototype.hasOwnProperty;
-    var __propIsEnum$P = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$P = (obj, key, value) => key in obj ? __defProp$P(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$P = (a, b) => {
+    var __defProp$Q = Object.defineProperty;
+    var __getOwnPropSymbols$Q = Object.getOwnPropertySymbols;
+    var __hasOwnProp$Q = Object.prototype.hasOwnProperty;
+    var __propIsEnum$Q = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$Q = (obj, key, value) => key in obj ? __defProp$Q(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$Q = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$P.call(b, prop))
-          __defNormalProp$P(a, prop, b[prop]);
-      if (__getOwnPropSymbols$P)
-        for (var prop of __getOwnPropSymbols$P(b)) {
-          if (__propIsEnum$P.call(b, prop))
-            __defNormalProp$P(a, prop, b[prop]);
+        if (__hasOwnProp$Q.call(b, prop))
+          __defNormalProp$Q(a, prop, b[prop]);
+      if (__getOwnPropSymbols$Q)
+        for (var prop of __getOwnPropSymbols$Q(b)) {
+          if (__propIsEnum$Q.call(b, prop))
+            __defNormalProp$Q(a, prop, b[prop]);
         }
       return a;
     };
@@ -23270,7 +24130,7 @@ ${parts.join("\n")}
         this._currentY = 0;
         this._currentPageIndex = -1;
         this._skipKerning = false;
-        const dynamicOptions = __spreadValues$P(__spreadValues$P({}, _DynamicBitmapFont.defaultOptions), options);
+        const dynamicOptions = __spreadValues$Q(__spreadValues$Q({}, _DynamicBitmapFont.defaultOptions), options);
         this._textureSize = dynamicOptions.textureSize;
         this._mipmap = dynamicOptions.mipmap;
         const style = dynamicOptions.style.clone();
@@ -23670,19 +24530,19 @@ ${parts.join("\n")}
     }
 
     "use strict";
-    var __defProp$O = Object.defineProperty;
-    var __getOwnPropSymbols$O = Object.getOwnPropertySymbols;
-    var __hasOwnProp$O = Object.prototype.hasOwnProperty;
-    var __propIsEnum$O = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$O = (obj, key, value) => key in obj ? __defProp$O(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$O = (a, b) => {
+    var __defProp$P = Object.defineProperty;
+    var __getOwnPropSymbols$P = Object.getOwnPropertySymbols;
+    var __hasOwnProp$P = Object.prototype.hasOwnProperty;
+    var __propIsEnum$P = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$P = (obj, key, value) => key in obj ? __defProp$P(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$P = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$O.call(b, prop))
-          __defNormalProp$O(a, prop, b[prop]);
-      if (__getOwnPropSymbols$O)
-        for (var prop of __getOwnPropSymbols$O(b)) {
-          if (__propIsEnum$O.call(b, prop))
-            __defNormalProp$O(a, prop, b[prop]);
+        if (__hasOwnProp$P.call(b, prop))
+          __defNormalProp$P(a, prop, b[prop]);
+      if (__getOwnPropSymbols$P)
+        for (var prop of __getOwnPropSymbols$P(b)) {
+          if (__propIsEnum$P.call(b, prop))
+            __defNormalProp$P(a, prop, b[prop]);
         }
       return a;
     };
@@ -23741,7 +24601,7 @@ ${parts.join("\n")}
           overrideFill = false;
         }
         if (!Cache.has(fontFamilyKey)) {
-          const fnt = new DynamicBitmapFont(__spreadValues$O({
+          const fnt = new DynamicBitmapFont(__spreadValues$P({
             style,
             overrideFill,
             overrideSize: true
@@ -23801,7 +24661,7 @@ ${parts.join("\n")}
         if (!name) {
           throw new Error("[BitmapFontManager] Property `name` is required.");
         }
-        options = __spreadValues$O(__spreadValues$O({}, this.defaultOptions), options);
+        options = __spreadValues$P(__spreadValues$P({}, this.defaultOptions), options);
         const textStyle = options.style;
         const style = textStyle instanceof TextStyle ? textStyle : new TextStyle(textStyle);
         const overrideFill = style._fill.fill !== null && style._fill.fill !== void 0;
@@ -24046,8 +24906,7 @@ ${parts.join("\n")}
           });
         }
         htmlText._didTextUpdate = false;
-        const padding = htmlText._style.padding;
-        updateQuadBounds(batchableSprite.bounds, htmlText._anchor, batchableSprite.texture, padding);
+        updateTextBounds(batchableSprite, htmlText);
       }
       async _updateGpuText(htmlText) {
         var _a;
@@ -24071,8 +24930,7 @@ ${parts.join("\n")}
         gpuText.generatingTexture = false;
         gpuText.textureNeedsUploading = true;
         htmlText.onViewUpdate();
-        const padding = htmlText._style.padding;
-        updateQuadBounds(batchableSprite.bounds, htmlText._anchor, batchableSprite.texture, padding);
+        updateTextBounds(batchableSprite, htmlText);
       }
       _getGpuText(htmlText) {
         return this._gpuText[htmlText.uid] || this.initGpuText(htmlText);
@@ -24222,19 +25080,19 @@ ${parts.join("\n")}
     }
 
     "use strict";
-    var __defProp$N = Object.defineProperty;
-    var __getOwnPropSymbols$N = Object.getOwnPropertySymbols;
-    var __hasOwnProp$N = Object.prototype.hasOwnProperty;
-    var __propIsEnum$N = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$N = (obj, key, value) => key in obj ? __defProp$N(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$N = (a, b) => {
+    var __defProp$O = Object.defineProperty;
+    var __getOwnPropSymbols$O = Object.getOwnPropertySymbols;
+    var __hasOwnProp$O = Object.prototype.hasOwnProperty;
+    var __propIsEnum$O = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$O = (obj, key, value) => key in obj ? __defProp$O(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$O = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$N.call(b, prop))
-          __defNormalProp$N(a, prop, b[prop]);
-      if (__getOwnPropSymbols$N)
-        for (var prop of __getOwnPropSymbols$N(b)) {
-          if (__propIsEnum$N.call(b, prop))
-            __defNormalProp$N(a, prop, b[prop]);
+        if (__hasOwnProp$O.call(b, prop))
+          __defNormalProp$O(a, prop, b[prop]);
+      if (__getOwnPropSymbols$O)
+        for (var prop of __getOwnPropSymbols$O(b)) {
+          if (__propIsEnum$O.call(b, prop))
+            __defNormalProp$O(a, prop, b[prop]);
         }
       return a;
     };
@@ -24270,7 +25128,7 @@ ${parts.join("\n")}
         return new HTMLTextStyle({
           align: this.align,
           breakWords: this.breakWords,
-          dropShadow: this.dropShadow ? __spreadValues$N({}, this.dropShadow) : null,
+          dropShadow: this.dropShadow ? __spreadValues$O({}, this.dropShadow) : null,
           fill: this._fill,
           fontFamily: this.fontFamily,
           fontSize: this.fontSize,
@@ -24596,19 +25454,19 @@ ${parts.join("\n")}
     extensions.add(HTMLTextPipe);
 
     "use strict";
-    var __defProp$M = Object.defineProperty;
-    var __getOwnPropSymbols$M = Object.getOwnPropertySymbols;
-    var __hasOwnProp$M = Object.prototype.hasOwnProperty;
-    var __propIsEnum$M = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$M = (obj, key, value) => key in obj ? __defProp$M(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$M = (a, b) => {
+    var __defProp$N = Object.defineProperty;
+    var __getOwnPropSymbols$N = Object.getOwnPropertySymbols;
+    var __hasOwnProp$N = Object.prototype.hasOwnProperty;
+    var __propIsEnum$N = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$N = (obj, key, value) => key in obj ? __defProp$N(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$N = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$M.call(b, prop))
-          __defNormalProp$M(a, prop, b[prop]);
-      if (__getOwnPropSymbols$M)
-        for (var prop of __getOwnPropSymbols$M(b)) {
-          if (__propIsEnum$M.call(b, prop))
-            __defNormalProp$M(a, prop, b[prop]);
+        if (__hasOwnProp$N.call(b, prop))
+          __defNormalProp$N(a, prop, b[prop]);
+      if (__getOwnPropSymbols$N)
+        for (var prop of __getOwnPropSymbols$N(b)) {
+          if (__propIsEnum$N.call(b, prop))
+            __defNormalProp$N(a, prop, b[prop]);
         }
       return a;
     };
@@ -24624,9 +25482,16 @@ ${parts.join("\n")}
             indices: args[2]
           };
         }
-        options = __spreadValues$M(__spreadValues$M({}, _MeshGeometry.defaultOptions), options);
+        options = __spreadValues$N(__spreadValues$N({}, _MeshGeometry.defaultOptions), options);
         const positions = options.positions || new Float32Array([0, 0, 1, 0, 1, 1, 0, 1]);
-        const uvs = options.uvs || new Float32Array([0, 0, 1, 0, 1, 1, 0, 1]);
+        let uvs = options.uvs;
+        if (!uvs) {
+          if (options.positions) {
+            uvs = new Float32Array(positions.length);
+          } else {
+            uvs = new Float32Array([0, 0, 1, 0, 1, 1, 0, 1]);
+          }
+        }
         const indices = options.indices || new Uint32Array([0, 1, 2, 0, 2, 3]);
         const shrinkToFit = options.shrinkBuffersToFit;
         const positionBuffer = new Buffer({
@@ -24671,6 +25536,12 @@ ${parts.join("\n")}
       get positions() {
         return this.attributes.aPosition.buffer.data;
       }
+      /**
+       * Set the positions of the mesh.
+       * When setting the positions, its important that the uvs array is at least as long as the positions array.
+       * otherwise the geometry will not be valid.
+       * @param {Float32Array} value - The positions of the mesh.
+       */
       set positions(value) {
         this.attributes.aPosition.buffer.data = value;
       }
@@ -24678,6 +25549,12 @@ ${parts.join("\n")}
       get uvs() {
         return this.attributes.aUV.buffer.data;
       }
+      /**
+       * Set the UVs of the mesh.
+       * Its important that the uvs array you set is at least as long as the positions array.
+       * otherwise the geometry will not be valid.
+       * @param {Float32Array} value - The UVs of the mesh.
+       */
       set uvs(value) {
         this.attributes.aUV.buffer.data = value;
       }
@@ -24696,21 +25573,21 @@ ${parts.join("\n")}
     let MeshGeometry = _MeshGeometry;
 
     "use strict";
-    var __defProp$L = Object.defineProperty;
+    var __defProp$M = Object.defineProperty;
     var __defProps$l = Object.defineProperties;
     var __getOwnPropDescs$l = Object.getOwnPropertyDescriptors;
-    var __getOwnPropSymbols$L = Object.getOwnPropertySymbols;
-    var __hasOwnProp$L = Object.prototype.hasOwnProperty;
-    var __propIsEnum$L = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$L = (obj, key, value) => key in obj ? __defProp$L(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$L = (a, b) => {
+    var __getOwnPropSymbols$M = Object.getOwnPropertySymbols;
+    var __hasOwnProp$M = Object.prototype.hasOwnProperty;
+    var __propIsEnum$M = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$M = (obj, key, value) => key in obj ? __defProp$M(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$M = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$L.call(b, prop))
-          __defNormalProp$L(a, prop, b[prop]);
-      if (__getOwnPropSymbols$L)
-        for (var prop of __getOwnPropSymbols$L(b)) {
-          if (__propIsEnum$L.call(b, prop))
-            __defNormalProp$L(a, prop, b[prop]);
+        if (__hasOwnProp$M.call(b, prop))
+          __defNormalProp$M(a, prop, b[prop]);
+      if (__getOwnPropSymbols$M)
+        for (var prop of __getOwnPropSymbols$M(b)) {
+          if (__propIsEnum$M.call(b, prop))
+            __defNormalProp$M(a, prop, b[prop]);
         }
       return a;
     };
@@ -24749,8 +25626,8 @@ ${parts.join("\n")}
         )
       }
     };
-    const localUniformBitGroup2 = __spreadProps$l(__spreadValues$L({}, localUniformBit), {
-      vertex: __spreadProps$l(__spreadValues$L({}, localUniformBit.vertex), {
+    const localUniformBitGroup2 = __spreadProps$l(__spreadValues$M({}, localUniformBit), {
+      vertex: __spreadProps$l(__spreadValues$M({}, localUniformBit.vertex), {
         // replace the group!
         header: localUniformBit.vertex.header.replace("group(1)", "group(2)")
       })
@@ -25079,7 +25956,7 @@ ${parts.join("\n")}
             batchableMesh.geometry = geometry;
             batchableMesh.renderable = tilingSprite;
             batchableMesh.transform = tilingSprite.groupTransform;
-            batchableMesh.texture = tilingSprite._texture;
+            batchableMesh.setTexture(tilingSprite._texture);
           }
           batchableMesh.roundPixels = this._renderer._roundPixels | tilingSprite._roundPixels;
           batcher.addToBatch(batchableMesh, instructionSet);
@@ -25196,19 +26073,19 @@ ${parts.join("\n")}
     extensions.add(TilingSpritePipe);
 
     "use strict";
-    var __defProp$K = Object.defineProperty;
-    var __getOwnPropSymbols$K = Object.getOwnPropertySymbols;
-    var __hasOwnProp$K = Object.prototype.hasOwnProperty;
-    var __propIsEnum$K = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$K = (obj, key, value) => key in obj ? __defProp$K(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$K = (a, b) => {
+    var __defProp$L = Object.defineProperty;
+    var __getOwnPropSymbols$L = Object.getOwnPropertySymbols;
+    var __hasOwnProp$L = Object.prototype.hasOwnProperty;
+    var __propIsEnum$L = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$L = (obj, key, value) => key in obj ? __defProp$L(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$L = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$K.call(b, prop))
-          __defNormalProp$K(a, prop, b[prop]);
-      if (__getOwnPropSymbols$K)
-        for (var prop of __getOwnPropSymbols$K(b)) {
-          if (__propIsEnum$K.call(b, prop))
-            __defNormalProp$K(a, prop, b[prop]);
+        if (__hasOwnProp$L.call(b, prop))
+          __defNormalProp$L(a, prop, b[prop]);
+      if (__getOwnPropSymbols$L)
+        for (var prop of __getOwnPropSymbols$L(b)) {
+          if (__propIsEnum$L.call(b, prop))
+            __defNormalProp$L(a, prop, b[prop]);
         }
       return a;
     };
@@ -25234,7 +26111,7 @@ ${parts.join("\n")}
        */
       build(options) {
         var _a, _b, _c, _d;
-        options = __spreadValues$K(__spreadValues$K({}, _PlaneGeometry.defaultOptions), options);
+        options = __spreadValues$L(__spreadValues$L({}, _PlaneGeometry.defaultOptions), options);
         this.verticesX = (_a = this.verticesX) != null ? _a : options.verticesX;
         this.verticesY = (_b = this.verticesY) != null ? _b : options.verticesY;
         this.width = (_c = this.width) != null ? _c : options.width;
@@ -25287,25 +26164,25 @@ ${parts.join("\n")}
     let PlaneGeometry = _PlaneGeometry;
 
     "use strict";
-    var __defProp$J = Object.defineProperty;
-    var __getOwnPropSymbols$J = Object.getOwnPropertySymbols;
-    var __hasOwnProp$J = Object.prototype.hasOwnProperty;
-    var __propIsEnum$J = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$J = (obj, key, value) => key in obj ? __defProp$J(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$J = (a, b) => {
+    var __defProp$K = Object.defineProperty;
+    var __getOwnPropSymbols$K = Object.getOwnPropertySymbols;
+    var __hasOwnProp$K = Object.prototype.hasOwnProperty;
+    var __propIsEnum$K = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$K = (obj, key, value) => key in obj ? __defProp$K(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$K = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$J.call(b, prop))
-          __defNormalProp$J(a, prop, b[prop]);
-      if (__getOwnPropSymbols$J)
-        for (var prop of __getOwnPropSymbols$J(b)) {
-          if (__propIsEnum$J.call(b, prop))
-            __defNormalProp$J(a, prop, b[prop]);
+        if (__hasOwnProp$K.call(b, prop))
+          __defNormalProp$K(a, prop, b[prop]);
+      if (__getOwnPropSymbols$K)
+        for (var prop of __getOwnPropSymbols$K(b)) {
+          if (__propIsEnum$K.call(b, prop))
+            __defNormalProp$K(a, prop, b[prop]);
         }
       return a;
     };
     const _NineSliceGeometry = class _NineSliceGeometry extends PlaneGeometry {
       constructor(options = {}) {
-        options = __spreadValues$J(__spreadValues$J({}, _NineSliceGeometry.defaultOptions), options);
+        options = __spreadValues$K(__spreadValues$K({}, _NineSliceGeometry.defaultOptions), options);
         super({
           width: options.width,
           height: options.height,
@@ -25319,7 +26196,7 @@ ${parts.join("\n")}
        * @param options - The options of the NineSliceGeometry.
        */
       update(options) {
-        var _a, _b, _c, _d, _e, _f, _g, _h;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j;
         this.width = (_a = options.width) != null ? _a : this.width;
         this.height = (_b = options.height) != null ? _b : this.height;
         this._originalWidth = (_c = options.originalWidth) != null ? _c : this._originalWidth;
@@ -25328,23 +26205,39 @@ ${parts.join("\n")}
         this._rightWidth = (_f = options.rightWidth) != null ? _f : this._rightWidth;
         this._topHeight = (_g = options.topHeight) != null ? _g : this._topHeight;
         this._bottomHeight = (_h = options.bottomHeight) != null ? _h : this._bottomHeight;
+        this._anchorX = (_i = options.anchor) == null ? void 0 : _i.x;
+        this._anchorY = (_j = options.anchor) == null ? void 0 : _j.y;
         this.updateUvs();
         this.updatePositions();
       }
       /** Updates the positions of the vertices. */
       updatePositions() {
-        const positions = this.positions;
-        const w = this._leftWidth + this._rightWidth;
-        const scaleW = this.width > w ? 1 : this.width / w;
-        const h = this._topHeight + this._bottomHeight;
-        const scaleH = this.height > h ? 1 : this.height / h;
+        const p = this.positions;
+        const {
+          width,
+          height,
+          _leftWidth,
+          _rightWidth,
+          _topHeight,
+          _bottomHeight,
+          _anchorX,
+          _anchorY
+        } = this;
+        const w = _leftWidth + _rightWidth;
+        const scaleW = width > w ? 1 : width / w;
+        const h = _topHeight + _bottomHeight;
+        const scaleH = height > h ? 1 : height / h;
         const scale = Math.min(scaleW, scaleH);
-        positions[9] = positions[11] = positions[13] = positions[15] = this._topHeight * scale;
-        positions[17] = positions[19] = positions[21] = positions[23] = this.height - this._bottomHeight * scale;
-        positions[25] = positions[27] = positions[29] = positions[31] = this.height;
-        positions[2] = positions[10] = positions[18] = positions[26] = this._leftWidth * scale;
-        positions[4] = positions[12] = positions[20] = positions[28] = this.width - this._rightWidth * scale;
-        positions[6] = positions[14] = positions[22] = positions[30] = this.width;
+        const anchorOffsetX = _anchorX * width;
+        const anchorOffsetY = _anchorY * height;
+        p[0] = p[8] = p[16] = p[24] = -anchorOffsetX;
+        p[2] = p[10] = p[18] = p[26] = _leftWidth * scale - anchorOffsetX;
+        p[4] = p[12] = p[20] = p[28] = width - _rightWidth * scale - anchorOffsetX;
+        p[6] = p[14] = p[22] = p[30] = width - anchorOffsetX;
+        p[1] = p[3] = p[5] = p[7] = -anchorOffsetY;
+        p[9] = p[11] = p[13] = p[15] = _topHeight * scale - anchorOffsetY;
+        p[17] = p[19] = p[21] = p[23] = height - _bottomHeight * scale - anchorOffsetY;
+        p[25] = p[27] = p[29] = p[31] = height - anchorOffsetY;
         this.getBuffer("aPosition").update();
       }
       /** Updates the UVs of the vertices. */
@@ -25420,7 +26313,7 @@ ${parts.join("\n")}
       }
       _updateBatchableSprite(sprite, batchableSprite) {
         batchableSprite.geometry.update(sprite);
-        batchableSprite.texture = sprite._texture;
+        batchableSprite.setTexture(sprite._texture);
       }
       _getGpuSprite(sprite) {
         return this._gpuSpriteHash[sprite.uid] || this._initGPUSprite(sprite);
@@ -25506,69 +26399,6 @@ ${parts.join("\n")}
     };
 
     "use strict";
-    const tempMatrix$3 = new Matrix();
-    function getFastGlobalBounds(target, bounds) {
-      bounds.clear();
-      _getGlobalBoundsRecursive(target, bounds);
-      if (!bounds.isValid) {
-        bounds.set(0, 0, 0, 0);
-      }
-      const renderGroup = target.renderGroup || target.parentRenderGroup;
-      bounds.applyMatrix(renderGroup.worldTransform);
-      return bounds;
-    }
-    function _getGlobalBoundsRecursive(target, bounds) {
-      if (target.localDisplayStatus !== 7 || !target.measurable) {
-        return;
-      }
-      const manageEffects = !!target.effects.length;
-      let localBounds = bounds;
-      if (target.renderGroup || manageEffects) {
-        localBounds = boundsPool.get().clear();
-      }
-      if (target.boundsArea) {
-        bounds.addRect(target.boundsArea, target.worldTransform);
-      } else {
-        if (target.renderPipeId) {
-          const viewBounds = target.bounds;
-          localBounds.addFrame(
-            viewBounds.minX,
-            viewBounds.minY,
-            viewBounds.maxX,
-            viewBounds.maxY,
-            target.groupTransform
-          );
-        }
-        const children = target.children;
-        for (let i = 0; i < children.length; i++) {
-          _getGlobalBoundsRecursive(children[i], localBounds);
-        }
-      }
-      if (manageEffects) {
-        let advanced = false;
-        const renderGroup = target.renderGroup || target.parentRenderGroup;
-        for (let i = 0; i < target.effects.length; i++) {
-          if (target.effects[i].addBounds) {
-            if (!advanced) {
-              advanced = true;
-              localBounds.applyMatrix(renderGroup.worldTransform);
-            }
-            target.effects[i].addBounds(localBounds, true);
-          }
-        }
-        if (advanced) {
-          localBounds.applyMatrix(renderGroup.worldTransform.copyTo(tempMatrix$3).invert());
-          bounds.addBounds(localBounds, target.relativeGroupTransform);
-        }
-        bounds.addBounds(localBounds);
-        boundsPool.return(localBounds);
-      } else if (target.renderGroup) {
-        bounds.addBounds(localBounds, target.relativeGroupTransform);
-        boundsPool.return(localBounds);
-      }
-    }
-
-    "use strict";
     function getGlobalRenderableBounds(renderables, bounds) {
       bounds.clear();
       const tempMatrix = bounds.matrix;
@@ -25640,7 +26470,7 @@ ${parts.join("\n")}
           bounds.addRect(instruction.filterEffect.filterArea);
           bounds.applyMatrix(instruction.container.worldTransform);
         } else {
-          getFastGlobalBounds(instruction.container, bounds);
+          instruction.container.getFastGlobalBounds(true, bounds);
         }
         if (instruction.container) {
           const renderGroup = instruction.container.renderGroup || instruction.container.parentRenderGroup;
@@ -26083,19 +26913,19 @@ ${parts.join("\n")}
     }
 
     "use strict";
-    var __defProp$I = Object.defineProperty;
-    var __getOwnPropSymbols$I = Object.getOwnPropertySymbols;
-    var __hasOwnProp$I = Object.prototype.hasOwnProperty;
-    var __propIsEnum$I = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$I = (obj, key, value) => key in obj ? __defProp$I(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$I = (a, b) => {
+    var __defProp$J = Object.defineProperty;
+    var __getOwnPropSymbols$J = Object.getOwnPropertySymbols;
+    var __hasOwnProp$J = Object.prototype.hasOwnProperty;
+    var __propIsEnum$J = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$J = (obj, key, value) => key in obj ? __defProp$J(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$J = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$I.call(b, prop))
-          __defNormalProp$I(a, prop, b[prop]);
-      if (__getOwnPropSymbols$I)
-        for (var prop of __getOwnPropSymbols$I(b)) {
-          if (__propIsEnum$I.call(b, prop))
-            __defNormalProp$I(a, prop, b[prop]);
+        if (__hasOwnProp$J.call(b, prop))
+          __defNormalProp$J(a, prop, b[prop]);
+      if (__getOwnPropSymbols$J)
+        for (var prop of __getOwnPropSymbols$J(b)) {
+          if (__propIsEnum$J.call(b, prop))
+            __defNormalProp$J(a, prop, b[prop]);
         }
       return a;
     };
@@ -26104,7 +26934,7 @@ ${parts.join("\n")}
       "destroy",
       "contextChange",
       "resolutionChange",
-      "reset",
+      "resetState",
       "renderEnd",
       "renderStart",
       "render",
@@ -26144,9 +26974,9 @@ ${parts.join("\n")}
         for (const systemName in this._systemsHash) {
           const system = this._systemsHash[systemName];
           const defaultSystemOptions = system.constructor.defaultOptions;
-          options = __spreadValues$I(__spreadValues$I({}, defaultSystemOptions), options);
+          options = __spreadValues$J(__spreadValues$J({}, defaultSystemOptions), options);
         }
-        options = __spreadValues$I(__spreadValues$I({}, _AbstractRenderer.defaultOptions), options);
+        options = __spreadValues$J(__spreadValues$J({}, _AbstractRenderer.defaultOptions), options);
         this._roundPixels = options.roundPixels ? 1 : 0;
         for (let i = 0; i < this.runners.init.items.length; i++) {
           await this.runners.init.items[i].init(options);
@@ -26154,6 +26984,7 @@ ${parts.join("\n")}
         this._initOptions = options;
       }
       render(args, deprecated) {
+        var _a, _b;
         let options = args;
         if (options instanceof Container) {
           options = { container: options };
@@ -26165,7 +26996,8 @@ ${parts.join("\n")}
         options.target || (options.target = this.view.renderTarget);
         if (options.target === this.view.renderTarget) {
           this._lastObjectRendered = options.container;
-          options.clearColor = this.background.colorRgba;
+          (_a = options.clearColor) != null ? _a : options.clearColor = this.background.colorRgba;
+          (_b = options.clear) != null ? _b : options.clear = this.background.clearBeforeRender;
         }
         if (options.clearColor) {
           const isRGBAArray = Array.isArray(options.clearColor) && options.clearColor.length === 4;
@@ -26349,6 +27181,30 @@ ${parts.join("\n")}
           throw new Error("Current environment does not allow unsafe-eval, please use pixi.js/unsafe-eval module to enable support.");
         }
       }
+      /**
+       * Resets the rendering state of the renderer.
+       * This is useful when you want to use the WebGL context directly and need to ensure PixiJS's internal state
+       * stays synchronized. When modifying the WebGL context state externally, calling this method before the next Pixi
+       * render will reset all internal caches and ensure it executes correctly.
+       *
+       * This is particularly useful when combining PixiJS with other rendering engines like Three.js:
+       * ```js
+       * // Reset Three.js state
+       * threeRenderer.resetState();
+       *
+       * // Render a Three.js scene
+       * threeRenderer.render(threeScene, threeCamera);
+       *
+       * // Reset PixiJS state since Three.js modified the WebGL context
+       * pixiRenderer.resetState();
+       *
+       * // Now render Pixi content
+       * pixiRenderer.render(pixiScene);
+       * ```
+       */
+      resetState() {
+        this.runners.resetState.emit();
+      }
     };
     /** The default options for the renderer. */
     _AbstractRenderer.defaultOptions = {
@@ -26443,19 +27299,19 @@ ${parts.join("\n")}
     }
 
     "use strict";
-    var __defProp$H = Object.defineProperty;
-    var __getOwnPropSymbols$H = Object.getOwnPropertySymbols;
-    var __hasOwnProp$H = Object.prototype.hasOwnProperty;
-    var __propIsEnum$H = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$H = (obj, key, value) => key in obj ? __defProp$H(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$H = (a, b) => {
+    var __defProp$I = Object.defineProperty;
+    var __getOwnPropSymbols$I = Object.getOwnPropertySymbols;
+    var __hasOwnProp$I = Object.prototype.hasOwnProperty;
+    var __propIsEnum$I = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$I = (obj, key, value) => key in obj ? __defProp$I(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$I = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$H.call(b, prop))
-          __defNormalProp$H(a, prop, b[prop]);
-      if (__getOwnPropSymbols$H)
-        for (var prop of __getOwnPropSymbols$H(b)) {
-          if (__propIsEnum$H.call(b, prop))
-            __defNormalProp$H(a, prop, b[prop]);
+        if (__hasOwnProp$I.call(b, prop))
+          __defNormalProp$I(a, prop, b[prop]);
+      if (__getOwnPropSymbols$I)
+        for (var prop of __getOwnPropSymbols$I(b)) {
+          if (__propIsEnum$I.call(b, prop))
+            __defNormalProp$I(a, prop, b[prop]);
         }
       return a;
     };
@@ -26480,17 +27336,17 @@ ${parts.join("\n")}
         if (rendererType === "webgpu" && await isWebGPUSupported()) {
           const { WebGPURenderer } = await Promise.resolve().then(function () { return WebGPURenderer$1; });
           RendererClass = WebGPURenderer;
-          finalOptions = __spreadValues$H(__spreadValues$H({}, options), options.webgpu);
+          finalOptions = __spreadValues$I(__spreadValues$I({}, options), options.webgpu);
           break;
         } else if (rendererType === "webgl" && isWebGLSupported(
           (_a = options.failIfMajorPerformanceCaveat) != null ? _a : AbstractRenderer.defaultOptions.failIfMajorPerformanceCaveat
         )) {
           const { WebGLRenderer } = await Promise.resolve().then(function () { return WebGLRenderer$1; });
           RendererClass = WebGLRenderer;
-          finalOptions = __spreadValues$H(__spreadValues$H({}, options), options.webgl);
+          finalOptions = __spreadValues$I(__spreadValues$I({}, options), options.webgl);
           break;
         } else if (rendererType === "canvas") {
-          finalOptions = __spreadValues$H({}, options);
+          finalOptions = __spreadValues$I({}, options);
           throw new Error("CanvasRenderer is not yet implemented");
         }
       }
@@ -26506,7 +27362,7 @@ ${parts.join("\n")}
 
     "use strict";
     const DATA_URI = /^\s*data:(?:([\w-]+)\/([\w+.-]+))?(?:;charset=([\w-]+))?(?:;(base64))?,(.*)/i;
-    const VERSION = "8.6.6";
+    const VERSION = "8.8.0";
 
     "use strict";
     class ApplicationInitHook {
@@ -26542,19 +27398,19 @@ ${parts.join("\n")}
     };
 
     "use strict";
-    var __defProp$G = Object.defineProperty;
-    var __getOwnPropSymbols$G = Object.getOwnPropertySymbols;
-    var __hasOwnProp$G = Object.prototype.hasOwnProperty;
-    var __propIsEnum$G = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$G = (obj, key, value) => key in obj ? __defProp$G(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$G = (a, b) => {
+    var __defProp$H = Object.defineProperty;
+    var __getOwnPropSymbols$H = Object.getOwnPropertySymbols;
+    var __hasOwnProp$H = Object.prototype.hasOwnProperty;
+    var __propIsEnum$H = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$H = (obj, key, value) => key in obj ? __defProp$H(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$H = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$G.call(b, prop))
-          __defNormalProp$G(a, prop, b[prop]);
-      if (__getOwnPropSymbols$G)
-        for (var prop of __getOwnPropSymbols$G(b)) {
-          if (__propIsEnum$G.call(b, prop))
-            __defNormalProp$G(a, prop, b[prop]);
+        if (__hasOwnProp$H.call(b, prop))
+          __defNormalProp$H(a, prop, b[prop]);
+      if (__getOwnPropSymbols$H)
+        for (var prop of __getOwnPropSymbols$H(b)) {
+          if (__propIsEnum$H.call(b, prop))
+            __defNormalProp$H(a, prop, b[prop]);
         }
       return a;
     };
@@ -26571,7 +27427,7 @@ ${parts.join("\n")}
        * @param options - The optional application and renderer parameters.
        */
       async init(options) {
-        options = __spreadValues$G({}, options);
+        options = __spreadValues$H({}, options);
         this.renderer = await autoDetectRenderer(options);
         _Application._plugins.forEach((plugin) => {
           plugin.init.call(this, options);
@@ -27176,21 +28032,21 @@ ${parts.join("\n")}
     };
 
     "use strict";
-    var __defProp$F = Object.defineProperty;
+    var __defProp$G = Object.defineProperty;
     var __defProps$k = Object.defineProperties;
     var __getOwnPropDescs$k = Object.getOwnPropertyDescriptors;
-    var __getOwnPropSymbols$F = Object.getOwnPropertySymbols;
-    var __hasOwnProp$F = Object.prototype.hasOwnProperty;
-    var __propIsEnum$F = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$F = (obj, key, value) => key in obj ? __defProp$F(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$F = (a, b) => {
+    var __getOwnPropSymbols$G = Object.getOwnPropertySymbols;
+    var __hasOwnProp$G = Object.prototype.hasOwnProperty;
+    var __propIsEnum$G = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$G = (obj, key, value) => key in obj ? __defProp$G(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$G = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$F.call(b, prop))
-          __defNormalProp$F(a, prop, b[prop]);
-      if (__getOwnPropSymbols$F)
-        for (var prop of __getOwnPropSymbols$F(b)) {
-          if (__propIsEnum$F.call(b, prop))
-            __defNormalProp$F(a, prop, b[prop]);
+        if (__hasOwnProp$G.call(b, prop))
+          __defNormalProp$G(a, prop, b[prop]);
+      if (__getOwnPropSymbols$G)
+        for (var prop of __getOwnPropSymbols$G(b)) {
+          if (__propIsEnum$G.call(b, prop))
+            __defNormalProp$G(a, prop, b[prop]);
         }
       return a;
     };
@@ -27339,7 +28195,7 @@ ${e}`);
           } else if (hash[parser.name]) {
             warn(`[Assets] loadParser name conflict "${parser.name}"`);
           }
-          return __spreadProps$k(__spreadValues$F({}, hash), { [parser.name]: parser });
+          return __spreadProps$k(__spreadValues$G({}, hash), { [parser.name]: parser });
         }, {});
       }
     }
@@ -27406,21 +28262,21 @@ ${e}`);
     };
 
     "use strict";
-    var __defProp$E = Object.defineProperty;
+    var __defProp$F = Object.defineProperty;
     var __defProps$j = Object.defineProperties;
     var __getOwnPropDescs$j = Object.getOwnPropertyDescriptors;
-    var __getOwnPropSymbols$E = Object.getOwnPropertySymbols;
-    var __hasOwnProp$E = Object.prototype.hasOwnProperty;
-    var __propIsEnum$E = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$E = (obj, key, value) => key in obj ? __defProp$E(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$E = (a, b) => {
+    var __getOwnPropSymbols$F = Object.getOwnPropertySymbols;
+    var __hasOwnProp$F = Object.prototype.hasOwnProperty;
+    var __propIsEnum$F = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$F = (obj, key, value) => key in obj ? __defProp$F(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$F = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$E.call(b, prop))
-          __defNormalProp$E(a, prop, b[prop]);
-      if (__getOwnPropSymbols$E)
-        for (var prop of __getOwnPropSymbols$E(b)) {
-          if (__propIsEnum$E.call(b, prop))
-            __defNormalProp$E(a, prop, b[prop]);
+        if (__hasOwnProp$F.call(b, prop))
+          __defNormalProp$F(a, prop, b[prop]);
+      if (__getOwnPropSymbols$F)
+        for (var prop of __getOwnPropSymbols$F(b)) {
+          if (__propIsEnum$F.call(b, prop))
+            __defNormalProp$F(a, prop, b[prop]);
         }
       return a;
     };
@@ -27490,7 +28346,7 @@ ${e}`);
           const data = (_f = options.data) != null ? _f : {};
           for (let i = 0; i < weights.length; i++) {
             const weight = weights[i];
-            const font = new FontFace(name, `url(${encodeURIWhenNeeded(url)})`, __spreadProps$j(__spreadValues$E({}, data), {
+            const font = new FontFace(name, `url(${encodeURIWhenNeeded(url)})`, __spreadProps$j(__spreadValues$F({}, data), {
               weight
             }));
             await font.load();
@@ -27554,30 +28410,30 @@ ${e}`);
     }
 
     "use strict";
-    var __defProp$D = Object.defineProperty;
-    var __getOwnPropSymbols$D = Object.getOwnPropertySymbols;
-    var __hasOwnProp$D = Object.prototype.hasOwnProperty;
-    var __propIsEnum$D = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$D = (obj, key, value) => key in obj ? __defProp$D(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$D = (a, b) => {
+    var __defProp$E = Object.defineProperty;
+    var __getOwnPropSymbols$E = Object.getOwnPropertySymbols;
+    var __hasOwnProp$E = Object.prototype.hasOwnProperty;
+    var __propIsEnum$E = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$E = (obj, key, value) => key in obj ? __defProp$E(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$E = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$D.call(b, prop))
-          __defNormalProp$D(a, prop, b[prop]);
-      if (__getOwnPropSymbols$D)
-        for (var prop of __getOwnPropSymbols$D(b)) {
-          if (__propIsEnum$D.call(b, prop))
-            __defNormalProp$D(a, prop, b[prop]);
+        if (__hasOwnProp$E.call(b, prop))
+          __defNormalProp$E(a, prop, b[prop]);
+      if (__getOwnPropSymbols$E)
+        for (var prop of __getOwnPropSymbols$E(b)) {
+          if (__propIsEnum$E.call(b, prop))
+            __defNormalProp$E(a, prop, b[prop]);
         }
       return a;
     };
     var __objRest$h = (source, exclude) => {
       var target = {};
       for (var prop in source)
-        if (__hasOwnProp$D.call(source, prop) && exclude.indexOf(prop) < 0)
+        if (__hasOwnProp$E.call(source, prop) && exclude.indexOf(prop) < 0)
           target[prop] = source[prop];
-      if (source != null && __getOwnPropSymbols$D)
-        for (var prop of __getOwnPropSymbols$D(source)) {
-          if (exclude.indexOf(prop) < 0 && __propIsEnum$D.call(source, prop))
+      if (source != null && __getOwnPropSymbols$E)
+        for (var prop of __getOwnPropSymbols$E(source)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum$E.call(source, prop))
             target[prop] = source[prop];
         }
       return target;
@@ -27599,8 +28455,8 @@ ${e}`);
         return checkDataUrl(url, validSVGMIME) || checkExtension(url, validSVGExtension);
       },
       async load(url, asset, loader) {
-        var _a;
-        if ((_a = asset.data.parseAsGraphicsContext) != null ? _a : this.config.parseAsGraphicsContext) {
+        var _a, _b;
+        if ((_b = (_a = asset.data) == null ? void 0 : _a.parseAsGraphicsContext) != null ? _b : this.config.parseAsGraphicsContext) {
           return loadAsGraphics(url);
         }
         return loadAsTexture(url, asset, loader, this.config.crossOrigin);
@@ -27610,7 +28466,7 @@ ${e}`);
       }
     };
     async function loadAsTexture(url, asset, loader, crossOrigin) {
-      var _a, _b, _c, _d, _e;
+      var _a, _b, _c, _d, _e, _f;
       const response = await DOMAdapter.get().fetch(url);
       const blob = await response.blob();
       const blobUrl = URL.createObjectURL(blob);
@@ -27627,8 +28483,8 @@ ${e}`);
       canvas.width = width * resolution;
       canvas.height = height * resolution;
       context.drawImage(image, 0, 0, width * resolution, height * resolution);
-      const _f = asset.data, { parseAsGraphicsContext: _p } = _f, rest = __objRest$h(_f, ["parseAsGraphicsContext"]);
-      const base = new ImageSource(__spreadValues$D({
+      const _g = (_f = asset.data) != null ? _f : {}, { parseAsGraphicsContext: _p } = _g, rest = __objRest$h(_g, ["parseAsGraphicsContext"]);
+      const base = new ImageSource(__spreadValues$E({
         resource: canvas,
         alphaMode: "premultiply-alpha-on-upload",
         resolution
@@ -27775,19 +28631,19 @@ ${e}`);
     const WorkerManager = new WorkerManagerClass();
 
     "use strict";
-    var __defProp$C = Object.defineProperty;
-    var __getOwnPropSymbols$C = Object.getOwnPropertySymbols;
-    var __hasOwnProp$C = Object.prototype.hasOwnProperty;
-    var __propIsEnum$C = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$C = (obj, key, value) => key in obj ? __defProp$C(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$C = (a, b) => {
+    var __defProp$D = Object.defineProperty;
+    var __getOwnPropSymbols$D = Object.getOwnPropertySymbols;
+    var __hasOwnProp$D = Object.prototype.hasOwnProperty;
+    var __propIsEnum$D = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$D = (obj, key, value) => key in obj ? __defProp$D(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$D = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$C.call(b, prop))
-          __defNormalProp$C(a, prop, b[prop]);
-      if (__getOwnPropSymbols$C)
-        for (var prop of __getOwnPropSymbols$C(b)) {
-          if (__propIsEnum$C.call(b, prop))
-            __defNormalProp$C(a, prop, b[prop]);
+        if (__hasOwnProp$D.call(b, prop))
+          __defNormalProp$D(a, prop, b[prop]);
+      if (__getOwnPropSymbols$D)
+        for (var prop of __getOwnPropSymbols$D(b)) {
+          if (__propIsEnum$D.call(b, prop))
+            __defNormalProp$D(a, prop, b[prop]);
         }
       return a;
     };
@@ -27832,7 +28688,7 @@ ${e}`);
             src = await loadImageBitmap(url, asset);
           }
         } else {
-          src = await new Promise((resolve) => {
+          src = await new Promise((resolve, reject) => {
             src = new Image();
             src.crossOrigin = this.config.crossOrigin;
             src.src = url;
@@ -27842,10 +28698,11 @@ ${e}`);
               src.onload = () => {
                 resolve(src);
               };
+              src.onerror = reject;
             }
           });
         }
-        const base = new ImageSource(__spreadValues$C({
+        const base = new ImageSource(__spreadValues$D({
           resource: src,
           alphaMode: "premultiply-alpha-on-upload",
           resolution: ((_a = asset.data) == null ? void 0 : _a.resolution) || getResolutionOfUrl(url)
@@ -27858,21 +28715,21 @@ ${e}`);
     };
 
     "use strict";
-    var __defProp$B = Object.defineProperty;
+    var __defProp$C = Object.defineProperty;
     var __defProps$i = Object.defineProperties;
     var __getOwnPropDescs$i = Object.getOwnPropertyDescriptors;
-    var __getOwnPropSymbols$B = Object.getOwnPropertySymbols;
-    var __hasOwnProp$B = Object.prototype.hasOwnProperty;
-    var __propIsEnum$B = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$B = (obj, key, value) => key in obj ? __defProp$B(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$B = (a, b) => {
+    var __getOwnPropSymbols$C = Object.getOwnPropertySymbols;
+    var __hasOwnProp$C = Object.prototype.hasOwnProperty;
+    var __propIsEnum$C = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$C = (obj, key, value) => key in obj ? __defProp$C(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$C = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$B.call(b, prop))
-          __defNormalProp$B(a, prop, b[prop]);
-      if (__getOwnPropSymbols$B)
-        for (var prop of __getOwnPropSymbols$B(b)) {
-          if (__propIsEnum$B.call(b, prop))
-            __defNormalProp$B(a, prop, b[prop]);
+        if (__hasOwnProp$C.call(b, prop))
+          __defNormalProp$C(a, prop, b[prop]);
+      if (__getOwnPropSymbols$C)
+        for (var prop of __getOwnPropSymbols$C(b)) {
+          if (__propIsEnum$C.call(b, prop))
+            __defNormalProp$C(a, prop, b[prop]);
         }
       return a;
     };
@@ -27929,7 +28786,7 @@ ${e}`);
       },
       async load(url, asset, loader) {
         var _a, _b;
-        const options = __spreadValues$B(__spreadProps$i(__spreadValues$B({}, VideoSource.defaultOptions), {
+        const options = __spreadValues$C(__spreadProps$i(__spreadValues$C({}, VideoSource.defaultOptions), {
           resolution: ((_a = asset.data) == null ? void 0 : _a.resolution) || getResolutionOfUrl(url),
           alphaMode: ((_b = asset.data) == null ? void 0 : _b.alphaMode) || await detectVideoAlphaMode()
         }), asset.data);
@@ -27965,7 +28822,7 @@ ${e}`);
         }
         return new Promise((resolve) => {
           const onCanPlay = async () => {
-            const base = new VideoSource(__spreadProps$i(__spreadValues$B({}, options), { resource: videoElement }));
+            const base = new VideoSource(__spreadProps$i(__spreadValues$C({}, options), { resource: videoElement }));
             videoElement.removeEventListener("canplay", onCanPlay);
             if (asset.data.preload) {
               await preloadVideo(videoElement);
@@ -29288,7 +30145,9 @@ ${e}`);
       let mipHeight = height;
       let offset = dataOffset;
       for (let level = 0; level < mipmapCount; ++level) {
-        const byteLength = blockBytes ? Math.max(4, mipWidth) / 4 * Math.max(4, mipHeight) / 4 * blockBytes : mipWidth * mipHeight * 4;
+        const alignedWidth = Math.ceil(Math.max(4, mipWidth) / 4) * 4;
+        const alignedHeight = Math.ceil(Math.max(4, mipHeight) / 4) * 4;
+        const byteLength = blockBytes ? alignedWidth / 4 * alignedHeight / 4 * blockBytes : mipWidth * mipHeight * 4;
         const levelBuffer = new Uint8Array(arrayBuffer, offset, byteLength);
         levelBuffers.push(levelBuffer);
         offset += byteLength;
@@ -30267,30 +31126,30 @@ ${e}`);
     "use strict";
 
     "use strict";
-    var __defProp$A = Object.defineProperty;
-    var __getOwnPropSymbols$A = Object.getOwnPropertySymbols;
-    var __hasOwnProp$A = Object.prototype.hasOwnProperty;
-    var __propIsEnum$A = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$A = (obj, key, value) => key in obj ? __defProp$A(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$A = (a, b) => {
+    var __defProp$B = Object.defineProperty;
+    var __getOwnPropSymbols$B = Object.getOwnPropertySymbols;
+    var __hasOwnProp$B = Object.prototype.hasOwnProperty;
+    var __propIsEnum$B = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$B = (obj, key, value) => key in obj ? __defProp$B(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$B = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$A.call(b, prop))
-          __defNormalProp$A(a, prop, b[prop]);
-      if (__getOwnPropSymbols$A)
-        for (var prop of __getOwnPropSymbols$A(b)) {
-          if (__propIsEnum$A.call(b, prop))
-            __defNormalProp$A(a, prop, b[prop]);
+        if (__hasOwnProp$B.call(b, prop))
+          __defNormalProp$B(a, prop, b[prop]);
+      if (__getOwnPropSymbols$B)
+        for (var prop of __getOwnPropSymbols$B(b)) {
+          if (__propIsEnum$B.call(b, prop))
+            __defNormalProp$B(a, prop, b[prop]);
         }
       return a;
     };
     var __objRest$g = (source, exclude) => {
       var target = {};
       for (var prop in source)
-        if (__hasOwnProp$A.call(source, prop) && exclude.indexOf(prop) < 0)
+        if (__hasOwnProp$B.call(source, prop) && exclude.indexOf(prop) < 0)
           target[prop] = source[prop];
-      if (source != null && __getOwnPropSymbols$A)
-        for (var prop of __getOwnPropSymbols$A(source)) {
-          if (exclude.indexOf(prop) < 0 && __propIsEnum$A.call(source, prop))
+      if (source != null && __getOwnPropSymbols$B)
+        for (var prop of __getOwnPropSymbols$B(source)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum$B.call(source, prop))
             target[prop] = source[prop];
         }
       return target;
@@ -30300,7 +31159,7 @@ ${e}`);
        * @param options - The optional parameters of this filter.
        */
       constructor(options) {
-        options = __spreadValues$A(__spreadValues$A({}, _Filter.defaultOptions), options);
+        options = __spreadValues$B(__spreadValues$B({}, _Filter.defaultOptions), options);
         super(options);
         /** If enabled is true the filter is applied, if false it will not. */
         this.enabled = true;
@@ -30358,7 +31217,7 @@ ${e}`);
         if (gl) {
           glProgram = GlProgram.from(gl);
         }
-        return new _Filter(__spreadValues$A({
+        return new _Filter(__spreadValues$B({
           gpuProgram,
           glProgram
         }, rest));
@@ -30385,26 +31244,26 @@ ${e}`);
     var blendTemplate = "\nstruct GlobalFilterUniforms {\n  uInputSize:vec4<f32>,\n  uInputPixel:vec4<f32>,\n  uInputClamp:vec4<f32>,\n  uOutputFrame:vec4<f32>,\n  uGlobalFrame:vec4<f32>,\n  uOutputTexture:vec4<f32>,\n};\n\nstruct BlendUniforms {\n  uBlend:f32,\n};\n\n@group(0) @binding(0) var<uniform> gfu: GlobalFilterUniforms;\n@group(0) @binding(1) var uTexture: texture_2d<f32>;\n@group(0) @binding(2) var uSampler : sampler;\n@group(0) @binding(3) var uBackTexture: texture_2d<f32>;\n\n@group(1) @binding(0) var<uniform> blendUniforms : BlendUniforms;\n\n\nstruct VSOutput {\n    @builtin(position) position: vec4<f32>,\n    @location(0) uv : vec2<f32>\n  };\n\nfn filterVertexPosition(aPosition:vec2<f32>) -> vec4<f32>\n{\n    var position = aPosition * gfu.uOutputFrame.zw + gfu.uOutputFrame.xy;\n\n    position.x = position.x * (2.0 / gfu.uOutputTexture.x) - 1.0;\n    position.y = position.y * (2.0*gfu.uOutputTexture.z / gfu.uOutputTexture.y) - gfu.uOutputTexture.z;\n\n    return vec4(position, 0.0, 1.0);\n}\n\nfn filterTextureCoord( aPosition:vec2<f32> ) -> vec2<f32>\n{\n    return aPosition * (gfu.uOutputFrame.zw * gfu.uInputSize.zw);\n}\n\nfn globalTextureCoord( aPosition:vec2<f32> ) -> vec2<f32>\n{\n  return  (aPosition.xy / gfu.uGlobalFrame.zw) + (gfu.uGlobalFrame.xy / gfu.uGlobalFrame.zw);  \n}\n  \n@vertex\nfn mainVertex(\n  @location(0) aPosition : vec2<f32>, \n) -> VSOutput {\n  return VSOutput(\n   filterVertexPosition(aPosition),\n   filterTextureCoord(aPosition)\n  );\n}\n\n{FUNCTIONS}\n\n@fragment\nfn mainFragment(\n  @location(0) uv: vec2<f32>\n) -> @location(0) vec4<f32> {\n\n\n   var back =  textureSample(uBackTexture, uSampler, uv);\n   var front = textureSample(uTexture, uSampler, uv);\n   var blendedAlpha = front.a + back.a * (1.0 - front.a);\n   \n   var out = vec4<f32>(0.0,0.0,0.0,0.0);\n\n   {MAIN}\n\n   return out;\n}";
 
     "use strict";
-    var __defProp$z = Object.defineProperty;
-    var __getOwnPropSymbols$z = Object.getOwnPropertySymbols;
-    var __hasOwnProp$z = Object.prototype.hasOwnProperty;
-    var __propIsEnum$z = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$z = (obj, key, value) => key in obj ? __defProp$z(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$z = (a, b) => {
+    var __defProp$A = Object.defineProperty;
+    var __getOwnPropSymbols$A = Object.getOwnPropertySymbols;
+    var __hasOwnProp$A = Object.prototype.hasOwnProperty;
+    var __propIsEnum$A = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$A = (obj, key, value) => key in obj ? __defProp$A(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$A = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$z.call(b, prop))
-          __defNormalProp$z(a, prop, b[prop]);
-      if (__getOwnPropSymbols$z)
-        for (var prop of __getOwnPropSymbols$z(b)) {
-          if (__propIsEnum$z.call(b, prop))
-            __defNormalProp$z(a, prop, b[prop]);
+        if (__hasOwnProp$A.call(b, prop))
+          __defNormalProp$A(a, prop, b[prop]);
+      if (__getOwnPropSymbols$A)
+        for (var prop of __getOwnPropSymbols$A(b)) {
+          if (__propIsEnum$A.call(b, prop))
+            __defNormalProp$A(a, prop, b[prop]);
         }
       return a;
     };
     class BlendModeFilter extends Filter {
       constructor(options) {
         const gpuOptions = options.gpu;
-        const gpuSource = compileBlendModeShader(__spreadValues$z({ source: blendTemplate }, gpuOptions));
+        const gpuSource = compileBlendModeShader(__spreadValues$A({ source: blendTemplate }, gpuOptions));
         const gpuProgram = GpuProgram.from({
           vertex: {
             source: gpuSource,
@@ -30416,7 +31275,7 @@ ${e}`);
           }
         });
         const glOptions = options.gl;
-        const glSource = compileBlendModeShader(__spreadValues$z({ source: blendTemplateFrag }, glOptions));
+        const glSource = compileBlendModeShader(__spreadValues$A({ source: blendTemplateFrag }, glOptions));
         const glProgram = GlProgram.from({
           vertex: blendTemplateVert,
           fragment: glSource
@@ -30632,21 +31491,21 @@ ${e}`);
     var source$5 = "struct GlobalFilterUniforms {\n  uInputSize:vec4<f32>,\n  uInputPixel:vec4<f32>,\n  uInputClamp:vec4<f32>,\n  uOutputFrame:vec4<f32>,\n  uGlobalFrame:vec4<f32>,\n  uOutputTexture:vec4<f32>,\n};\n\nstruct AlphaUniforms {\n  uAlpha:f32,\n};\n\n@group(0) @binding(0) var<uniform> gfu: GlobalFilterUniforms;\n@group(0) @binding(1) var uTexture: texture_2d<f32>;\n@group(0) @binding(2) var uSampler : sampler;\n\n@group(1) @binding(0) var<uniform> alphaUniforms : AlphaUniforms;\n\nstruct VSOutput {\n    @builtin(position) position: vec4<f32>,\n    @location(0) uv : vec2<f32>\n  };\n\nfn filterVertexPosition(aPosition:vec2<f32>) -> vec4<f32>\n{\n    var position = aPosition * gfu.uOutputFrame.zw + gfu.uOutputFrame.xy;\n\n    position.x = position.x * (2.0 / gfu.uOutputTexture.x) - 1.0;\n    position.y = position.y * (2.0*gfu.uOutputTexture.z / gfu.uOutputTexture.y) - gfu.uOutputTexture.z;\n\n    return vec4(position, 0.0, 1.0);\n}\n\nfn filterTextureCoord( aPosition:vec2<f32> ) -> vec2<f32>\n{\n    return aPosition * (gfu.uOutputFrame.zw * gfu.uInputSize.zw);\n}\n\nfn globalTextureCoord( aPosition:vec2<f32> ) -> vec2<f32>\n{\n  return  (aPosition.xy / gfu.uGlobalFrame.zw) + (gfu.uGlobalFrame.xy / gfu.uGlobalFrame.zw);  \n}\n\nfn getSize() -> vec2<f32>\n{\n  return gfu.uGlobalFrame.zw;\n}\n  \n@vertex\nfn mainVertex(\n  @location(0) aPosition : vec2<f32>, \n) -> VSOutput {\n  return VSOutput(\n   filterVertexPosition(aPosition),\n   filterTextureCoord(aPosition)\n  );\n}\n\n@fragment\nfn mainFragment(\n  @location(0) uv: vec2<f32>,\n  @builtin(position) position: vec4<f32>\n) -> @location(0) vec4<f32> {\n \n    var sample = textureSample(uTexture, uSampler, uv);\n    \n    return sample * alphaUniforms.uAlpha;\n}";
 
     "use strict";
-    var __defProp$y = Object.defineProperty;
+    var __defProp$z = Object.defineProperty;
     var __defProps$h = Object.defineProperties;
     var __getOwnPropDescs$h = Object.getOwnPropertyDescriptors;
-    var __getOwnPropSymbols$y = Object.getOwnPropertySymbols;
-    var __hasOwnProp$y = Object.prototype.hasOwnProperty;
-    var __propIsEnum$y = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$y = (obj, key, value) => key in obj ? __defProp$y(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$y = (a, b) => {
+    var __getOwnPropSymbols$z = Object.getOwnPropertySymbols;
+    var __hasOwnProp$z = Object.prototype.hasOwnProperty;
+    var __propIsEnum$z = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$z = (obj, key, value) => key in obj ? __defProp$z(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$z = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$y.call(b, prop))
-          __defNormalProp$y(a, prop, b[prop]);
-      if (__getOwnPropSymbols$y)
-        for (var prop of __getOwnPropSymbols$y(b)) {
-          if (__propIsEnum$y.call(b, prop))
-            __defNormalProp$y(a, prop, b[prop]);
+        if (__hasOwnProp$z.call(b, prop))
+          __defNormalProp$z(a, prop, b[prop]);
+      if (__getOwnPropSymbols$z)
+        for (var prop of __getOwnPropSymbols$z(b)) {
+          if (__propIsEnum$z.call(b, prop))
+            __defNormalProp$z(a, prop, b[prop]);
         }
       return a;
     };
@@ -30654,18 +31513,18 @@ ${e}`);
     var __objRest$f = (source2, exclude) => {
       var target = {};
       for (var prop in source2)
-        if (__hasOwnProp$y.call(source2, prop) && exclude.indexOf(prop) < 0)
+        if (__hasOwnProp$z.call(source2, prop) && exclude.indexOf(prop) < 0)
           target[prop] = source2[prop];
-      if (source2 != null && __getOwnPropSymbols$y)
-        for (var prop of __getOwnPropSymbols$y(source2)) {
-          if (exclude.indexOf(prop) < 0 && __propIsEnum$y.call(source2, prop))
+      if (source2 != null && __getOwnPropSymbols$z)
+        for (var prop of __getOwnPropSymbols$z(source2)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum$z.call(source2, prop))
             target[prop] = source2[prop];
         }
       return target;
     };
     const _AlphaFilter = class _AlphaFilter extends Filter {
       constructor(options) {
-        options = __spreadValues$y(__spreadValues$y({}, _AlphaFilter.defaultOptions), options);
+        options = __spreadValues$z(__spreadValues$z({}, _AlphaFilter.defaultOptions), options);
         const gpuProgram = GpuProgram.from({
           vertex: {
             source: source$5,
@@ -30685,7 +31544,7 @@ ${e}`);
         const alphaUniforms = new UniformGroup({
           uAlpha: { value: alpha, type: "f32" }
         });
-        super(__spreadProps$h(__spreadValues$y({}, rest), {
+        super(__spreadProps$h(__spreadValues$z({}, rest), {
           gpuProgram,
           glProgram,
           resources: {
@@ -30860,19 +31719,19 @@ ${e}`);
     }
 
     "use strict";
-    var __defProp$x = Object.defineProperty;
-    var __getOwnPropSymbols$x = Object.getOwnPropertySymbols;
-    var __hasOwnProp$x = Object.prototype.hasOwnProperty;
-    var __propIsEnum$x = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$x = (obj, key, value) => key in obj ? __defProp$x(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$x = (a, b) => {
+    var __defProp$y = Object.defineProperty;
+    var __getOwnPropSymbols$y = Object.getOwnPropertySymbols;
+    var __hasOwnProp$y = Object.prototype.hasOwnProperty;
+    var __propIsEnum$y = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$y = (obj, key, value) => key in obj ? __defProp$y(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$y = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$x.call(b, prop))
-          __defNormalProp$x(a, prop, b[prop]);
-      if (__getOwnPropSymbols$x)
-        for (var prop of __getOwnPropSymbols$x(b)) {
-          if (__propIsEnum$x.call(b, prop))
-            __defNormalProp$x(a, prop, b[prop]);
+        if (__hasOwnProp$y.call(b, prop))
+          __defNormalProp$y(a, prop, b[prop]);
+      if (__getOwnPropSymbols$y)
+        for (var prop of __getOwnPropSymbols$y(b)) {
+          if (__propIsEnum$y.call(b, prop))
+            __defNormalProp$y(a, prop, b[prop]);
         }
       return a;
     };
@@ -30885,10 +31744,10 @@ ${e}`);
        * @param options.kernelSize - The kernelSize of the blur filter.Options: 5, 7, 9, 11, 13, 15.
        */
       constructor(options) {
-        options = __spreadValues$x(__spreadValues$x({}, _BlurFilterPass.defaultOptions), options);
+        options = __spreadValues$y(__spreadValues$y({}, _BlurFilterPass.defaultOptions), options);
         const glProgram = generateBlurGlProgram(options.horizontal, options.kernelSize);
         const gpuProgram = generateBlurProgram(options.horizontal, options.kernelSize);
-        super(__spreadValues$x({
+        super(__spreadValues$y({
           glProgram,
           gpuProgram,
           resources: {
@@ -30967,21 +31826,21 @@ ${e}`);
     let BlurFilterPass = _BlurFilterPass;
 
     "use strict";
-    var __defProp$w = Object.defineProperty;
+    var __defProp$x = Object.defineProperty;
     var __defProps$g = Object.defineProperties;
     var __getOwnPropDescs$g = Object.getOwnPropertyDescriptors;
-    var __getOwnPropSymbols$w = Object.getOwnPropertySymbols;
-    var __hasOwnProp$w = Object.prototype.hasOwnProperty;
-    var __propIsEnum$w = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$w = (obj, key, value) => key in obj ? __defProp$w(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$w = (a, b) => {
+    var __getOwnPropSymbols$x = Object.getOwnPropertySymbols;
+    var __hasOwnProp$x = Object.prototype.hasOwnProperty;
+    var __propIsEnum$x = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$x = (obj, key, value) => key in obj ? __defProp$x(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$x = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$w.call(b, prop))
-          __defNormalProp$w(a, prop, b[prop]);
-      if (__getOwnPropSymbols$w)
-        for (var prop of __getOwnPropSymbols$w(b)) {
-          if (__propIsEnum$w.call(b, prop))
-            __defNormalProp$w(a, prop, b[prop]);
+        if (__hasOwnProp$x.call(b, prop))
+          __defNormalProp$x(a, prop, b[prop]);
+      if (__getOwnPropSymbols$x)
+        for (var prop of __getOwnPropSymbols$x(b)) {
+          if (__propIsEnum$x.call(b, prop))
+            __defNormalProp$x(a, prop, b[prop]);
         }
       return a;
     };
@@ -30989,11 +31848,11 @@ ${e}`);
     var __objRest$e = (source, exclude) => {
       var target = {};
       for (var prop in source)
-        if (__hasOwnProp$w.call(source, prop) && exclude.indexOf(prop) < 0)
+        if (__hasOwnProp$x.call(source, prop) && exclude.indexOf(prop) < 0)
           target[prop] = source[prop];
-      if (source != null && __getOwnPropSymbols$w)
-        for (var prop of __getOwnPropSymbols$w(source)) {
-          if (exclude.indexOf(prop) < 0 && __propIsEnum$w.call(source, prop))
+      if (source != null && __getOwnPropSymbols$x)
+        for (var prop of __getOwnPropSymbols$x(source)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum$x.call(source, prop))
             target[prop] = source[prop];
         }
       return target;
@@ -31012,15 +31871,15 @@ ${e}`);
           if (args[3] !== void 0)
             options.kernelSize = args[3];
         }
-        options = __spreadValues$w(__spreadValues$w({}, BlurFilterPass.defaultOptions), options);
+        options = __spreadValues$x(__spreadValues$x({}, BlurFilterPass.defaultOptions), options);
         const _b = options, { strength, strengthX, strengthY, quality } = _b, rest = __objRest$e(_b, ["strength", "strengthX", "strengthY", "quality"]);
-        super(__spreadProps$g(__spreadValues$w({}, rest), {
+        super(__spreadProps$g(__spreadValues$x({}, rest), {
           compatibleRenderers: RendererType.BOTH,
           resources: {}
         }));
         this._repeatEdgePixels = false;
-        this.blurXFilter = new BlurFilterPass(__spreadValues$w({ horizontal: true }, options));
-        this.blurYFilter = new BlurFilterPass(__spreadValues$w({ horizontal: false }, options));
+        this.blurXFilter = new BlurFilterPass(__spreadValues$x({ horizontal: true }, options));
+        this.blurYFilter = new BlurFilterPass(__spreadValues$x({ horizontal: false }, options));
         this.quality = quality;
         this.strengthX = strengthX != null ? strengthX : strength;
         this.strengthY = strengthY != null ? strengthY : strength;
@@ -31173,21 +32032,21 @@ ${e}`);
     var source$3 = "struct GlobalFilterUniforms {\n  uInputSize:vec4<f32>,\n  uInputPixel:vec4<f32>,\n  uInputClamp:vec4<f32>,\n  uOutputFrame:vec4<f32>,\n  uGlobalFrame:vec4<f32>,\n  uOutputTexture:vec4<f32>,\n};\n\nstruct ColorMatrixUniforms {\n  uColorMatrix:array<vec4<f32>, 5>,\n  uAlpha:f32,\n};\n\n\n@group(0) @binding(0) var<uniform> gfu: GlobalFilterUniforms;\n@group(0) @binding(1) var uTexture: texture_2d<f32>;\n@group(0) @binding(2) var uSampler : sampler;\n@group(1) @binding(0) var<uniform> colorMatrixUniforms : ColorMatrixUniforms;\n\n\nstruct VSOutput {\n    @builtin(position) position: vec4<f32>,\n    @location(0) uv : vec2<f32>,\n  };\n  \nfn filterVertexPosition(aPosition:vec2<f32>) -> vec4<f32>\n{\n    var position = aPosition * gfu.uOutputFrame.zw + gfu.uOutputFrame.xy;\n\n    position.x = position.x * (2.0 / gfu.uOutputTexture.x) - 1.0;\n    position.y = position.y * (2.0*gfu.uOutputTexture.z / gfu.uOutputTexture.y) - gfu.uOutputTexture.z;\n\n    return vec4(position, 0.0, 1.0);\n}\n\nfn filterTextureCoord( aPosition:vec2<f32> ) -> vec2<f32>\n{\n  return aPosition * (gfu.uOutputFrame.zw * gfu.uInputSize.zw);\n}\n\n@vertex\nfn mainVertex(\n  @location(0) aPosition : vec2<f32>, \n) -> VSOutput {\n  return VSOutput(\n   filterVertexPosition(aPosition),\n   filterTextureCoord(aPosition),\n  );\n}\n\n\n@fragment\nfn mainFragment(\n  @location(0) uv: vec2<f32>,\n) -> @location(0) vec4<f32> {\n\n\n  var c = textureSample(uTexture, uSampler, uv);\n  \n  if (colorMatrixUniforms.uAlpha == 0.0) {\n    return c;\n  }\n\n \n    // Un-premultiply alpha before applying the color matrix. See issue #3539.\n    if (c.a > 0.0) {\n      c.r /= c.a;\n      c.g /= c.a;\n      c.b /= c.a;\n    }\n\n    var cm = colorMatrixUniforms.uColorMatrix;\n\n\n    var result = vec4<f32>(0.);\n\n    result.r = (cm[0][0] * c.r);\n    result.r += (cm[0][1] * c.g);\n    result.r += (cm[0][2] * c.b);\n    result.r += (cm[0][3] * c.a);\n    result.r += cm[1][0];\n\n    result.g = (cm[1][1] * c.r);\n    result.g += (cm[1][2] * c.g);\n    result.g += (cm[1][3] * c.b);\n    result.g += (cm[2][0] * c.a);\n    result.g += cm[2][1];\n\n    result.b = (cm[2][2] * c.r);\n    result.b += (cm[2][3] * c.g);\n    result.b += (cm[3][0] * c.b);\n    result.b += (cm[3][1] * c.a);\n    result.b += cm[3][2];\n\n    result.a = (cm[3][3] * c.r);\n    result.a += (cm[4][0] * c.g);\n    result.a += (cm[4][1] * c.b);\n    result.a += (cm[4][2] * c.a);\n    result.a += cm[4][3];\n\n    var rgb = mix(c.rgb, result.rgb, colorMatrixUniforms.uAlpha);\n\n    rgb.r *= result.a;\n    rgb.g *= result.a;\n    rgb.b *= result.a;\n\n    return vec4(rgb, result.a);\n}";
 
     "use strict";
-    var __defProp$v = Object.defineProperty;
+    var __defProp$w = Object.defineProperty;
     var __defProps$f = Object.defineProperties;
     var __getOwnPropDescs$f = Object.getOwnPropertyDescriptors;
-    var __getOwnPropSymbols$v = Object.getOwnPropertySymbols;
-    var __hasOwnProp$v = Object.prototype.hasOwnProperty;
-    var __propIsEnum$v = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$v = (obj, key, value) => key in obj ? __defProp$v(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$v = (a, b) => {
+    var __getOwnPropSymbols$w = Object.getOwnPropertySymbols;
+    var __hasOwnProp$w = Object.prototype.hasOwnProperty;
+    var __propIsEnum$w = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$w = (obj, key, value) => key in obj ? __defProp$w(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$w = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$v.call(b, prop))
-          __defNormalProp$v(a, prop, b[prop]);
-      if (__getOwnPropSymbols$v)
-        for (var prop of __getOwnPropSymbols$v(b)) {
-          if (__propIsEnum$v.call(b, prop))
-            __defNormalProp$v(a, prop, b[prop]);
+        if (__hasOwnProp$w.call(b, prop))
+          __defNormalProp$w(a, prop, b[prop]);
+      if (__getOwnPropSymbols$w)
+        for (var prop of __getOwnPropSymbols$w(b)) {
+          if (__propIsEnum$w.call(b, prop))
+            __defNormalProp$w(a, prop, b[prop]);
         }
       return a;
     };
@@ -31241,7 +32100,7 @@ ${e}`);
           fragment: fragment$3,
           name: "color-matrix-filter"
         });
-        super(__spreadProps$f(__spreadValues$v({}, options), {
+        super(__spreadProps$f(__spreadValues$w({}, options), {
           gpuProgram,
           glProgram,
           resources: {
@@ -32004,21 +32863,21 @@ ${e}`);
     var source$2 = "\nstruct GlobalFilterUniforms {\n  uInputSize:vec4<f32>,\n  uInputPixel:vec4<f32>,\n  uInputClamp:vec4<f32>,\n  uOutputFrame:vec4<f32>,\n  uGlobalFrame:vec4<f32>,\n  uOutputTexture:vec4<f32>,\n};\n\nstruct DisplacementUniforms {\n  uFilterMatrix:mat3x3<f32>,\n  uScale:vec2<f32>,\n  uRotation:mat2x2<f32>\n};\n\n\n\n@group(0) @binding(0) var<uniform> gfu: GlobalFilterUniforms;\n@group(0) @binding(1) var uTexture: texture_2d<f32>;\n@group(0) @binding(2) var uSampler : sampler;\n\n@group(1) @binding(0) var<uniform> filterUniforms : DisplacementUniforms;\n@group(1) @binding(1) var uMapTexture: texture_2d<f32>;\n@group(1) @binding(2) var uMapSampler : sampler;\n\nstruct VSOutput {\n    @builtin(position) position: vec4<f32>,\n    @location(0) uv : vec2<f32>,\n    @location(1) filterUv : vec2<f32>,\n  };\n\nfn filterVertexPosition(aPosition:vec2<f32>) -> vec4<f32>\n{\n    var position = aPosition * gfu.uOutputFrame.zw + gfu.uOutputFrame.xy;\n\n    position.x = position.x * (2.0 / gfu.uOutputTexture.x) - 1.0;\n    position.y = position.y * (2.0*gfu.uOutputTexture.z / gfu.uOutputTexture.y) - gfu.uOutputTexture.z;\n\n    return vec4(position, 0.0, 1.0);\n}\n\nfn filterTextureCoord( aPosition:vec2<f32> ) -> vec2<f32>\n{\n    return aPosition * (gfu.uOutputFrame.zw * gfu.uInputSize.zw);\n}\n\nfn globalTextureCoord( aPosition:vec2<f32> ) -> vec2<f32>\n{\n  return  (aPosition.xy / gfu.uGlobalFrame.zw) + (gfu.uGlobalFrame.xy / gfu.uGlobalFrame.zw);  \n}\n\nfn getFilterCoord(aPosition:vec2<f32> ) -> vec2<f32>\n{\n  return ( filterUniforms.uFilterMatrix * vec3( filterTextureCoord(aPosition), 1.0)  ).xy;\n}\n\nfn getSize() -> vec2<f32>\n{\n\n  \n  return gfu.uGlobalFrame.zw;\n}\n  \n@vertex\nfn mainVertex(\n  @location(0) aPosition : vec2<f32>, \n) -> VSOutput {\n  return VSOutput(\n   filterVertexPosition(aPosition),\n   filterTextureCoord(aPosition),\n   getFilterCoord(aPosition)\n  );\n}\n\n@fragment\nfn mainFragment(\n  @location(0) uv: vec2<f32>,\n  @location(1) filterUv: vec2<f32>,\n  @builtin(position) position: vec4<f32>\n) -> @location(0) vec4<f32> {\n\n    var map = textureSample(uMapTexture, uMapSampler, filterUv);\n\n    var offset =  gfu.uInputSize.zw * (filterUniforms.uRotation * (map.xy - 0.5)) * filterUniforms.uScale; \n   \n    return textureSample(uTexture, uSampler, clamp(uv + offset, gfu.uInputClamp.xy, gfu.uInputClamp.zw));\n}";
 
     "use strict";
-    var __defProp$u = Object.defineProperty;
+    var __defProp$v = Object.defineProperty;
     var __defProps$e = Object.defineProperties;
     var __getOwnPropDescs$e = Object.getOwnPropertyDescriptors;
-    var __getOwnPropSymbols$u = Object.getOwnPropertySymbols;
-    var __hasOwnProp$u = Object.prototype.hasOwnProperty;
-    var __propIsEnum$u = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$u = (obj, key, value) => key in obj ? __defProp$u(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$u = (a, b) => {
+    var __getOwnPropSymbols$v = Object.getOwnPropertySymbols;
+    var __hasOwnProp$v = Object.prototype.hasOwnProperty;
+    var __propIsEnum$v = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$v = (obj, key, value) => key in obj ? __defProp$v(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$v = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$u.call(b, prop))
-          __defNormalProp$u(a, prop, b[prop]);
-      if (__getOwnPropSymbols$u)
-        for (var prop of __getOwnPropSymbols$u(b)) {
-          if (__propIsEnum$u.call(b, prop))
-            __defNormalProp$u(a, prop, b[prop]);
+        if (__hasOwnProp$v.call(b, prop))
+          __defNormalProp$v(a, prop, b[prop]);
+      if (__getOwnPropSymbols$v)
+        for (var prop of __getOwnPropSymbols$v(b)) {
+          if (__propIsEnum$v.call(b, prop))
+            __defNormalProp$v(a, prop, b[prop]);
         }
       return a;
     };
@@ -32026,11 +32885,11 @@ ${e}`);
     var __objRest$d = (source2, exclude) => {
       var target = {};
       for (var prop in source2)
-        if (__hasOwnProp$u.call(source2, prop) && exclude.indexOf(prop) < 0)
+        if (__hasOwnProp$v.call(source2, prop) && exclude.indexOf(prop) < 0)
           target[prop] = source2[prop];
-      if (source2 != null && __getOwnPropSymbols$u)
-        for (var prop of __getOwnPropSymbols$u(source2)) {
-          if (exclude.indexOf(prop) < 0 && __propIsEnum$u.call(source2, prop))
+      if (source2 != null && __getOwnPropSymbols$v)
+        for (var prop of __getOwnPropSymbols$v(source2)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum$v.call(source2, prop))
             target[prop] = source2[prop];
         }
       return target;
@@ -32070,7 +32929,7 @@ ${e}`);
           }
         });
         const textureSource = sprite.texture.source;
-        super(__spreadProps$e(__spreadValues$u({}, rest), {
+        super(__spreadProps$e(__spreadValues$v({}, rest), {
           gpuProgram,
           glProgram,
           resources: {
@@ -32118,21 +32977,21 @@ ${e}`);
     var source$1 = "\n\nstruct GlobalFilterUniforms {\n  uInputSize:vec4<f32>,\n  uInputPixel:vec4<f32>,\n  uInputClamp:vec4<f32>,\n  uOutputFrame:vec4<f32>,\n  uGlobalFrame:vec4<f32>,\n  uOutputTexture:vec4<f32>,\n};\n\nstruct NoiseUniforms {\n  uNoise:f32,\n  uSeed:f32,\n};\n\n@group(0) @binding(0) var<uniform> gfu: GlobalFilterUniforms;\n@group(0) @binding(1) var uTexture: texture_2d<f32>;\n@group(0) @binding(2) var uSampler : sampler;\n\n@group(1) @binding(0) var<uniform> noiseUniforms : NoiseUniforms;\n\nstruct VSOutput {\n    @builtin(position) position: vec4<f32>,\n    @location(0) uv : vec2<f32>\n  };\n\nfn filterVertexPosition(aPosition:vec2<f32>) -> vec4<f32>\n{\n    var position = aPosition * gfu.uOutputFrame.zw + gfu.uOutputFrame.xy;\n\n    position.x = position.x * (2.0 / gfu.uOutputTexture.x) - 1.0;\n    position.y = position.y * (2.0*gfu.uOutputTexture.z / gfu.uOutputTexture.y) - gfu.uOutputTexture.z;\n\n    return vec4(position, 0.0, 1.0);\n}\n\nfn filterTextureCoord( aPosition:vec2<f32> ) -> vec2<f32>\n{\n    return aPosition * (gfu.uOutputFrame.zw * gfu.uInputSize.zw);\n}\n\nfn globalTextureCoord( aPosition:vec2<f32> ) -> vec2<f32>\n{\n  return  (aPosition.xy / gfu.uGlobalFrame.zw) + (gfu.uGlobalFrame.xy / gfu.uGlobalFrame.zw);  \n}\n\nfn getSize() -> vec2<f32>\n{\n  return gfu.uGlobalFrame.zw;\n}\n  \n@vertex\nfn mainVertex(\n  @location(0) aPosition : vec2<f32>, \n) -> VSOutput {\n  return VSOutput(\n   filterVertexPosition(aPosition),\n   filterTextureCoord(aPosition)\n  );\n}\n\nfn rand(co:vec2<f32>) -> f32\n{\n  return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);\n}\n\n\n\n@fragment\nfn mainFragment(\n  @location(0) uv: vec2<f32>,\n  @builtin(position) position: vec4<f32>\n) -> @location(0) vec4<f32> {\n\n    var pixelPosition =  globalTextureCoord(position.xy);// / (getSize());//-  gfu.uOutputFrame.xy);\n  \n    \n    var sample = textureSample(uTexture, uSampler, uv);\n    var randomValue =  rand(pixelPosition.xy * noiseUniforms.uSeed);\n    var diff = (randomValue - 0.5) * noiseUniforms.uNoise;\n  \n    // Un-premultiply alpha before applying the color matrix. See issue #3539.\n    if (sample.a > 0.0) {\n      sample.r /= sample.a;\n      sample.g /= sample.a;\n      sample.b /= sample.a;\n    }\n\n    sample.r += diff;\n    sample.g += diff;\n    sample.b += diff;\n\n    // Premultiply alpha again.\n    sample.r *= sample.a;\n    sample.g *= sample.a;\n    sample.b *= sample.a;\n    \n    return sample;\n}";
 
     "use strict";
-    var __defProp$t = Object.defineProperty;
+    var __defProp$u = Object.defineProperty;
     var __defProps$d = Object.defineProperties;
     var __getOwnPropDescs$d = Object.getOwnPropertyDescriptors;
-    var __getOwnPropSymbols$t = Object.getOwnPropertySymbols;
-    var __hasOwnProp$t = Object.prototype.hasOwnProperty;
-    var __propIsEnum$t = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$t = (obj, key, value) => key in obj ? __defProp$t(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$t = (a, b) => {
+    var __getOwnPropSymbols$u = Object.getOwnPropertySymbols;
+    var __hasOwnProp$u = Object.prototype.hasOwnProperty;
+    var __propIsEnum$u = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$u = (obj, key, value) => key in obj ? __defProp$u(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$u = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$t.call(b, prop))
-          __defNormalProp$t(a, prop, b[prop]);
-      if (__getOwnPropSymbols$t)
-        for (var prop of __getOwnPropSymbols$t(b)) {
-          if (__propIsEnum$t.call(b, prop))
-            __defNormalProp$t(a, prop, b[prop]);
+        if (__hasOwnProp$u.call(b, prop))
+          __defNormalProp$u(a, prop, b[prop]);
+      if (__getOwnPropSymbols$u)
+        for (var prop of __getOwnPropSymbols$u(b)) {
+          if (__propIsEnum$u.call(b, prop))
+            __defNormalProp$u(a, prop, b[prop]);
         }
       return a;
     };
@@ -32140,11 +32999,11 @@ ${e}`);
     var __objRest$c = (source2, exclude) => {
       var target = {};
       for (var prop in source2)
-        if (__hasOwnProp$t.call(source2, prop) && exclude.indexOf(prop) < 0)
+        if (__hasOwnProp$u.call(source2, prop) && exclude.indexOf(prop) < 0)
           target[prop] = source2[prop];
-      if (source2 != null && __getOwnPropSymbols$t)
-        for (var prop of __getOwnPropSymbols$t(source2)) {
-          if (exclude.indexOf(prop) < 0 && __propIsEnum$t.call(source2, prop))
+      if (source2 != null && __getOwnPropSymbols$u)
+        for (var prop of __getOwnPropSymbols$u(source2)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum$u.call(source2, prop))
             target[prop] = source2[prop];
         }
       return target;
@@ -32154,7 +33013,7 @@ ${e}`);
        * @param options - The options of the noise filter.
        */
       constructor(options = {}) {
-        options = __spreadValues$t(__spreadValues$t({}, _NoiseFilter.defaultOptions), options);
+        options = __spreadValues$u(__spreadValues$u({}, _NoiseFilter.defaultOptions), options);
         const gpuProgram = GpuProgram.from({
           vertex: {
             source: source$1,
@@ -32171,7 +33030,7 @@ ${e}`);
           name: "noise-filter"
         });
         const _a = options, { noise, seed } = _a, rest = __objRest$c(_a, ["noise", "seed"]);
-        super(__spreadProps$d(__spreadValues$t({}, rest), {
+        super(__spreadProps$d(__spreadValues$u({}, rest), {
           gpuProgram,
           glProgram,
           resources: {
@@ -32214,21 +33073,21 @@ ${e}`);
     var source = "struct GlobalFilterUniforms {\n  uInputSize:vec4<f32>,\n  uInputPixel:vec4<f32>,\n  uInputClamp:vec4<f32>,\n  uOutputFrame:vec4<f32>,\n  uGlobalFrame:vec4<f32>,\n  uOutputTexture:vec4<f32>,\n};\n\nstruct MaskUniforms {\n  uFilterMatrix:mat3x3<f32>,\n  uMaskClamp:vec4<f32>,\n  uAlpha:f32,\n  uInverse:f32,\n};\n\n@group(0) @binding(0) var<uniform> gfu: GlobalFilterUniforms;\n@group(0) @binding(1) var uTexture: texture_2d<f32>;\n@group(0) @binding(2) var uSampler : sampler;\n\n@group(1) @binding(0) var<uniform> filterUniforms : MaskUniforms;\n@group(1) @binding(1) var uMaskTexture: texture_2d<f32>;\n\nstruct VSOutput {\n    @builtin(position) position: vec4<f32>,\n    @location(0) uv : vec2<f32>,\n    @location(1) filterUv : vec2<f32>,\n};\n\nfn filterVertexPosition(aPosition:vec2<f32>) -> vec4<f32>\n{\n    var position = aPosition * gfu.uOutputFrame.zw + gfu.uOutputFrame.xy;\n\n    position.x = position.x * (2.0 / gfu.uOutputTexture.x) - 1.0;\n    position.y = position.y * (2.0*gfu.uOutputTexture.z / gfu.uOutputTexture.y) - gfu.uOutputTexture.z;\n\n    return vec4(position, 0.0, 1.0);\n}\n\nfn filterTextureCoord( aPosition:vec2<f32> ) -> vec2<f32>\n{\n    return aPosition * (gfu.uOutputFrame.zw * gfu.uInputSize.zw);\n}\n\nfn globalTextureCoord( aPosition:vec2<f32> ) -> vec2<f32>\n{\n  return  (aPosition.xy / gfu.uGlobalFrame.zw) + (gfu.uGlobalFrame.xy / gfu.uGlobalFrame.zw);\n}\n\nfn getFilterCoord(aPosition:vec2<f32> ) -> vec2<f32>\n{\n  return ( filterUniforms.uFilterMatrix * vec3( filterTextureCoord(aPosition), 1.0)  ).xy;\n}\n\nfn getSize() -> vec2<f32>\n{\n  return gfu.uGlobalFrame.zw;\n}\n\n@vertex\nfn mainVertex(\n  @location(0) aPosition : vec2<f32>,\n) -> VSOutput {\n  return VSOutput(\n   filterVertexPosition(aPosition),\n   filterTextureCoord(aPosition),\n   getFilterCoord(aPosition)\n  );\n}\n\n@fragment\nfn mainFragment(\n  @location(0) uv: vec2<f32>,\n  @location(1) filterUv: vec2<f32>,\n  @builtin(position) position: vec4<f32>\n) -> @location(0) vec4<f32> {\n\n    var maskClamp = filterUniforms.uMaskClamp;\n    var uAlpha = filterUniforms.uAlpha;\n\n    var clip = step(3.5,\n      step(maskClamp.x, filterUv.x) +\n      step(maskClamp.y, filterUv.y) +\n      step(filterUv.x, maskClamp.z) +\n      step(filterUv.y, maskClamp.w));\n\n    var mask = textureSample(uMaskTexture, uSampler, filterUv);\n    var source = textureSample(uTexture, uSampler, uv);\n    var alphaMul = 1.0 - uAlpha * (1.0 - mask.a);\n\n    var a: f32 = alphaMul * mask.r * uAlpha * clip;\n\n    if (filterUniforms.uInverse == 1.0) {\n        a = 1.0 - a;\n    }\n\n    return source * a;\n}\n";
 
     "use strict";
-    var __defProp$s = Object.defineProperty;
+    var __defProp$t = Object.defineProperty;
     var __defProps$c = Object.defineProperties;
     var __getOwnPropDescs$c = Object.getOwnPropertyDescriptors;
-    var __getOwnPropSymbols$s = Object.getOwnPropertySymbols;
-    var __hasOwnProp$s = Object.prototype.hasOwnProperty;
-    var __propIsEnum$s = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$s = (obj, key, value) => key in obj ? __defProp$s(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$s = (a, b) => {
+    var __getOwnPropSymbols$t = Object.getOwnPropertySymbols;
+    var __hasOwnProp$t = Object.prototype.hasOwnProperty;
+    var __propIsEnum$t = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$t = (obj, key, value) => key in obj ? __defProp$t(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$t = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$s.call(b, prop))
-          __defNormalProp$s(a, prop, b[prop]);
-      if (__getOwnPropSymbols$s)
-        for (var prop of __getOwnPropSymbols$s(b)) {
-          if (__propIsEnum$s.call(b, prop))
-            __defNormalProp$s(a, prop, b[prop]);
+        if (__hasOwnProp$t.call(b, prop))
+          __defNormalProp$t(a, prop, b[prop]);
+      if (__getOwnPropSymbols$t)
+        for (var prop of __getOwnPropSymbols$t(b)) {
+          if (__propIsEnum$t.call(b, prop))
+            __defNormalProp$t(a, prop, b[prop]);
         }
       return a;
     };
@@ -32236,11 +33095,11 @@ ${e}`);
     var __objRest$b = (source2, exclude) => {
       var target = {};
       for (var prop in source2)
-        if (__hasOwnProp$s.call(source2, prop) && exclude.indexOf(prop) < 0)
+        if (__hasOwnProp$t.call(source2, prop) && exclude.indexOf(prop) < 0)
           target[prop] = source2[prop];
-      if (source2 != null && __getOwnPropSymbols$s)
-        for (var prop of __getOwnPropSymbols$s(source2)) {
-          if (exclude.indexOf(prop) < 0 && __propIsEnum$s.call(source2, prop))
+      if (source2 != null && __getOwnPropSymbols$t)
+        for (var prop of __getOwnPropSymbols$t(source2)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum$t.call(source2, prop))
             target[prop] = source2[prop];
         }
       return target;
@@ -32270,7 +33129,7 @@ ${e}`);
           fragment,
           name: "mask-filter"
         });
-        super(__spreadProps$c(__spreadValues$s({}, rest), {
+        super(__spreadProps$c(__spreadValues$t({}, rest), {
           gpuProgram,
           glProgram,
           resources: {
@@ -32550,30 +33409,30 @@ ${e}`);
     let PrepareBase = _PrepareBase;
 
     "use strict";
-    var __defProp$r = Object.defineProperty;
-    var __getOwnPropSymbols$r = Object.getOwnPropertySymbols;
-    var __hasOwnProp$r = Object.prototype.hasOwnProperty;
-    var __propIsEnum$r = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$r = (obj, key, value) => key in obj ? __defProp$r(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$r = (a, b) => {
+    var __defProp$s = Object.defineProperty;
+    var __getOwnPropSymbols$s = Object.getOwnPropertySymbols;
+    var __hasOwnProp$s = Object.prototype.hasOwnProperty;
+    var __propIsEnum$s = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$s = (obj, key, value) => key in obj ? __defProp$s(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$s = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$r.call(b, prop))
-          __defNormalProp$r(a, prop, b[prop]);
-      if (__getOwnPropSymbols$r)
-        for (var prop of __getOwnPropSymbols$r(b)) {
-          if (__propIsEnum$r.call(b, prop))
-            __defNormalProp$r(a, prop, b[prop]);
+        if (__hasOwnProp$s.call(b, prop))
+          __defNormalProp$s(a, prop, b[prop]);
+      if (__getOwnPropSymbols$s)
+        for (var prop of __getOwnPropSymbols$s(b)) {
+          if (__propIsEnum$s.call(b, prop))
+            __defNormalProp$s(a, prop, b[prop]);
         }
       return a;
     };
     var __objRest$a = (source, exclude) => {
       var target = {};
       for (var prop in source)
-        if (__hasOwnProp$r.call(source, prop) && exclude.indexOf(prop) < 0)
+        if (__hasOwnProp$s.call(source, prop) && exclude.indexOf(prop) < 0)
           target[prop] = source[prop];
-      if (source != null && __getOwnPropSymbols$r)
-        for (var prop of __getOwnPropSymbols$r(source)) {
-          if (exclude.indexOf(prop) < 0 && __propIsEnum$r.call(source, prop))
+      if (source != null && __getOwnPropSymbols$s)
+        for (var prop of __getOwnPropSymbols$s(source)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum$s.call(source, prop))
             target[prop] = source[prop];
         }
       return target;
@@ -32594,7 +33453,7 @@ ${e}`);
           }
         }
         const _a = options, { geometry, shader, texture, roundPixels, state } = _a, rest = __objRest$a(_a, ["geometry", "shader", "texture", "roundPixels", "state"]);
-        super(__spreadValues$r({
+        super(__spreadValues$s({
           label: "Mesh"
         }, rest));
         this.renderPipeId = "mesh";
@@ -32764,21 +33623,21 @@ ${e}`);
     }
 
     "use strict";
-    var __defProp$q = Object.defineProperty;
+    var __defProp$r = Object.defineProperty;
     var __defProps$b = Object.defineProperties;
     var __getOwnPropDescs$b = Object.getOwnPropertyDescriptors;
-    var __getOwnPropSymbols$q = Object.getOwnPropertySymbols;
-    var __hasOwnProp$q = Object.prototype.hasOwnProperty;
-    var __propIsEnum$q = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$q = (obj, key, value) => key in obj ? __defProp$q(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$q = (a, b) => {
+    var __getOwnPropSymbols$r = Object.getOwnPropertySymbols;
+    var __hasOwnProp$r = Object.prototype.hasOwnProperty;
+    var __propIsEnum$r = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$r = (obj, key, value) => key in obj ? __defProp$r(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$r = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$q.call(b, prop))
-          __defNormalProp$q(a, prop, b[prop]);
-      if (__getOwnPropSymbols$q)
-        for (var prop of __getOwnPropSymbols$q(b)) {
-          if (__propIsEnum$q.call(b, prop))
-            __defNormalProp$q(a, prop, b[prop]);
+        if (__hasOwnProp$r.call(b, prop))
+          __defNormalProp$r(a, prop, b[prop]);
+      if (__getOwnPropSymbols$r)
+        for (var prop of __getOwnPropSymbols$r(b)) {
+          if (__propIsEnum$r.call(b, prop))
+            __defNormalProp$r(a, prop, b[prop]);
         }
       return a;
     };
@@ -32786,11 +33645,11 @@ ${e}`);
     var __objRest$9 = (source, exclude) => {
       var target = {};
       for (var prop in source)
-        if (__hasOwnProp$q.call(source, prop) && exclude.indexOf(prop) < 0)
+        if (__hasOwnProp$r.call(source, prop) && exclude.indexOf(prop) < 0)
           target[prop] = source[prop];
-      if (source != null && __getOwnPropSymbols$q)
-        for (var prop of __getOwnPropSymbols$q(source)) {
-          if (exclude.indexOf(prop) < 0 && __propIsEnum$q.call(source, prop))
+      if (source != null && __getOwnPropSymbols$r)
+        for (var prop of __getOwnPropSymbols$r(source)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum$r.call(source, prop))
             target[prop] = source[prop];
         }
       return target;
@@ -32805,25 +33664,48 @@ ${e}`);
             autoUpdate: args[1]
           };
         }
-        const _a = options, { textures, autoUpdate } = _a, rest = __objRest$9(_a, ["textures", "autoUpdate"]);
+        const _a = options, {
+          animationSpeed = 1,
+          autoPlay = false,
+          autoUpdate = true,
+          loop = true,
+          onComplete = null,
+          onFrameChange = null,
+          onLoop = null,
+          textures,
+          updateAnchor = false
+        } = _a, rest = __objRest$9(_a, [
+          "animationSpeed",
+          "autoPlay",
+          "autoUpdate",
+          "loop",
+          "onComplete",
+          "onFrameChange",
+          "onLoop",
+          "textures",
+          "updateAnchor"
+        ]);
         const [firstFrame] = textures;
-        super(__spreadProps$b(__spreadValues$q({}, rest), {
+        super(__spreadProps$b(__spreadValues$r({}, rest), {
           texture: firstFrame instanceof Texture ? firstFrame : firstFrame.texture
         }));
         this._textures = null;
         this._durations = null;
-        this._autoUpdate = autoUpdate != null ? autoUpdate : true;
+        this._autoUpdate = autoUpdate;
         this._isConnectedToTicker = false;
-        this.animationSpeed = 1;
-        this.loop = true;
-        this.updateAnchor = false;
-        this.onComplete = null;
-        this.onFrameChange = null;
-        this.onLoop = null;
+        this.animationSpeed = animationSpeed;
+        this.loop = loop;
+        this.updateAnchor = updateAnchor;
+        this.onComplete = onComplete;
+        this.onFrameChange = onFrameChange;
+        this.onLoop = onLoop;
         this._currentTime = 0;
         this._playing = false;
         this._previousFrame = null;
         this.textures = textures;
+        if (autoPlay) {
+          this.play();
+        }
       }
       /** Stops the AnimatedSprite. */
       stop() {
@@ -32918,7 +33800,7 @@ ${e}`);
         }
         this._previousFrame = currentFrame;
         this.texture = this._textures[currentFrame];
-        if (this.updateAnchor) {
+        if (this.updateAnchor && this.texture.defaultAnchor) {
           this.anchor.copyFrom(this.texture.defaultAnchor);
         }
         if (this.onFrameChange) {
@@ -33114,30 +33996,30 @@ ${e}`);
     }
 
     "use strict";
-    var __defProp$p = Object.defineProperty;
-    var __getOwnPropSymbols$p = Object.getOwnPropertySymbols;
-    var __hasOwnProp$p = Object.prototype.hasOwnProperty;
-    var __propIsEnum$p = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$p = (obj, key, value) => key in obj ? __defProp$p(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$p = (a, b) => {
+    var __defProp$q = Object.defineProperty;
+    var __getOwnPropSymbols$q = Object.getOwnPropertySymbols;
+    var __hasOwnProp$q = Object.prototype.hasOwnProperty;
+    var __propIsEnum$q = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$q = (obj, key, value) => key in obj ? __defProp$q(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$q = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$p.call(b, prop))
-          __defNormalProp$p(a, prop, b[prop]);
-      if (__getOwnPropSymbols$p)
-        for (var prop of __getOwnPropSymbols$p(b)) {
-          if (__propIsEnum$p.call(b, prop))
-            __defNormalProp$p(a, prop, b[prop]);
+        if (__hasOwnProp$q.call(b, prop))
+          __defNormalProp$q(a, prop, b[prop]);
+      if (__getOwnPropSymbols$q)
+        for (var prop of __getOwnPropSymbols$q(b)) {
+          if (__propIsEnum$q.call(b, prop))
+            __defNormalProp$q(a, prop, b[prop]);
         }
       return a;
     };
     var __objRest$8 = (source, exclude) => {
       var target = {};
       for (var prop in source)
-        if (__hasOwnProp$p.call(source, prop) && exclude.indexOf(prop) < 0)
+        if (__hasOwnProp$q.call(source, prop) && exclude.indexOf(prop) < 0)
           target[prop] = source[prop];
-      if (source != null && __getOwnPropSymbols$p)
-        for (var prop of __getOwnPropSymbols$p(source)) {
-          if (exclude.indexOf(prop) < 0 && __propIsEnum$p.call(source, prop))
+      if (source != null && __getOwnPropSymbols$q)
+        for (var prop of __getOwnPropSymbols$q(source)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum$q.call(source, prop))
             target[prop] = source[prop];
         }
       return target;
@@ -33153,7 +34035,7 @@ ${e}`);
           options.width = args[1];
           options.height = args[2];
         }
-        options = __spreadValues$p(__spreadValues$p({}, _TilingSprite.defaultOptions), options);
+        options = __spreadValues$q(__spreadValues$q({}, _TilingSprite.defaultOptions), options);
         const _a = options != null ? options : {}, {
           texture,
           anchor,
@@ -33175,7 +34057,7 @@ ${e}`);
           "applyAnchorToTexture",
           "roundPixels"
         ]);
-        super(__spreadValues$p({
+        super(__spreadValues$q({
           label: "TilingSprite"
         }, rest));
         this.renderPipeId = "tilingSprite";
@@ -33212,11 +34094,11 @@ ${e}`);
        */
       static from(source, options = {}) {
         if (typeof source === "string") {
-          return new _TilingSprite(__spreadValues$p({
+          return new _TilingSprite(__spreadValues$q({
             texture: Cache.get(source)
           }, options));
         }
-        return new _TilingSprite(__spreadValues$p({
+        return new _TilingSprite(__spreadValues$q({
           texture: source
         }, options));
       }
@@ -33360,10 +34242,10 @@ ${e}`);
         const anchor = this._anchor;
         const width = this._width;
         const height = this._height;
-        bounds.maxX = -anchor._x * width;
-        bounds.minX = bounds.maxX + width;
-        bounds.maxY = -anchor._y * height;
-        bounds.minY = bounds.maxY + height;
+        bounds.minX = -anchor._x * width;
+        bounds.maxX = bounds.minX + width;
+        bounds.minY = -anchor._y * height;
+        bounds.maxY = bounds.minY + height;
       }
       /**
        * Checks if the object contains the given point.
@@ -33426,30 +34308,30 @@ ${e}`);
     let TilingSprite = _TilingSprite;
 
     "use strict";
-    var __defProp$o = Object.defineProperty;
-    var __getOwnPropSymbols$o = Object.getOwnPropertySymbols;
-    var __hasOwnProp$o = Object.prototype.hasOwnProperty;
-    var __propIsEnum$o = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$o = (obj, key, value) => key in obj ? __defProp$o(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$o = (a, b) => {
+    var __defProp$p = Object.defineProperty;
+    var __getOwnPropSymbols$p = Object.getOwnPropertySymbols;
+    var __hasOwnProp$p = Object.prototype.hasOwnProperty;
+    var __propIsEnum$p = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$p = (obj, key, value) => key in obj ? __defProp$p(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$p = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$o.call(b, prop))
-          __defNormalProp$o(a, prop, b[prop]);
-      if (__getOwnPropSymbols$o)
-        for (var prop of __getOwnPropSymbols$o(b)) {
-          if (__propIsEnum$o.call(b, prop))
-            __defNormalProp$o(a, prop, b[prop]);
+        if (__hasOwnProp$p.call(b, prop))
+          __defNormalProp$p(a, prop, b[prop]);
+      if (__getOwnPropSymbols$p)
+        for (var prop of __getOwnPropSymbols$p(b)) {
+          if (__propIsEnum$p.call(b, prop))
+            __defNormalProp$p(a, prop, b[prop]);
         }
       return a;
     };
     var __objRest$7 = (source, exclude) => {
       var target = {};
       for (var prop in source)
-        if (__hasOwnProp$o.call(source, prop) && exclude.indexOf(prop) < 0)
+        if (__hasOwnProp$p.call(source, prop) && exclude.indexOf(prop) < 0)
           target[prop] = source[prop];
-      if (source != null && __getOwnPropSymbols$o)
-        for (var prop of __getOwnPropSymbols$o(source)) {
-          if (exclude.indexOf(prop) < 0 && __propIsEnum$o.call(source, prop))
+      if (source != null && __getOwnPropSymbols$p)
+        for (var prop of __getOwnPropSymbols$p(source)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum$p.call(source, prop))
             target[prop] = source[prop];
         }
       return target;
@@ -33457,7 +34339,7 @@ ${e}`);
     class AbstractText extends ViewContainer {
       constructor(options, styleClass) {
         const _a = options, { text, resolution, style, anchor, width, height, roundPixels } = _a, rest = __objRest$7(_a, ["text", "resolution", "style", "anchor", "width", "height", "roundPixels"]);
-        super(__spreadValues$o({}, rest));
+        super(__spreadValues$p({}, rest));
         this.batched = true;
         this._resolution = null;
         this._autoResolution = true;
@@ -33643,7 +34525,7 @@ ${e}`);
         this._text = null;
       }
     }
-    function ensureOptions(args, name) {
+    function ensureTextOptions(args, name) {
       var _a;
       let options = (_a = args[0]) != null ? _a : {};
       if (typeof options === "string" || args[1]) {
@@ -33659,7 +34541,7 @@ ${e}`);
     "use strict";
     class Text extends AbstractText {
       constructor(...args) {
-        const options = ensureOptions(args, "Text");
+        const options = ensureTextOptions(args, "Text");
         super(options, TextStyle);
         this.renderPipeId = "text";
       }
@@ -33723,7 +34605,7 @@ ${e}`);
        * @param graphicsContext
        */
       resolveGraphicsContextQueueItem(graphicsContext) {
-        this.renderer.graphicsContext.getContextRenderData(graphicsContext);
+        this.renderer.graphicsContext.getGpuContext(graphicsContext);
         const { instructions } = graphicsContext;
         for (const instruction of instructions) {
           if (instruction.action === "texture") {
@@ -33742,7 +34624,7 @@ ${e}`);
     class BitmapText extends AbstractText {
       constructor(...args) {
         var _a, _b, _c;
-        const options = ensureOptions(args, "BitmapText");
+        const options = ensureTextOptions(args, "BitmapText");
         (_a = options.style) != null ? _a : options.style = options.style || {};
         (_c = (_b = options.style).fill) != null ? _c : _b.fill = 16777215;
         super(options, TextStyle);
@@ -33787,7 +34669,7 @@ ${e}`);
     "use strict";
     class HTMLText extends AbstractText {
       constructor(...args) {
-        const options = ensureOptions(args, "HtmlText");
+        const options = ensureTextOptions(args, "HtmlText");
         super(options, HTMLTextStyle);
         this.renderPipeId = "htmlText";
       }
@@ -33840,7 +34722,7 @@ ${e}`);
        * @param graphicsContext
        */
       uploadGraphicsContext(graphicsContext) {
-        this.renderer.graphicsContext.getContextRenderData(graphicsContext);
+        this.renderer.graphicsContext.getGpuContext(graphicsContext);
         const { instructions } = graphicsContext;
         for (const instruction of instructions) {
           if (instruction.action === "texture") {
@@ -33879,24 +34761,33 @@ ${e}`);
     "use strict";
     class GlBatchAdaptor {
       constructor() {
-        this._didUpload = false;
         this._tempState = State.for2d();
+        /**
+         * We only want to sync the a batched shaders uniforms once on first use
+         * this is a hash of shader uids to a boolean value.  When the shader is first bound
+         * we set the value to true.  When the shader is bound again we check the value and
+         * if it is true we know that the uniforms have already been synced and we skip it.
+         */
+        this._didUploadHash = {};
       }
       init(batcherPipe) {
         batcherPipe.renderer.runners.contextChange.add(this);
       }
       contextChange() {
-        this._didUpload = false;
+        this._didUploadHash = {};
       }
       start(batchPipe, geometry, shader) {
         const renderer = batchPipe.renderer;
-        renderer.shader.bind(shader, this._didUpload);
+        const didUpload = this._didUploadHash[shader.uid];
+        renderer.shader.bind(shader, didUpload);
+        if (!didUpload) {
+          this._didUploadHash[shader.uid] = true;
+        }
         renderer.shader.updateUniformGroup(renderer.globalUniforms.uniformGroup);
         renderer.geometry.bind(geometry, shader.glProgram);
       }
       execute(batchPipe, batch) {
         const renderer = batchPipe.renderer;
-        this._didUpload = true;
         this._tempState.blendMode = batch.blendMode;
         renderer.state.set(this._tempState);
         const textures = batch.textures.textures;
@@ -34196,87 +35087,6 @@ ${e}`);
     };
 
     "use strict";
-    function buildInstructions(renderGroup, rendererOrPipes) {
-      const root = renderGroup.root;
-      const instructionSet = renderGroup.instructionSet;
-      instructionSet.reset();
-      const renderer = rendererOrPipes.renderPipes ? rendererOrPipes : rendererOrPipes.batch.renderer;
-      const renderPipes = renderer.renderPipes;
-      renderPipes.batch.buildStart(instructionSet);
-      renderPipes.blendMode.buildStart();
-      renderPipes.colorMask.buildStart();
-      if (root.sortableChildren) {
-        root.sortChildren();
-      }
-      collectAllRenderablesAdvanced(root, instructionSet, renderer, true);
-      renderPipes.batch.buildEnd(instructionSet);
-      renderPipes.blendMode.buildEnd(instructionSet);
-    }
-    function collectAllRenderables(container, instructionSet, rendererOrPipes) {
-      const renderer = rendererOrPipes.renderPipes ? rendererOrPipes : rendererOrPipes.batch.renderer;
-      if (container.globalDisplayStatus < 7 || !container.includeInBuild)
-        return;
-      if (container.sortableChildren) {
-        container.sortChildren();
-      }
-      if (container.isSimple) {
-        collectAllRenderablesSimple(container, instructionSet, renderer);
-      } else {
-        collectAllRenderablesAdvanced(container, instructionSet, renderer, false);
-      }
-    }
-    function collectAllRenderablesSimple(container, instructionSet, renderer) {
-      if (container.renderPipeId) {
-        const renderable = container;
-        const { renderPipes, renderableGC } = renderer;
-        renderPipes.blendMode.setBlendMode(renderable, container.groupBlendMode, instructionSet);
-        const rp = renderPipes;
-        rp[renderable.renderPipeId].addRenderable(renderable, instructionSet);
-        renderableGC.addRenderable(renderable);
-        renderable.didViewUpdate = false;
-      }
-      if (!container.renderGroup) {
-        const children = container.children;
-        const length = children.length;
-        for (let i = 0; i < length; i++) {
-          collectAllRenderables(children[i], instructionSet, renderer);
-        }
-      }
-    }
-    function collectAllRenderablesAdvanced(container, instructionSet, renderer, isRoot) {
-      const { renderPipes, renderableGC } = renderer;
-      if (!isRoot && container.renderGroup) {
-        renderPipes.renderGroup.addRenderGroup(container.renderGroup, instructionSet);
-      } else {
-        for (let i = 0; i < container.effects.length; i++) {
-          const effect = container.effects[i];
-          const pipe = renderPipes[effect.pipe];
-          pipe.push(effect, container, instructionSet);
-        }
-        const renderable = container;
-        const renderPipeId = renderable.renderPipeId;
-        if (renderPipeId) {
-          renderPipes.blendMode.setBlendMode(renderable, renderable.groupBlendMode, instructionSet);
-          const pipe = renderPipes[renderPipeId];
-          pipe.addRenderable(renderable, instructionSet);
-          renderableGC.addRenderable(renderable);
-          renderable.didViewUpdate = false;
-        }
-        const children = container.children;
-        if (children.length) {
-          for (let i = 0; i < children.length; i++) {
-            collectAllRenderables(children[i], instructionSet, renderer);
-          }
-        }
-        for (let i = container.effects.length - 1; i >= 0; i--) {
-          const effect = container.effects[i];
-          const pipe = renderPipes[effect.pipe];
-          pipe.pop(effect, container, instructionSet);
-        }
-      }
-    }
-
-    "use strict";
     const tempBounds$1 = new Bounds();
     class AlphaMaskEffect extends FilterEffect {
       constructor() {
@@ -34321,10 +35131,10 @@ ${e}`);
         if (mask.renderMaskToTexture) {
           const maskContainer = mask.mask;
           maskContainer.includeInBuild = true;
-          collectAllRenderables(
-            maskContainer,
+          maskContainer.collectRenderables(
             instructionSet,
-            renderer
+            renderer,
+            null
           );
           maskContainer.includeInBuild = false;
         }
@@ -34549,10 +35359,10 @@ ${e}`);
         }
         const maskData = this._maskHash.get(effect);
         maskData.instructionsStart = instructionSet.instructionSize;
-        collectAllRenderables(
-          maskContainer,
+        maskContainer.collectRenderables(
           instructionSet,
-          renderer
+          renderer,
+          null
         );
         maskContainer.includeInBuild = false;
         renderer.renderPipes.batch.break(instructionSet);
@@ -34845,6 +35655,9 @@ ${e}`);
         buffer.on("destroy", this.onBufferDestroy, this);
         return glBuffer;
       }
+      resetState() {
+        this._boundBufferBases = /* @__PURE__ */ Object.create(null);
+      }
     }
     /** @ignore */
     GlBufferSystem.extension = {
@@ -34855,21 +35668,21 @@ ${e}`);
     };
 
     "use strict";
-    var __defProp$n = Object.defineProperty;
+    var __defProp$o = Object.defineProperty;
     var __defProps$a = Object.defineProperties;
     var __getOwnPropDescs$a = Object.getOwnPropertyDescriptors;
-    var __getOwnPropSymbols$n = Object.getOwnPropertySymbols;
-    var __hasOwnProp$n = Object.prototype.hasOwnProperty;
-    var __propIsEnum$n = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$n = (obj, key, value) => key in obj ? __defProp$n(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$n = (a, b) => {
+    var __getOwnPropSymbols$o = Object.getOwnPropertySymbols;
+    var __hasOwnProp$o = Object.prototype.hasOwnProperty;
+    var __propIsEnum$o = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$o = (obj, key, value) => key in obj ? __defProp$o(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$o = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$n.call(b, prop))
-          __defNormalProp$n(a, prop, b[prop]);
-      if (__getOwnPropSymbols$n)
-        for (var prop of __getOwnPropSymbols$n(b)) {
-          if (__propIsEnum$n.call(b, prop))
-            __defNormalProp$n(a, prop, b[prop]);
+        if (__hasOwnProp$o.call(b, prop))
+          __defNormalProp$o(a, prop, b[prop]);
+      if (__getOwnPropSymbols$o)
+        for (var prop of __getOwnPropSymbols$o(b)) {
+          if (__propIsEnum$o.call(b, prop))
+            __defNormalProp$o(a, prop, b[prop]);
         }
       return a;
     };
@@ -34920,7 +35733,7 @@ ${e}`);
       }
       init(options) {
         var _a, _b;
-        options = __spreadValues$n(__spreadValues$n({}, _GlContextSystem.defaultOptions), options);
+        options = __spreadValues$o(__spreadValues$o({}, _GlContextSystem.defaultOptions), options);
         let multiView = this.multiView = options.multiView;
         if (options.context && multiView) {
           warn("Renderer created with both a context and multiview enabled. Disabling multiView as both cannot work together.");
@@ -35016,7 +35829,7 @@ ${e}`);
           loseContext: gl.getExtension("WEBGL_lose_context")
         };
         if (this.webGLVersion === 1) {
-          this.extensions = __spreadProps$a(__spreadValues$n({}, common), {
+          this.extensions = __spreadProps$a(__spreadValues$o({}, common), {
             drawBuffers: gl.getExtension("WEBGL_draw_buffers"),
             depthTexture: gl.getExtension("WEBGL_depth_texture"),
             vertexArrayObject: gl.getExtension("OES_vertex_array_object") || gl.getExtension("MOZ_OES_vertex_array_object") || gl.getExtension("WEBKIT_OES_vertex_array_object"),
@@ -35030,7 +35843,7 @@ ${e}`);
             srgb: gl.getExtension("EXT_sRGB")
           });
         } else {
-          this.extensions = __spreadProps$a(__spreadValues$n({}, common), {
+          this.extensions = __spreadProps$a(__spreadValues$o({}, common), {
             colorBufferFloat: gl.getExtension("EXT_color_buffer_float")
           });
           const provokeExt = gl.getExtension("WEBGL_provoking_vertex");
@@ -35342,7 +36155,7 @@ ${e}`);
         this.updateBuffers();
       }
       /** Reset and unbind any active VAO and geometry. */
-      reset() {
+      resetState() {
         this.unbind();
       }
       /** Update buffers of the currently bound geometry. */
@@ -35575,19 +36388,19 @@ ${e}`);
     };
 
     "use strict";
-    var __defProp$m = Object.defineProperty;
-    var __getOwnPropSymbols$m = Object.getOwnPropertySymbols;
-    var __hasOwnProp$m = Object.prototype.hasOwnProperty;
-    var __propIsEnum$m = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$m = (obj, key, value) => key in obj ? __defProp$m(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$m = (a, b) => {
+    var __defProp$n = Object.defineProperty;
+    var __getOwnPropSymbols$n = Object.getOwnPropertySymbols;
+    var __hasOwnProp$n = Object.prototype.hasOwnProperty;
+    var __propIsEnum$n = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$n = (obj, key, value) => key in obj ? __defProp$n(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$n = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$m.call(b, prop))
-          __defNormalProp$m(a, prop, b[prop]);
-      if (__getOwnPropSymbols$m)
-        for (var prop of __getOwnPropSymbols$m(b)) {
-          if (__propIsEnum$m.call(b, prop))
-            __defNormalProp$m(a, prop, b[prop]);
+        if (__hasOwnProp$n.call(b, prop))
+          __defNormalProp$n(a, prop, b[prop]);
+      if (__getOwnPropSymbols$n)
+        for (var prop of __getOwnPropSymbols$n(b)) {
+          if (__propIsEnum$n.call(b, prop))
+            __defNormalProp$n(a, prop, b[prop]);
         }
       return a;
     };
@@ -35614,7 +36427,7 @@ ${e}`);
         this._renderer = renderer;
       }
       init(options = {}) {
-        const { useBackBuffer, antialias } = __spreadValues$m(__spreadValues$m({}, _GlBackBufferSystem.defaultOptions), options);
+        const { useBackBuffer, antialias } = __spreadValues$n(__spreadValues$n({}, _GlBackBufferSystem.defaultOptions), options);
         this.useBackBuffer = useBackBuffer;
         this._antialias = antialias;
         if (!this._renderer.context.supports.msaa) {
@@ -35874,9 +36687,7 @@ ${e}`);
           "increment-wrap": gl.INCR_WRAP,
           "decrement-wrap": gl.DECR_WRAP
         };
-        this._stencilCache.enabled = false;
-        this._stencilCache.stencilMode = STENCIL_MODES.NONE;
-        this._stencilCache.stencilReference = 0;
+        this.resetState();
       }
       onRenderTargetChange(renderTarget) {
         if (this._activeRenderTarget === renderTarget)
@@ -35890,6 +36701,11 @@ ${e}`);
           };
         }
         this.setStencilMode(stencilState.stencilMode, stencilState.stencilReference);
+      }
+      resetState() {
+        this._stencilCache.enabled = false;
+        this._stencilCache.stencilMode = STENCIL_MODES.NONE;
+        this._stencilCache.stencilReference = 0;
       }
       setStencilMode(stencilMode, stencilReference) {
         const stencilState = this._renderTargetStencilState[this._activeRenderTarget.uid];
@@ -36233,21 +37049,21 @@ ${e}`);
     }
 
     "use strict";
-    var __defProp$l = Object.defineProperty;
+    var __defProp$m = Object.defineProperty;
     var __defProps$9 = Object.defineProperties;
     var __getOwnPropDescs$9 = Object.getOwnPropertyDescriptors;
-    var __getOwnPropSymbols$l = Object.getOwnPropertySymbols;
-    var __hasOwnProp$l = Object.prototype.hasOwnProperty;
-    var __propIsEnum$l = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$l = (obj, key, value) => key in obj ? __defProp$l(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$l = (a, b) => {
+    var __getOwnPropSymbols$m = Object.getOwnPropertySymbols;
+    var __hasOwnProp$m = Object.prototype.hasOwnProperty;
+    var __propIsEnum$m = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$m = (obj, key, value) => key in obj ? __defProp$m(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$m = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$l.call(b, prop))
-          __defNormalProp$l(a, prop, b[prop]);
-      if (__getOwnPropSymbols$l)
-        for (var prop of __getOwnPropSymbols$l(b)) {
-          if (__propIsEnum$l.call(b, prop))
-            __defNormalProp$l(a, prop, b[prop]);
+        if (__hasOwnProp$m.call(b, prop))
+          __defNormalProp$m(a, prop, b[prop]);
+      if (__getOwnPropSymbols$m)
+        for (var prop of __getOwnPropSymbols$m(b)) {
+          if (__propIsEnum$m.call(b, prop))
+            __defNormalProp$m(a, prop, b[prop]);
         }
       return a;
     };
@@ -36315,7 +37131,7 @@ ${e}`);
       "mat2x4<f32>": loopMatrix(2, 4),
       "mat3x4<f32>": loopMatrix(3, 4)
     };
-    const uboSyncFunctionsWGSL = __spreadProps$9(__spreadValues$l({}, uboSyncFunctionsSTD40), {
+    const uboSyncFunctionsWGSL = __spreadProps$9(__spreadValues$m({}, uboSyncFunctionsSTD40), {
       "mat2x2<f32>": `
         data[offset] = v[0];
         data[offset + 1] = v[1];
@@ -36467,7 +37283,7 @@ ${e}`);
         const gl = renderer.gl;
         const glRenderTarget = new GlRenderTarget();
         const colorTexture = renderTarget.colorTexture;
-        if (colorTexture.resource === renderer.canvas) {
+        if (CanvasSource.test(colorTexture.resource)) {
           this._renderer.context.ensureCanvasSize(renderTarget.colorTexture.resource);
           glRenderTarget.framebuffer = null;
           return glRenderTarget;
@@ -36683,19 +37499,19 @@ ${e}`);
     }
 
     "use strict";
-    var __defProp$k = Object.defineProperty;
-    var __getOwnPropSymbols$k = Object.getOwnPropertySymbols;
-    var __hasOwnProp$k = Object.prototype.hasOwnProperty;
-    var __propIsEnum$k = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$k = (obj, key, value) => key in obj ? __defProp$k(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$k = (a, b) => {
+    var __defProp$l = Object.defineProperty;
+    var __getOwnPropSymbols$l = Object.getOwnPropertySymbols;
+    var __hasOwnProp$l = Object.prototype.hasOwnProperty;
+    var __propIsEnum$l = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$l = (obj, key, value) => key in obj ? __defProp$l(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$l = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$k.call(b, prop))
-          __defNormalProp$k(a, prop, b[prop]);
-      if (__getOwnPropSymbols$k)
-        for (var prop of __getOwnPropSymbols$k(b)) {
-          if (__propIsEnum$k.call(b, prop))
-            __defNormalProp$k(a, prop, b[prop]);
+        if (__hasOwnProp$l.call(b, prop))
+          __defNormalProp$l(a, prop, b[prop]);
+      if (__getOwnPropSymbols$l)
+        for (var prop of __getOwnPropSymbols$l(b)) {
+          if (__propIsEnum$l.call(b, prop))
+            __defNormalProp$l(a, prop, b[prop]);
         }
       return a;
     };
@@ -36703,7 +37519,7 @@ ${e}`);
     function getCanvasTexture(canvas, options) {
       if (!canvasCache.has(canvas)) {
         const texture = new Texture({
-          source: new CanvasSource(__spreadValues$k({
+          source: new CanvasSource(__spreadValues$l({
             resource: canvas
           }, options))
         });
@@ -36729,19 +37545,19 @@ ${e}`);
     }
 
     "use strict";
-    var __defProp$j = Object.defineProperty;
-    var __getOwnPropSymbols$j = Object.getOwnPropertySymbols;
-    var __hasOwnProp$j = Object.prototype.hasOwnProperty;
-    var __propIsEnum$j = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$j = (obj, key, value) => key in obj ? __defProp$j(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$j = (a, b) => {
+    var __defProp$k = Object.defineProperty;
+    var __getOwnPropSymbols$k = Object.getOwnPropertySymbols;
+    var __hasOwnProp$k = Object.prototype.hasOwnProperty;
+    var __propIsEnum$k = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$k = (obj, key, value) => key in obj ? __defProp$k(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$k = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$j.call(b, prop))
-          __defNormalProp$j(a, prop, b[prop]);
-      if (__getOwnPropSymbols$j)
-        for (var prop of __getOwnPropSymbols$j(b)) {
-          if (__propIsEnum$j.call(b, prop))
-            __defNormalProp$j(a, prop, b[prop]);
+        if (__hasOwnProp$k.call(b, prop))
+          __defNormalProp$k(a, prop, b[prop]);
+      if (__getOwnPropSymbols$k)
+        for (var prop of __getOwnPropSymbols$k(b)) {
+          if (__propIsEnum$k.call(b, prop))
+            __defNormalProp$k(a, prop, b[prop]);
         }
       return a;
     };
@@ -36762,7 +37578,7 @@ ${e}`);
         this._size = new Float32Array(2);
         /** if true, then when the render target is destroyed, it will destroy all the textures that were created for it. */
         this._managedColorTextures = false;
-        descriptor = __spreadValues$j(__spreadValues$j({}, _RenderTarget.defaultOptions), descriptor);
+        descriptor = __spreadValues$k(__spreadValues$k({}, _RenderTarget.defaultOptions), descriptor);
         this.stencil = descriptor.stencil;
         this.depth = descriptor.depth;
         this.isRoot = descriptor.isRoot;
@@ -37060,7 +37876,32 @@ ${e}`);
         return (_a = this._renderSurfaceToRenderTargetHash.get(renderSurface)) != null ? _a : this._initRenderTarget(renderSurface);
       }
       /**
-       * Copies a render surface to another texture
+       * Copies a render surface to another texture.
+       *
+       * NOTE:
+       * for sourceRenderSurfaceTexture, The render target must be something that is written too by the renderer
+       *
+       * The following is not valid:
+       * @example
+       * const canvas = document.createElement('canvas')
+       * canvas.width = 200;
+       * canvas.height = 200;
+       *
+       * const ctx = canvas2.getContext('2d')!
+       * ctx.fillStyle = 'red'
+       * ctx.fillRect(0, 0, 200, 200);
+       *
+       * const texture = RenderTexture.create({
+       *   width: 200,
+       *   height: 200,
+       * })
+       * const renderTarget = renderer.renderTarget.getRenderTarget(canvas2);
+       *
+       * renderer.renderTarget.copyToTexture(renderTarget,texture, {x:0,y:0},{width:200,height:200},{x:0,y:0});
+       *
+       * The best way to copy a canvas is to create a texture from it. Then render with that.
+       *
+       * Parsing in a RenderTarget canvas context (with a 2d context)
        * @param sourceRenderSurfaceTexture - the render surface to copy from
        * @param destinationTexture - the texture to copy to
        * @param originSrc - the origin of the copy
@@ -37145,6 +37986,10 @@ ${e}`);
       }
       getGpuRenderTarget(renderTarget) {
         return this._gpuRenderTargetHash[renderTarget.uid] || (this._gpuRenderTargetHash[renderTarget.uid] = this.adaptor.initGpuRenderTarget(renderTarget));
+      }
+      resetState() {
+        this.renderTarget = null;
+        this.renderSurface = null;
       }
     }
 
@@ -37770,6 +38615,9 @@ ${e}`);
       _generateShaderSync(shader, shaderSystem) {
         return generateShaderSyncCode(shader, shaderSystem);
       }
+      resetState() {
+        this._activeProgram = null;
+      }
     }
     /** @ignore */
     GlShaderSystem.extension = {
@@ -38120,7 +38968,7 @@ ${e}`);
       contextChange(gl) {
         this.gl = gl;
         this.blendModesMap = mapWebGLBlendModesToPixi(gl);
-        this.reset();
+        this.resetState();
       }
       /**
        * Sets the current state
@@ -38239,7 +39087,7 @@ ${e}`);
       }
       // used
       /** Resets all the logic and disables the VAOs. */
-      reset() {
+      resetState() {
         this.gl.pixelStorei(this.gl.UNPACK_FLIP_Y_WEBGL, false);
         this.forceState(this.defaultState);
         this._blendEq = true;
@@ -38445,8 +39293,6 @@ ${e}`);
     const glUploadImageResource = {
       id: "image",
       upload(source, glTexture, gl, webGLVersion) {
-        const premultipliedAlpha = source.alphaMode === "premultiply-alpha-on-upload";
-        gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, premultipliedAlpha);
         const glWidth = glTexture.width;
         const glHeight = glTexture.height;
         const textureWidth = source.pixelWidth;
@@ -38490,7 +39336,7 @@ ${e}`);
               source.resource
             );
           }
-        } else if (glWidth === textureWidth || glHeight === textureHeight) {
+        } else if (glWidth === textureWidth && glHeight === textureHeight) {
           gl.texSubImage2D(
             gl.TEXTURE_2D,
             0,
@@ -38668,21 +39514,21 @@ ${e}`);
     }
 
     "use strict";
-    var __defProp$i = Object.defineProperty;
+    var __defProp$j = Object.defineProperty;
     var __defProps$8 = Object.defineProperties;
     var __getOwnPropDescs$8 = Object.getOwnPropertyDescriptors;
-    var __getOwnPropSymbols$i = Object.getOwnPropertySymbols;
-    var __hasOwnProp$i = Object.prototype.hasOwnProperty;
-    var __propIsEnum$i = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$i = (obj, key, value) => key in obj ? __defProp$i(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$i = (a, b) => {
+    var __getOwnPropSymbols$j = Object.getOwnPropertySymbols;
+    var __hasOwnProp$j = Object.prototype.hasOwnProperty;
+    var __propIsEnum$j = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$j = (obj, key, value) => key in obj ? __defProp$j(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$j = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$i.call(b, prop))
-          __defNormalProp$i(a, prop, b[prop]);
-      if (__getOwnPropSymbols$i)
-        for (var prop of __getOwnPropSymbols$i(b)) {
-          if (__propIsEnum$i.call(b, prop))
-            __defNormalProp$i(a, prop, b[prop]);
+        if (__hasOwnProp$j.call(b, prop))
+          __defNormalProp$j(a, prop, b[prop]);
+      if (__getOwnPropSymbols$j)
+        for (var prop of __getOwnPropSymbols$j(b)) {
+          if (__propIsEnum$j.call(b, prop))
+            __defNormalProp$j(a, prop, b[prop]);
         }
       return a;
     };
@@ -38702,7 +39548,7 @@ ${e}`);
           "bgra8unorm-srgb": extensions.srgb.SRGB8_ALPHA8_EXT
         };
       }
-      return __spreadValues$i(__spreadValues$i(__spreadValues$i(__spreadValues$i(__spreadValues$i(__spreadValues$i(__spreadProps$8(__spreadValues$i({
+      return __spreadValues$j(__spreadValues$j(__spreadValues$j(__spreadValues$j(__spreadValues$j(__spreadValues$j(__spreadProps$8(__spreadValues$j({
         // 8-bit formats
         r8unorm: gl.R8,
         r8snorm: gl.R8_SNORM,
@@ -38900,6 +39746,7 @@ ${e}`);
           video: glUploadVideoResource,
           compressed: glUploadCompressedTextureResource
         };
+        this._premultiplyAlpha = false;
         // TODO - separate samplers will be a cool thing to add, but not right now!
         this._useSeparateSamplers = false;
         this._renderer = renderer;
@@ -38916,6 +39763,7 @@ ${e}`);
         this._glTextures = /* @__PURE__ */ Object.create(null);
         this._glSamplers = /* @__PURE__ */ Object.create(null);
         this._boundSamplers = /* @__PURE__ */ Object.create(null);
+        this._premultiplyAlpha = false;
         for (let i = 0; i < 16; i++) {
           this.bind(Texture.EMPTY, i);
         }
@@ -39037,6 +39885,11 @@ ${e}`);
         const glTexture = this.getGlSource(source);
         gl.bindTexture(gl.TEXTURE_2D, glTexture.texture);
         this._boundTextures[this._activeTextureLocation] = source;
+        const premultipliedAlpha = source.alphaMode === "premultiply-alpha-on-upload";
+        if (this._premultiplyAlpha !== premultipliedAlpha) {
+          this._premultiplyAlpha = premultipliedAlpha;
+          gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, premultipliedAlpha);
+        }
         if (this._uploads[source.uploadMethodId]) {
           this._uploads[source.uploadMethodId].upload(source, glTexture, gl, this._renderer.context.webGLVersion);
         } else {
@@ -39126,6 +39979,11 @@ ${e}`);
         this.managedTextures.slice().forEach((source) => this.onSourceDestroy(source));
         this.managedTextures = null;
         this._renderer = null;
+      }
+      resetState() {
+        this._activeTextureLocation = -1;
+        this._boundTextures.fill(Texture.EMPTY.source);
+        this._boundSamplers = /* @__PURE__ */ Object.create(null);
       }
     }
     /** @ignore */
@@ -39599,7 +40457,7 @@ ${e}`);
       _updateRenderGroups(renderGroup) {
         const renderer = this._renderer;
         const renderPipes = renderer.renderPipes;
-        renderGroup.runOnRender();
+        renderGroup.runOnRender(renderer);
         renderGroup.instructionSet.renderPipes = renderPipes;
         if (!renderGroup.structureDidChange) {
           validateRenderables(renderGroup, renderPipes);
@@ -39609,7 +40467,7 @@ ${e}`);
         updateRenderGroupTransforms(renderGroup);
         if (renderGroup.structureDidChange) {
           renderGroup.structureDidChange = false;
-          buildInstructions(renderGroup, renderer);
+          this._buildInstructions(renderGroup, renderer);
         } else {
           this._updateRenderables(renderGroup);
         }
@@ -39630,6 +40488,22 @@ ${e}`);
           }
         }
         clearList(list, index);
+      }
+      _buildInstructions(renderGroup, rendererOrPipes) {
+        const root = renderGroup.root;
+        const instructionSet = renderGroup.instructionSet;
+        instructionSet.reset();
+        const renderer = rendererOrPipes.renderPipes ? rendererOrPipes : rendererOrPipes.batch.renderer;
+        const renderPipes = renderer.renderPipes;
+        renderPipes.batch.buildStart(instructionSet);
+        renderPipes.blendMode.buildStart();
+        renderPipes.colorMask.buildStart();
+        if (root.sortableChildren) {
+          root.sortChildren();
+        }
+        root.collectRenderablesWithEffects(instructionSet, renderer, null);
+        renderPipes.batch.buildEnd(instructionSet);
+        renderPipes.blendMode.buildEnd(instructionSet);
       }
     }
     /** @ignore */
@@ -39712,19 +40586,19 @@ ${e}`);
     };
 
     "use strict";
-    var __defProp$h = Object.defineProperty;
-    var __getOwnPropSymbols$h = Object.getOwnPropertySymbols;
-    var __hasOwnProp$h = Object.prototype.hasOwnProperty;
-    var __propIsEnum$h = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$h = (obj, key, value) => key in obj ? __defProp$h(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$h = (a, b) => {
+    var __defProp$i = Object.defineProperty;
+    var __getOwnPropSymbols$i = Object.getOwnPropertySymbols;
+    var __hasOwnProp$i = Object.prototype.hasOwnProperty;
+    var __propIsEnum$i = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$i = (obj, key, value) => key in obj ? __defProp$i(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$i = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$h.call(b, prop))
-          __defNormalProp$h(a, prop, b[prop]);
-      if (__getOwnPropSymbols$h)
-        for (var prop of __getOwnPropSymbols$h(b)) {
-          if (__propIsEnum$h.call(b, prop))
-            __defNormalProp$h(a, prop, b[prop]);
+        if (__hasOwnProp$i.call(b, prop))
+          __defNormalProp$i(a, prop, b[prop]);
+      if (__getOwnPropSymbols$i)
+        for (var prop of __getOwnPropSymbols$i(b)) {
+          if (__propIsEnum$i.call(b, prop))
+            __defNormalProp$i(a, prop, b[prop]);
         }
       return a;
     };
@@ -39740,7 +40614,7 @@ ${e}`);
        * @param options - the options for the background colors
        */
       init(options) {
-        options = __spreadValues$h(__spreadValues$h({}, _BackgroundSystem.defaultOptions), options);
+        options = __spreadValues$i(__spreadValues$i({}, _BackgroundSystem.defaultOptions), options);
         this.clearBeforeRender = options.clearBeforeRender;
         this.color = options.background || options.backgroundColor || this._backgroundColor;
         this.alpha = options.backgroundAlpha;
@@ -39817,6 +40691,11 @@ ${e}`);
         this._isAdvanced = false;
         this._filterHash = /* @__PURE__ */ Object.create(null);
         this._renderer = renderer;
+        this._renderer.runners.prerender.add(this);
+      }
+      prerender() {
+        this._activeBlendMode = "normal";
+        this._isAdvanced = false;
       }
       /**
        * This ensures that a blendMode switch is added to the instruction set if the blend mode has changed.
@@ -39915,19 +40794,19 @@ ${e}`);
     };
 
     "use strict";
-    var __defProp$g = Object.defineProperty;
-    var __getOwnPropSymbols$g = Object.getOwnPropertySymbols;
-    var __hasOwnProp$g = Object.prototype.hasOwnProperty;
-    var __propIsEnum$g = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$g = (obj, key, value) => key in obj ? __defProp$g(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$g = (a, b) => {
+    var __defProp$h = Object.defineProperty;
+    var __getOwnPropSymbols$h = Object.getOwnPropertySymbols;
+    var __hasOwnProp$h = Object.prototype.hasOwnProperty;
+    var __propIsEnum$h = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$h = (obj, key, value) => key in obj ? __defProp$h(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$h = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$g.call(b, prop))
-          __defNormalProp$g(a, prop, b[prop]);
-      if (__getOwnPropSymbols$g)
-        for (var prop of __getOwnPropSymbols$g(b)) {
-          if (__propIsEnum$g.call(b, prop))
-            __defNormalProp$g(a, prop, b[prop]);
+        if (__hasOwnProp$h.call(b, prop))
+          __defNormalProp$h(a, prop, b[prop]);
+      if (__getOwnPropSymbols$h)
+        for (var prop of __getOwnPropSymbols$h(b)) {
+          if (__propIsEnum$h.call(b, prop))
+            __defNormalProp$h(a, prop, b[prop]);
         }
       return a;
     };
@@ -39943,11 +40822,11 @@ ${e}`);
       }
       _normalizeOptions(options, defaults = {}) {
         if (options instanceof Container || options instanceof Texture) {
-          return __spreadValues$g({
+          return __spreadValues$h({
             target: options
           }, defaults);
         }
-        return __spreadValues$g(__spreadValues$g({}, defaults), options);
+        return __spreadValues$h(__spreadValues$h({}, defaults), options);
       }
       /**
        * Will return a HTML Image of the target
@@ -40120,21 +40999,21 @@ ${e}`);
     }
 
     "use strict";
-    var __defProp$f = Object.defineProperty;
+    var __defProp$g = Object.defineProperty;
     var __defProps$7 = Object.defineProperties;
     var __getOwnPropDescs$7 = Object.getOwnPropertyDescriptors;
-    var __getOwnPropSymbols$f = Object.getOwnPropertySymbols;
-    var __hasOwnProp$f = Object.prototype.hasOwnProperty;
-    var __propIsEnum$f = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$f = (obj, key, value) => key in obj ? __defProp$f(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$f = (a, b) => {
+    var __getOwnPropSymbols$g = Object.getOwnPropertySymbols;
+    var __hasOwnProp$g = Object.prototype.hasOwnProperty;
+    var __propIsEnum$g = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$g = (obj, key, value) => key in obj ? __defProp$g(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$g = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$f.call(b, prop))
-          __defNormalProp$f(a, prop, b[prop]);
-      if (__getOwnPropSymbols$f)
-        for (var prop of __getOwnPropSymbols$f(b)) {
-          if (__propIsEnum$f.call(b, prop))
-            __defNormalProp$f(a, prop, b[prop]);
+        if (__hasOwnProp$g.call(b, prop))
+          __defNormalProp$g(a, prop, b[prop]);
+      if (__getOwnPropSymbols$g)
+        for (var prop of __getOwnPropSymbols$g(b)) {
+          if (__propIsEnum$g.call(b, prop))
+            __defNormalProp$g(a, prop, b[prop]);
         }
       return a;
     };
@@ -40180,7 +41059,7 @@ ${e}`);
         const region = ((_a = options.frame) == null ? void 0 : _a.copyTo(tempRect)) || getLocalBounds(container, tempBounds).rectangle;
         region.width = Math.max(region.width, 1 / resolution) | 0;
         region.height = Math.max(region.height, 1 / resolution) | 0;
-        const target = RenderTexture.create(__spreadProps$7(__spreadValues$f({}, options.textureSourceOptions), {
+        const target = RenderTexture.create(__spreadProps$7(__spreadValues$g({}, options.textureSourceOptions), {
           width: region.width,
           height: region.height,
           resolution,
@@ -40506,19 +41385,19 @@ ${e}`);
     }
 
     "use strict";
-    var __defProp$e = Object.defineProperty;
-    var __getOwnPropSymbols$e = Object.getOwnPropertySymbols;
-    var __hasOwnProp$e = Object.prototype.hasOwnProperty;
-    var __propIsEnum$e = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$e = (obj, key, value) => key in obj ? __defProp$e(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$e = (a, b) => {
+    var __defProp$f = Object.defineProperty;
+    var __getOwnPropSymbols$f = Object.getOwnPropertySymbols;
+    var __hasOwnProp$f = Object.prototype.hasOwnProperty;
+    var __propIsEnum$f = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$f = (obj, key, value) => key in obj ? __defProp$f(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$f = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$e.call(b, prop))
-          __defNormalProp$e(a, prop, b[prop]);
-      if (__getOwnPropSymbols$e)
-        for (var prop of __getOwnPropSymbols$e(b)) {
-          if (__propIsEnum$e.call(b, prop))
-            __defNormalProp$e(a, prop, b[prop]);
+        if (__hasOwnProp$f.call(b, prop))
+          __defNormalProp$f(a, prop, b[prop]);
+      if (__getOwnPropSymbols$f)
+        for (var prop of __getOwnPropSymbols$f(b)) {
+          if (__propIsEnum$f.call(b, prop))
+            __defNormalProp$f(a, prop, b[prop]);
         }
       return a;
     };
@@ -40542,7 +41421,7 @@ ${e}`);
        * @param options - Configuration options for the renderer
        */
       init(options) {
-        options = __spreadValues$e(__spreadValues$e({}, _RenderableGCSystem.defaultOptions), options);
+        options = __spreadValues$f(__spreadValues$f({}, _RenderableGCSystem.defaultOptions), options);
         this.maxUnusedTime = options.renderableGCMaxUnusedTime;
         this._frequency = options.renderableGCFrequency;
         this.enabled = options.renderableGCActive;
@@ -40726,19 +41605,19 @@ ${e}`);
     let RenderableGCSystem = _RenderableGCSystem;
 
     "use strict";
-    var __defProp$d = Object.defineProperty;
-    var __getOwnPropSymbols$d = Object.getOwnPropertySymbols;
-    var __hasOwnProp$d = Object.prototype.hasOwnProperty;
-    var __propIsEnum$d = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$d = (obj, key, value) => key in obj ? __defProp$d(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$d = (a, b) => {
+    var __defProp$e = Object.defineProperty;
+    var __getOwnPropSymbols$e = Object.getOwnPropertySymbols;
+    var __hasOwnProp$e = Object.prototype.hasOwnProperty;
+    var __propIsEnum$e = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$e = (obj, key, value) => key in obj ? __defProp$e(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$e = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$d.call(b, prop))
-          __defNormalProp$d(a, prop, b[prop]);
-      if (__getOwnPropSymbols$d)
-        for (var prop of __getOwnPropSymbols$d(b)) {
-          if (__propIsEnum$d.call(b, prop))
-            __defNormalProp$d(a, prop, b[prop]);
+        if (__hasOwnProp$e.call(b, prop))
+          __defNormalProp$e(a, prop, b[prop]);
+      if (__getOwnPropSymbols$e)
+        for (var prop of __getOwnPropSymbols$e(b)) {
+          if (__propIsEnum$e.call(b, prop))
+            __defNormalProp$e(a, prop, b[prop]);
         }
       return a;
     };
@@ -40751,7 +41630,7 @@ ${e}`);
       }
       init(options) {
         var _a;
-        options = __spreadValues$d(__spreadValues$d({}, _TextureGCSystem.defaultOptions), options);
+        options = __spreadValues$e(__spreadValues$e({}, _TextureGCSystem.defaultOptions), options);
         this.checkCountMax = options.textureGCCheckCountMax;
         this.maxIdle = (_a = options.textureGCAMaxIdle) != null ? _a : options.textureGCMaxIdle;
         this.active = options.textureGCActive;
@@ -40825,19 +41704,19 @@ ${e}`);
     let TextureGCSystem = _TextureGCSystem;
 
     "use strict";
-    var __defProp$c = Object.defineProperty;
-    var __getOwnPropSymbols$c = Object.getOwnPropertySymbols;
-    var __hasOwnProp$c = Object.prototype.hasOwnProperty;
-    var __propIsEnum$c = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$c = (obj, key, value) => key in obj ? __defProp$c(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$c = (a, b) => {
+    var __defProp$d = Object.defineProperty;
+    var __getOwnPropSymbols$d = Object.getOwnPropertySymbols;
+    var __hasOwnProp$d = Object.prototype.hasOwnProperty;
+    var __propIsEnum$d = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$d = (obj, key, value) => key in obj ? __defProp$d(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$d = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$c.call(b, prop))
-          __defNormalProp$c(a, prop, b[prop]);
-      if (__getOwnPropSymbols$c)
-        for (var prop of __getOwnPropSymbols$c(b)) {
-          if (__propIsEnum$c.call(b, prop))
-            __defNormalProp$c(a, prop, b[prop]);
+        if (__hasOwnProp$d.call(b, prop))
+          __defNormalProp$d(a, prop, b[prop]);
+      if (__getOwnPropSymbols$d)
+        for (var prop of __getOwnPropSymbols$d(b)) {
+          if (__propIsEnum$d.call(b, prop))
+            __defNormalProp$d(a, prop, b[prop]);
         }
       return a;
     };
@@ -40868,7 +41747,7 @@ ${e}`);
        * @param options - the options for the view
        */
       init(options) {
-        options = __spreadValues$c(__spreadValues$c({}, _ViewSystem.defaultOptions), options);
+        options = __spreadValues$d(__spreadValues$d({}, _ViewSystem.defaultOptions), options);
         if (options.view) {
           deprecation(v8_0_0, "ViewSystem.view has been renamed to ViewSystem.canvas");
           options.canvas = options.view;
@@ -41349,19 +42228,19 @@ ${e}`);
     };
 
     "use strict";
-    var __defProp$b = Object.defineProperty;
-    var __getOwnPropSymbols$b = Object.getOwnPropertySymbols;
-    var __hasOwnProp$b = Object.prototype.hasOwnProperty;
-    var __propIsEnum$b = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$b = (obj, key, value) => key in obj ? __defProp$b(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$b = (a, b) => {
+    var __defProp$c = Object.defineProperty;
+    var __getOwnPropSymbols$c = Object.getOwnPropertySymbols;
+    var __hasOwnProp$c = Object.prototype.hasOwnProperty;
+    var __propIsEnum$c = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$c = (obj, key, value) => key in obj ? __defProp$c(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$c = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$b.call(b, prop))
-          __defNormalProp$b(a, prop, b[prop]);
-      if (__getOwnPropSymbols$b)
-        for (var prop of __getOwnPropSymbols$b(b)) {
-          if (__propIsEnum$b.call(b, prop))
-            __defNormalProp$b(a, prop, b[prop]);
+        if (__hasOwnProp$c.call(b, prop))
+          __defNormalProp$c(a, prop, b[prop]);
+      if (__getOwnPropSymbols$c)
+        for (var prop of __getOwnPropSymbols$c(b)) {
+          if (__propIsEnum$c.call(b, prop))
+            __defNormalProp$c(a, prop, b[prop]);
         }
       return a;
     };
@@ -41489,9 +42368,9 @@ ${e}`);
         );
         this.renderPassEncoder = this.commandEncoder.beginRenderPass(descriptor);
         const boundPipeline = this._boundPipeline;
-        const boundVertexBuffer = __spreadValues$b({}, this._boundVertexBuffer);
+        const boundVertexBuffer = __spreadValues$c({}, this._boundVertexBuffer);
         const boundIndexBuffer = this._boundIndexBuffer;
-        const boundBindGroup = __spreadValues$b({}, this._boundBindGroup);
+        const boundBindGroup = __spreadValues$c({}, this._boundBindGroup);
         this._clearCache();
         const viewport = this._renderer.renderTarget.viewport;
         this.renderPassEncoder.setViewport(viewport.x, viewport.y, viewport.width, viewport.height, 0, 1);
@@ -41810,21 +42689,21 @@ ${e}`);
     };
 
     "use strict";
-    var __defProp$a = Object.defineProperty;
+    var __defProp$b = Object.defineProperty;
     var __defProps$6 = Object.defineProperties;
     var __getOwnPropDescs$6 = Object.getOwnPropertyDescriptors;
-    var __getOwnPropSymbols$a = Object.getOwnPropertySymbols;
-    var __hasOwnProp$a = Object.prototype.hasOwnProperty;
-    var __propIsEnum$a = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$a = (obj, key, value) => key in obj ? __defProp$a(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$a = (a, b) => {
+    var __getOwnPropSymbols$b = Object.getOwnPropertySymbols;
+    var __hasOwnProp$b = Object.prototype.hasOwnProperty;
+    var __propIsEnum$b = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$b = (obj, key, value) => key in obj ? __defProp$b(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$b = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$a.call(b, prop))
-          __defNormalProp$a(a, prop, b[prop]);
-      if (__getOwnPropSymbols$a)
-        for (var prop of __getOwnPropSymbols$a(b)) {
-          if (__propIsEnum$a.call(b, prop))
-            __defNormalProp$a(a, prop, b[prop]);
+        if (__hasOwnProp$b.call(b, prop))
+          __defNormalProp$b(a, prop, b[prop]);
+      if (__getOwnPropSymbols$b)
+        for (var prop of __getOwnPropSymbols$b(b)) {
+          if (__propIsEnum$b.call(b, prop))
+            __defNormalProp$b(a, prop, b[prop]);
         }
       return a;
     };
@@ -41936,7 +42815,7 @@ ${e}`);
           label: `PIXI Pipeline`
         };
         if (this._depthStencilAttachment) {
-          descriptor.depthStencil = __spreadProps$6(__spreadValues$a({}, this._stencilState), {
+          descriptor.depthStencil = __spreadProps$6(__spreadValues$b({}, this._stencilState), {
             format: "depth24plus-stencil8",
             depthWriteEnabled: state.depthTest,
             depthCompare: state.depthTest ? "less" : "always"
@@ -43319,34 +44198,40 @@ ${e}`);
     "use strict";
 
     "use strict";
+    function getFastGlobalBounds(target, bounds) {
+      deprecation("8.7.0", "Use container.getFastGlobalBounds() instead");
+      return target.getFastGlobalBounds(true, bounds);
+    }
 
     "use strict";
 
     "use strict";
-    var __defProp$9 = Object.defineProperty;
-    var __getOwnPropSymbols$9 = Object.getOwnPropertySymbols;
-    var __hasOwnProp$9 = Object.prototype.hasOwnProperty;
-    var __propIsEnum$9 = Object.prototype.propertyIsEnumerable;
-    var __defNormalProp$9 = (obj, key, value) => key in obj ? __defProp$9(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __spreadValues$9 = (a, b) => {
+
+    "use strict";
+    var __defProp$a = Object.defineProperty;
+    var __getOwnPropSymbols$a = Object.getOwnPropertySymbols;
+    var __hasOwnProp$a = Object.prototype.hasOwnProperty;
+    var __propIsEnum$a = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$a = (obj, key, value) => key in obj ? __defProp$a(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$a = (a, b) => {
       for (var prop in b || (b = {}))
-        if (__hasOwnProp$9.call(b, prop))
-          __defNormalProp$9(a, prop, b[prop]);
-      if (__getOwnPropSymbols$9)
-        for (var prop of __getOwnPropSymbols$9(b)) {
-          if (__propIsEnum$9.call(b, prop))
-            __defNormalProp$9(a, prop, b[prop]);
+        if (__hasOwnProp$a.call(b, prop))
+          __defNormalProp$a(a, prop, b[prop]);
+      if (__getOwnPropSymbols$a)
+        for (var prop of __getOwnPropSymbols$a(b)) {
+          if (__propIsEnum$a.call(b, prop))
+            __defNormalProp$a(a, prop, b[prop]);
         }
       return a;
     };
     var __objRest$6 = (source, exclude) => {
       var target = {};
       for (var prop in source)
-        if (__hasOwnProp$9.call(source, prop) && exclude.indexOf(prop) < 0)
+        if (__hasOwnProp$a.call(source, prop) && exclude.indexOf(prop) < 0)
           target[prop] = source[prop];
-      if (source != null && __getOwnPropSymbols$9)
-        for (var prop of __getOwnPropSymbols$9(source)) {
-          if (exclude.indexOf(prop) < 0 && __propIsEnum$9.call(source, prop))
+      if (source != null && __getOwnPropSymbols$a)
+        for (var prop of __getOwnPropSymbols$a(source)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum$a.call(source, prop))
             target[prop] = source[prop];
         }
       return target;
@@ -43361,7 +44246,7 @@ ${e}`);
           options = { render: options };
         }
         const _a = options, { render } = _a, rest = __objRest$6(_a, ["render"]);
-        super(__spreadValues$9({
+        super(__spreadValues$a({
           label: "RenderContainer"
         }, rest));
         this.renderPipeId = "customRender";
@@ -43382,6 +44267,13 @@ ${e}`);
        */
       render(_renderer) {
       }
+    }
+
+    "use strict";
+    function collectAllRenderables(container, instructionSet, rendererOrPipes) {
+      deprecation("8.7.0", "Please use container.collectRenderables instead.");
+      const renderer = rendererOrPipes.renderPipes ? rendererOrPipes : rendererOrPipes.batch.renderer;
+      return container.collectRenderables(instructionSet, renderer, null);
     }
 
     "use strict";
@@ -43495,6 +44387,135 @@ ${e}`);
       });
       return geometry;
     }
+
+    "use strict";
+    var __defProp$9 = Object.defineProperty;
+    var __getOwnPropSymbols$9 = Object.getOwnPropertySymbols;
+    var __hasOwnProp$9 = Object.prototype.hasOwnProperty;
+    var __propIsEnum$9 = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp$9 = (obj, key, value) => key in obj ? __defProp$9(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues$9 = (a, b) => {
+      for (var prop in b || (b = {}))
+        if (__hasOwnProp$9.call(b, prop))
+          __defNormalProp$9(a, prop, b[prop]);
+      if (__getOwnPropSymbols$9)
+        for (var prop of __getOwnPropSymbols$9(b)) {
+          if (__propIsEnum$9.call(b, prop))
+            __defNormalProp$9(a, prop, b[prop]);
+        }
+      return a;
+    };
+    const _RenderLayerClass = class _RenderLayerClass extends Container {
+      /**
+       * Creates a new RenderLayer instance
+       * @param options - Configuration options for the RenderLayer
+       * @param {boolean} [options.sortableChildren=false] - If true, layer children will be automatically sorted each render
+       * @param {Function} [options.sortFunction] - Custom function to sort layer children. Default sorts by zIndex
+       */
+      constructor(options = {}) {
+        options = __spreadValues$9(__spreadValues$9({}, _RenderLayerClass.defaultOptions), options);
+        super();
+        /** List of objects to be rendered by this layer */
+        this.renderLayerChildren = [];
+        this.sortableChildren = options.sortableChildren;
+        this.sortFunction = options.sortFunction;
+      }
+      /**
+       * Add an Container to this render layer. The Container will be rendered as part of this layer
+       * while maintaining its original parent in the scene graph.
+       * If the Container already belongs to a layer, it will be removed from the old layer before being added to this one.
+       * @param children - The Container(s) to add to this layer
+       */
+      attach(...children) {
+        for (let i = 0; i < children.length; i++) {
+          const child = children[i];
+          if (child.parentRenderLayer) {
+            if (child.parentRenderLayer === this)
+              continue;
+            child.parentRenderLayer.detach(child);
+          }
+          this.renderLayerChildren.push(child);
+          child.parentRenderLayer = this;
+          const renderGroup = this.renderGroup || this.parentRenderGroup;
+          if (renderGroup) {
+            renderGroup.structureDidChange = true;
+          }
+        }
+        return children[0];
+      }
+      /**
+       * Remove an Container from this render layer. The Container will no longer be rendered
+       * as part of this layer but maintains its original parent.
+       * @param children - The Container(s) to remove from this layer
+       */
+      detach(...children) {
+        for (let i = 0; i < children.length; i++) {
+          const child = children[i];
+          const index = this.renderLayerChildren.indexOf(child);
+          if (index !== -1) {
+            this.renderLayerChildren.splice(index, 1);
+          }
+          child.parentRenderLayer = null;
+          const renderGroup = this.renderGroup || this.parentRenderGroup;
+          if (renderGroup) {
+            renderGroup.structureDidChange = true;
+          }
+        }
+        return children[0];
+      }
+      /** Remove all objects from this render layer. */
+      detachAll() {
+        const layerChildren = this.renderLayerChildren;
+        for (let i = 0; i < layerChildren.length; i++) {
+          layerChildren[i].parentRenderLayer = null;
+        }
+        this.renderLayerChildren.length = 0;
+      }
+      collectRenderables(instructionSet, renderer, _currentLayer) {
+        const layerChildren = this.renderLayerChildren;
+        const length = layerChildren.length;
+        if (this.sortableChildren) {
+          this.sortRenderLayerChildren();
+        }
+        for (let i = 0; i < length; i++) {
+          if (!layerChildren[i].parent) {
+            warn(
+              "Container must be added to both layer and scene graph. Layers only handle render order - the scene graph is required for transforms (addChild)",
+              layerChildren[i]
+            );
+          }
+          layerChildren[i].collectRenderables(instructionSet, renderer, this);
+        }
+      }
+      /**
+       * Sort the layer's children using the defined sort function.
+       * Will be called each render if sortableChildren is true.
+       * Otherwise can call this manually.
+       */
+      sortRenderLayerChildren() {
+        this.renderLayerChildren.sort(this.sortFunction);
+      }
+      _getGlobalBoundsRecursive(factorRenderLayers, bounds, _currentLayer) {
+        if (!factorRenderLayers)
+          return;
+        const children = this.renderLayerChildren;
+        for (let i = 0; i < children.length; i++) {
+          children[i]._getGlobalBoundsRecursive(true, bounds, this);
+        }
+      }
+    };
+    /**
+     * Default options for RenderLayer instances
+     * @property {boolean} sortableChildren - If true, layer children will be automatically sorted each render.
+     * Default false.
+     * @property {Function} sortFunction - Function used to sort layer children. Default sorts by zIndex.
+     */
+    _RenderLayerClass.defaultOptions = {
+      sortableChildren: false,
+      sortFunction: (a, b) => a.zIndex - b.zIndex
+    };
+    let RenderLayerClass = _RenderLayerClass;
+    const RenderLayer = RenderLayerClass;
 
     "use strict";
     function applyProjectiveTransformationToPlane(width, height, geometry, transformationMatrix) {
@@ -44798,6 +45819,7 @@ ${e}`);
         const _a = options, {
           width,
           height,
+          anchor,
           leftWidth,
           rightWidth,
           topHeight,
@@ -44807,6 +45829,7 @@ ${e}`);
         } = _a, rest = __objRest(_a, [
           "width",
           "height",
+          "anchor",
           "leftWidth",
           "rightWidth",
           "topHeight",
@@ -44823,21 +45846,36 @@ ${e}`);
         this._topHeight = (_e = topHeight != null ? topHeight : (_d = texture == null ? void 0 : texture.defaultBorders) == null ? void 0 : _d.top) != null ? _e : NineSliceGeometry.defaultOptions.topHeight;
         this._rightWidth = (_g = rightWidth != null ? rightWidth : (_f = texture == null ? void 0 : texture.defaultBorders) == null ? void 0 : _f.right) != null ? _g : NineSliceGeometry.defaultOptions.rightWidth;
         this._bottomHeight = (_i = bottomHeight != null ? bottomHeight : (_h = texture == null ? void 0 : texture.defaultBorders) == null ? void 0 : _h.bottom) != null ? _i : NineSliceGeometry.defaultOptions.bottomHeight;
-        this.bounds.maxX = this._width = (_j = width != null ? width : texture.width) != null ? _j : NineSliceGeometry.defaultOptions.width;
-        this.bounds.maxY = this._height = (_k = height != null ? height : texture.height) != null ? _k : NineSliceGeometry.defaultOptions.height;
+        this._width = (_j = width != null ? width : texture.width) != null ? _j : NineSliceGeometry.defaultOptions.width;
+        this._height = (_k = height != null ? height : texture.height) != null ? _k : NineSliceGeometry.defaultOptions.height;
         this.allowChildren = false;
         this.texture = texture != null ? texture : _NineSliceSprite.defaultOptions.texture;
         this.roundPixels = roundPixels != null ? roundPixels : false;
+        this._anchor = new ObservablePoint(
+          {
+            _onUpdate: () => {
+              this.onViewUpdate();
+            }
+          }
+        );
+        if (anchor) {
+          this.anchor = anchor;
+        } else if (this.texture.defaultAnchor) {
+          this.anchor = this.texture.defaultAnchor;
+        }
       }
-      /** @private */
-      updateBounds() {
+      get anchor() {
+        return this._anchor;
+      }
+      set anchor(value) {
+        typeof value === "number" ? this._anchor.set(value) : this._anchor.copyFrom(value);
       }
       /** The width of the NineSliceSprite, setting this will actually modify the vertices and UV's of this plane. */
       get width() {
         return this._width;
       }
       set width(value) {
-        this.bounds.maxX = this._width = value;
+        this._width = value;
         this.onViewUpdate();
       }
       /** The height of the NineSliceSprite, setting this will actually modify the vertices and UV's of this plane. */
@@ -44845,7 +45883,7 @@ ${e}`);
         return this._height;
       }
       set height(value) {
-        this.bounds.maxY = this._height = value;
+        this._height = value;
         this.onViewUpdate();
       }
       /**
@@ -44861,8 +45899,8 @@ ${e}`);
           height = (_a = value.height) != null ? _a : value.width;
           value = value.width;
         }
-        this.bounds.maxX = this._width = value;
-        this.bounds.maxY = this._height = height != null ? height : value;
+        this._width = value;
+        this._height = height != null ? height : value;
         this.onViewUpdate();
       }
       /**
@@ -44948,6 +45986,19 @@ ${e}`);
           this._texture.destroy(destroyTextureSource);
         }
         this._texture = null;
+      }
+      /**
+       * @private
+       */
+      updateBounds() {
+        const bounds = this._bounds;
+        const anchor = this._anchor;
+        const width = this._width;
+        const height = this._height;
+        bounds.minX = -anchor._x * width;
+        bounds.maxX = bounds.minX + width;
+        bounds.minY = -anchor._y * height;
+        bounds.maxY = bounds.minY + height;
       }
     };
     /** The default options, used to override the initial values of any options passed in the constructor. */
@@ -45304,6 +46355,8 @@ ${e}`);
     exports.RenderGroup = RenderGroup;
     exports.RenderGroupPipe = RenderGroupPipe;
     exports.RenderGroupSystem = RenderGroupSystem;
+    exports.RenderLayer = RenderLayer;
+    exports.RenderLayerClass = RenderLayerClass;
     exports.RenderTarget = RenderTarget;
     exports.RenderTargetSystem = RenderTargetSystem;
     exports.RenderTexture = RenderTexture;
@@ -45317,7 +46370,6 @@ ${e}`);
     exports.SCALE_MODES = SCALE_MODES;
     exports.STENCIL_MODES = STENCIL_MODES;
     exports.SVGParser = SVGParser;
-    exports.SVGToGraphicsPath = SVGToGraphicsPath;
     exports.SchedulerSystem = SchedulerSystem;
     exports.ScissorMask = ScissorMask;
     exports.SdfShader = SdfShader;
@@ -45376,7 +46428,6 @@ ${e}`);
     exports.WebGPURenderer = WebGPURenderer;
     exports.WorkerManager = WorkerManager;
     exports._getGlobalBounds = _getGlobalBounds;
-    exports._getGlobalBoundsRecursive = _getGlobalBoundsRecursive;
     exports.accessibilityTarget = accessibilityTarget;
     exports.addBits = addBits;
     exports.addMaskBounds = addMaskBounds;
@@ -45413,7 +46464,6 @@ ${e}`);
     exports.buildContextBatches = buildContextBatches;
     exports.buildEllipse = buildEllipse;
     exports.buildGeometryFromPath = buildGeometryFromPath;
-    exports.buildInstructions = buildInstructions;
     exports.buildLine = buildLine;
     exports.buildPixelLine = buildPixelLine;
     exports.buildPolygon = buildPolygon;
@@ -45435,6 +46485,7 @@ ${e}`);
     exports.clearList = clearList;
     exports.closePointEps = closePointEps;
     exports.collectAllRenderables = collectAllRenderables;
+    exports.collectRenderablesMixin = collectRenderablesMixin;
     exports.color32BitToUniform = color32BitToUniform;
     exports.colorBit = colorBit;
     exports.colorBitGl = colorBitGl;
@@ -45489,8 +46540,8 @@ ${e}`);
     exports.effectsMixin = effectsMixin;
     exports.ensureAttributes = ensureAttributes;
     exports.ensureIsBuffer = ensureIsBuffer;
-    exports.ensureOptions = ensureOptions;
     exports.ensurePrecision = ensurePrecision;
+    exports.ensureTextOptions = ensureTextOptions;
     exports.ensureTextStyle = ensureTextStyle;
     exports.executeInstructions = executeInstructions;
     exports.extensions = extensions;
@@ -45498,6 +46549,7 @@ ${e}`);
     exports.extractAttributesFromGpuProgram = extractAttributesFromGpuProgram;
     exports.extractFontFamilies = extractFontFamilies;
     exports.extractStructAndGroups = extractStructAndGroups;
+    exports.extractSvgUrlId = extractSvgUrlId;
     exports.fastCopy = fastCopy;
     exports.findHooksRx = findHooksRx;
     exports.findMixin = findMixin;
@@ -45521,6 +46573,7 @@ ${e}`);
     exports.generateTextStyleKey = generateTextStyleKey;
     exports.generateTextureBatchBit = generateTextureBatchBit;
     exports.generateTextureBatchBitGl = generateTextureBatchBitGl;
+    exports.generateTextureMatrix = generateTextureMatrix;
     exports.generateUID = generateUID;
     exports.generateUniformsSync = generateUniformsSync;
     exports.getAdjustedBlendModeBlend = getAdjustedBlendModeBlend;
@@ -45532,6 +46585,7 @@ ${e}`);
     exports.getCanvasTexture = getCanvasTexture;
     exports.getDefaultUniformValue = getDefaultUniformValue;
     exports.getFastGlobalBounds = getFastGlobalBounds;
+    exports.getFastGlobalBoundsMixin = getFastGlobalBoundsMixin;
     exports.getFontCss = getFontCss;
     exports.getFontFamilyName = getFontFamilyName;
     exports.getGeometryBounds = getGeometryBounds;
@@ -45645,9 +46699,14 @@ ${e}`);
     exports.nssvg = nssvg;
     exports.nsxhtml = nsxhtml;
     exports.onRenderMixin = onRenderMixin;
+    exports.parseAttribute = parseAttribute;
     exports.parseDDS = parseDDS;
     exports.parseFunctionBody = parseFunctionBody;
     exports.parseKTX = parseKTX;
+    exports.parseSVGDefinitions = parseSVGDefinitions;
+    exports.parseSVGFloatAttribute = parseSVGFloatAttribute;
+    exports.parseSVGPath = parseSVGPath;
+    exports.parseSVGStyle = parseSVGStyle;
     exports.particleData = particleData;
     exports.particlesFrag = fragment$5;
     exports.particlesVert = vertex$3;
@@ -45679,6 +46738,7 @@ ${e}`);
     exports.spritesheetAsset = spritesheetAsset;
     exports.squaredDistanceToLineSegment = squaredDistanceToLineSegment;
     exports.stripVersion = stripVersion;
+    exports.styleAttributes = styleAttributes;
     exports.testImageFormat = testImageFormat;
     exports.testVideoFormat = testVideoFormat;
     exports.textStyleToCSS = textStyleToCSS;
@@ -45702,6 +46762,7 @@ ${e}`);
     exports.updateQuadBounds = updateQuadBounds;
     exports.updateRenderGroupTransform = updateRenderGroupTransform;
     exports.updateRenderGroupTransforms = updateRenderGroupTransforms;
+    exports.updateTextBounds = updateTextBounds;
     exports.updateTransformAndChildren = updateTransformAndChildren;
     exports.updateTransformBackwards = updateTransformBackwards;
     exports.updateWorldTransform = updateWorldTransform;
